@@ -1,14 +1,93 @@
-import { View, Text, TouchableOpacity,StyleSheet, ScrollView, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity,StyleSheet, ScrollView, TextInput, ToastAndroid } from 'react-native'
 import Ionic from "react-native-vector-icons/Ionicons"
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../constents/colors';
-
+import { CreateAccountWithEmailAndPassWord } from '../../../utilities/Utilities';
 
 const signUp = ({navigation}) => {
     const [email,setEmail]=useState("");
     const [passWord,setPassWord]=useState("");
     const [confirmPassword,setConfirmPassword]=useState("");
+
+    const [hidePassword,setHidePassword]=useState(false);
+    const [hideConfirmPassword,setHideConfirmPassword]=useState(false);
+
+    const [errors,setErrors]=useState({});
+    const [showErrors,setShowErrors]=useState(false);
+
+    const getErrors=(email,passWord,confirmPassword)=>{
+      const errors={}
+      if(!email){
+        errors.email="Please Enter Email"
+      }
+      else if(!email.includes("@")||!email.includes(".com")){
+        errors.email="Enter a Valid Email"
+      }
+
+      if(!passWord){
+        errors.password="Please Enter Password "
+      }
+      else if(passWord.length<8){
+        errors.password="Password Length must be minimum 8"
+      }
+
+      if(!confirmPassword){
+        errors.confirmPassword="Please Enter Password "
+      }
+      else if(confirmPassword.length<8 ){
+        errors.confirmPassword="Password Length must be minimum 8"
+      }
+      else if( passWord !==confirmPassword){
+        errors.confirmPassword="Passwrod does not Match"
+      }
+      
+        return errors;
+      
+    }
+    const handlesubmit = () => {
+      const errors=getErrors(email,passWord,confirmPassword);
+
+      if(Object.keys(errors).length>0){
+        setShowErrors(true);
+        setErrors(showErrors&&errors)
+        console.log(errors);
+      }
+      else{
+        setErrors({})
+        setShowErrors(false)
+        handleSignin(email,passWord)
+      }
+    };
+
+    const handleSignin= (email,password)=>{
+      CreateAccountWithEmailAndPassWord(email,password)
+      .then(()=>{
+        ToastAndroid.show("Account Created",ToastAndroid.SHORT);
+        navigation.navigate("Home")
+      })
+      .catch(error=>{
+        console.log("Sign-up error:", error); // Debugging
+      if (error.code === "auth/email-already-in-use") {
+        setErrors({ email: "Email already in use" });
+      } else if (error.code === "auth/invalid-email") {
+        setErrors({ password: "Email is Invalid" });
+      } else {
+        setErrors({ general: "Sign-up failed. Try again." });
+      }
+      setEmail({})
+      setShowErrors(false)
+    });
+  }
+    const LoginWithIcon=({iconName,onPress,buttonTitle})=>{
+      return(
+        <TouchableOpacity activeOpacity={.7} style={styles.touchButton} onPress={onPress}>
+          <Ionic name={iconName} style={styles.lastIcon}/>
+          <Text style={{color:colors.transparent,fontSize:14,opacity:0.6}}>{buttonTitle}</Text>
+        </TouchableOpacity>
+        
+      )
+    };
   return (
    <View>
     <LinearGradient
@@ -30,7 +109,7 @@ const signUp = ({navigation}) => {
             style={styles.icon}
           />
         </TouchableOpacity>
-        <ScrollView style={{paddingTop:60}}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{paddingTop:60}}>
             <View style={styles.TextContainer}>
                 <Text style={styles.welText}>Welcome</Text>
             </View>
@@ -45,34 +124,104 @@ const signUp = ({navigation}) => {
                      style={styles.txtInput}
                     />
                 </View>
-                <View style={{width:'100%',marginTop: 20, }}>      
-                    <TextInput
-                     placeholder='Enter a Password'
-                     placeholderTextColor={colors.lightText}
-                     keyboardType="visible-password"
-                     value={passWord}
-                     onChangeText={e => setPassWord(e)}
-                     style={styles.txtInput}
-                    />
-                </View>
-                <View style={{width:'100%',marginTop: 20, }}>      
-                    <TextInput
-                     placeholder='Confirm Password'
-                     placeholderTextColor={colors.lightText}
-                     keyboardType="visible-password"
-                     value={confirmPassword}
-                     onChangeText={e => setConfirmPassword(e)}
-                     style={styles.txtInput}
-                    />
-                </View>
+                {errors.email && <Text style={{ color: "red", fontSize: 14 }}>{errors.email}</Text>}
 
+                <View style={{width:'100%',marginTop: 20, }}>      
+                <View 
+                style={{ 
+                 flexDirection:"row",
+                 borderRadius:10,
+                 backgroundColor:colors.white,
+                 alignItems:"center",
+                 justifyContent:"space-between"
+                  }}>
+                <TextInput
+                  placeholder='Enter Password'
+                  placeholderTextColor={colors.lightText}
+                  secureTextEntry={hidePassword?false:true}
+                  value={passWord}
+                  onChangeText={p => setPassWord(p)}
+                  style={styles.txtInput}
+                />
+               {passWord.length>=1 && 
+                  <TouchableOpacity 
+                    activeOpacity={0.9}
+                    onPress={()=>setHidePassword(!hidePassword)}
+                    style={{paddingHorizontal:10,paddingRight:15}}
+                  >
+                    <Ionic name={hidePassword? "eye-sharp": "eye-off-sharp"} style={{fontSize:20,color:colors.black}}/>
+                  </TouchableOpacity>}
+
+                </View>
+                {errors.password && <Text style={{ color: "red", fontSize: 14 }}>{errors.password}</Text>}
+                </View>
+                
+                <View style={{width:'100%',marginTop: 20, }}>      
+                <View 
+                style={{ 
+                 flexDirection:"row",
+                 borderRadius:10,
+                 backgroundColor:colors.white,
+                 alignItems:"center",
+                 justifyContent:"space-between"
+                  }}>
+                <TextInput
+                  placeholder='Confirm Password'
+                  placeholderTextColor={colors.lightText}
+                  secureTextEntry={hideConfirmPassword?false:true}
+                  value={confirmPassword}
+                  onChangeText={p => setConfirmPassword(p)}
+                  style={styles.txtInput}
+                />
+               {confirmPassword.length>=1 && 
+                  <TouchableOpacity 
+                    activeOpacity={0.9}
+                    onPress={()=>setHideConfirmPassword(!hideConfirmPassword)}
+                    style={{paddingHorizontal:10,paddingRight:15}}
+                  >
+                    <Ionic name={hideConfirmPassword? "eye-sharp": "eye-off-sharp"} style={{fontSize:20,color:colors.black}}/>
+                  </TouchableOpacity>} 
+
+                </View>
+                {errors.confirmPassword && <Text style={{ color: "red", fontSize: 14 }}>{errors.confirmPassword}</Text>}
+                </View>
+                
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity activeOpacity={0.8} >
+                    <TouchableOpacity activeOpacity={0.8} onPress={handlesubmit}>
                        <Text style={styles.buttontxt}>Register</Text> 
                     </TouchableOpacity>
                 </View>
-                
             </View>
+            <View style={styles.linearContainer}>
+            <LinearGradient 
+            start={{x:1,y:0}}
+            end={{x:0.5,y:1}}
+            colors={['#00000090','#00000090','#ffffff00']}
+            style={styles.lngradient}>
+            </LinearGradient>
+            <Text>  Or Continue with  </Text>
+            <LinearGradient 
+            start={{x:0,y:0}}
+            colors={['#00000090','#00000090','#ffffff00']}
+            style={styles.lngradient}>
+            </LinearGradient>
+
+          </View>
+          <View style={styles.login}>
+          <LoginWithIcon iconName="logo-google" buttonTitle="Google"/>
+          <LoginWithIcon iconName="person"  buttonTitle="Anonymous"/>
+          </View>
+          <View style={styles.signInContainer}> 
+          <TouchableOpacity activeOpacity={0.8} style={{width:"100%",alignItems:"center"}}
+           onPress={()=>navigation.navigate("LogIn")}
+          >
+            <Text >Already a member?
+            <Text style={{fontWeight:"700" , color:colors.accent}}>  Sign In </Text></Text>
+          </TouchableOpacity>
+          </View>
+          <View style={{height:60,width:"100%",backgroundColor:colors.transparent}}>
+
+          </View>
         </ScrollView>
       </LinearGradient>
       </View>

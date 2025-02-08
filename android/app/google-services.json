@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "640987262083",
+    "project_id": "licenseapp-a8c01",
+    "storage_bucket": "licenseapp-a8c01.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640987262083:android:ae8aa00c275739d5173fb6",
+        "android_client_info": {
+          "package_name": "com.licenseapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640987262083-p6039knc6b6sltir790cnevqn1eqc79s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEOXKqe_nFOdBQRRsuq0uYNxisVtCp3VM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640987262083-p6039knc6b6sltir790cnevqn1eqc79s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

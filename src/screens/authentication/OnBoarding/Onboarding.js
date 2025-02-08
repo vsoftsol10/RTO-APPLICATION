@@ -36,7 +36,7 @@ const Onboarding = ({navigation}) => {
         <View style={styles.ButtonContainer}>
             <View style={styles.Buttons}>
             <TouchableOpacity 
-                    onPress={navigation.navigate("Register")}
+                    onPress={()=>navigation.navigate("Register")}
                     activeOpacity={0.8}
                     style={styles.Buttonthingsleft}>
                     <Text style={styles.ButtonText}>
@@ -44,7 +44,7 @@ const Onboarding = ({navigation}) => {
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={navigation.navigate("LogIn")}
+                    onPress={()=>navigation.navigate("LogIn")}
                     activeOpacity={0.8}
                     style={styles.Buttonthingsright}>
                     <Text style={styles.ButtonText}>
