@@ -29,6 +29,7 @@ const App = () => {
   return (
     <NavigationContainer>
         <Stack.Navigator
+        initialRouteName='Onboarding'
         screenOptions={{headerShown:false ,animation:"slide_from_bottom"}}
         >
           {user?

@@ -3,7 +3,8 @@ import Ionic from "react-native-vector-icons/Ionicons"
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../constents/colors';
-import { CreateAccountWithEmailAndPassWord } from '../../../utilities/Utilities';
+import { CreateAccountWithEmailAndPassWord, SignInAnonymously, SignInWithGoogle } from '../../../utilities/Utilities';
+import { signInAnonymously } from '@react-native-firebase/auth';
 
 const signUp = ({navigation}) => {
     const [email,setEmail]=useState("");
@@ -208,12 +209,32 @@ const signUp = ({navigation}) => {
 
           </View>
           <View style={styles.login}>
-          <LoginWithIcon iconName="logo-google" buttonTitle="Google"/>
-          <LoginWithIcon iconName="person"  buttonTitle="Anonymous"/>
+          <LoginWithIcon 
+              iconName="logo-google" 
+              onPress={async () => {
+                try {
+                  const userCredential = await SignInWithGoogle();
+                  if (userCredential) {
+                    ToastAndroid.show("Signed In Successfully", ToastAndroid.SHORT);
+                    navigation.navigate("Home");
+                  }
+                } catch (error) {
+                  console.error("Google Sign-In Error:", error);
+                  ToastAndroid.show("Google Sign-In Failed", ToastAndroid.SHORT);
+                }
+              }}  
+              buttonTitle="Google"/>
+          <LoginWithIcon iconName="person" onPress={()=>SignInAnonymously().then(()=>{
+            ToastAndroid.show("Signed In Anonymously",ToastAndroid.SHORT)
+            navigation.navigate("Home")
+          }).catch(error=>{
+              console.log(error);
+          })} buttonTitle="Anonymous"/>
           </View>
           <View style={styles.signInContainer}> 
           <TouchableOpacity activeOpacity={0.8} style={{width:"100%",alignItems:"center"}}
            onPress={()=>navigation.navigate("LogIn")}
+
           >
             <Text >Already a member?
             <Text style={{fontWeight:"700" , color:colors.accent}}>  Sign In </Text></Text>

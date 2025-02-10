@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity,StyleSheet, ScrollView, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity,StyleSheet, ScrollView, TextInput, ToastAndroid } from 'react-native'
 import Ionic from "react-native-vector-icons/Ionicons"
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../constents/colors';
+import { SignInWithEmailandPassword } from '../../../utilities/Utilities';
 
 
 const signUp = ({navigation}) => {
@@ -32,18 +33,42 @@ const signUp = ({navigation}) => {
       return errors;  
     }
     const handleSubmit=()=>{
-      const errors= getErrors(email,passWord)
+      const errors= getErrors(email,passWord);
       if(Object.keys(errors).length>0){
-        setShowErrors(errors);
-        setErrors(showErrors && errors)
+        setErrors(errors);
+        setShowErrors(true);
       }
       else{
         setErrors({});
         setShowErrors(false)
-        console.log("Loged in")
-      }
+        handleSignin(email,passWord)
+      } 
     }
 
+    const handleSignin = (email, password) => {
+      setShowErrors(false); // Hide errors before signing in
+      
+      SignInWithEmailandPassword(email, password)
+        .then(() => {
+          ToastAndroid.show("Logged In", ToastAndroid.SHORT);
+          setErrors({}); // Clear errors on successful login
+          navigation.navigate("Home");
+        })
+        .catch((error) => {
+          console.log("Sign-In error:", error); // Debugging
+    
+          if (error.code === "auth/user-not-found") {
+            setErrors({ email: "User not found" });
+          } else if (error.code === "auth/wrong-password") {
+            setErrors({ password: "Incorrect password" });
+          } else {
+            setErrors({ general: "Sign-In failed. Try again." });
+          }
+    
+          setShowErrors(true); // Show errors only if sign-in fails
+        });
+    };
+    
     const LoginWithIcon=({iconName,onPress,buttonTitle})=>{
       return(
         <TouchableOpacity activeOpacity={.7} style={styles.touchButton} onPress={onPress}>
@@ -124,7 +149,7 @@ const signUp = ({navigation}) => {
                 </View>
               
               <View style={styles.buttonContainer}>
-                <TouchableOpacity activeOpacity={0.8} onPress={handleSubmit}>
+                <TouchableOpacity activeOpacity={0.6} onPress={handleSubmit}>
                   <Text style={styles.buttontxt}>Login</Text> 
                 </TouchableOpacity>
               </View>
