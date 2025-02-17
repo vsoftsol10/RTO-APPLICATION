@@ -24,13 +24,13 @@ const Onboarding = ({navigation}) => {
           </View>
         </View>
         <View style={styles.notesContainer}>
-            <Text style={styles.notesTxt}>Simplify your notes</Text>
-            <Text style={styles.notesTxt}>Boost your productivity</Text>
+            <Text style={styles.notesTxt}>Get Your License with Ease!</Text>
+            <Text style={styles.notesTxt}>No More Long Queues!</Text>
         </View>
         <View style={styles.subNoteContainer}>
           <View>
-            <Text style={styles.subNoteText}>Effortless note-taking and seamless</Text>
-            <Text style={styles.subNoteText}>organization for productivity enthusiasts</Text>
+            <Text style={styles.subNoteText}>  Drive your dreams with ease,</Text>
+            <Text style={styles.subNoteText}>apply, learn & hit the road today!</Text>
           </View>
         </View>
         <View style={styles.ButtonContainer}>

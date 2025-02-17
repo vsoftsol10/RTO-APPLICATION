@@ -248,7 +248,7 @@ const styles=StyleSheet.create({
    justifyContent:'center',
    alignItems:"center",
    marginTop:20,
-   backgroundColor:colors.white,
+   backgroundColor:"#7A3c6D",
    paddingVertical:12,
    paddingHorizontal:16,
    borderRadius:10,

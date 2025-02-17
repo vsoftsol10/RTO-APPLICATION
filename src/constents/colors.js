@@ -12,7 +12,10 @@ const colors={
     transparent:'traparent',
 
     warning:'#E71C23',
-    accent:'#FF6060'
+    accent:'#FF6060',
+
+    purple: '#7A3C6D',
+    border: '#E5E5E5',
 
 };
 export default colors;

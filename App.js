@@ -8,6 +8,7 @@ import Onboarding from './src/screens/authentication/OnBoarding/Onboarding'
 import SignUp from './src/screens/authentication/SignUp/SignUp';
 import SingIn from './src/screens/authentication/SignIn/SingIn';
 import auth from '@react-native-firebase/auth';
+import InfoScreen from './src/screens/authentication/Information/InfoScreen';
 
 
 const App = () => {
@@ -33,12 +34,17 @@ const App = () => {
         screenOptions={{headerShown:false ,animation:"slide_from_bottom"}}
         >
           {user?
-            (<Stack.Screen name='Home' component={Home}/>)
+            (<>
+              <Stack.Screen name='Info'component={InfoScreen}/>
+              <Stack.Screen name='Home' component={Home}/>
+              
+            </>)
             :
             (<>
             <Stack.Screen name='Onboarding' component={Onboarding}/>
             <Stack.Screen name='Register' component={SignUp}/>
             <Stack.Screen name='LogIn' component={SingIn}/>
+            
             </>)}
         </Stack.Navigator>
     </NavigationContainer>
