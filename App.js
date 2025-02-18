@@ -23,25 +23,6 @@ const LoadingScreen = () => {
     </View>
   );
 };
-
-const AuthStack = createNativeStackNavigator();
-const MainStack = createNativeStackNavigator();
-
-const AuthNavigator = () => (
-  <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-    <AuthStack.Screen name="Onboarding" component={Onboarding} />
-    <AuthStack.Screen name="SignIn" component={SignIn} />
-    <AuthStack.Screen name="Register" component={SignUp} />
-  </AuthStack.Navigator>
-);
-
-const MainNavigator = () => (
-  <MainStack.Navigator screenOptions={{ headerShown: false }}>
-    <MainStack.Screen name="Home" component={Home} />
-    <MainStack.Screen name="InfoScreen" component={InfoScreen} />
-  </MainStack.Navigator>
-);
-
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -63,8 +44,35 @@ const App = () => {
 
   return (
     <NavigationContainer>
-    {user ? <MainNavigator /> : <AuthNavigator />}
-  </NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,animation:"slide_from_bottom"
+        }}
+      >
+        {!user ? (
+          // User is not signed in
+          <Stack.Group>
+            <Stack.Screen name="Onboarding" component={Onboarding} />
+            <Stack.Screen name="LogIn" component={SignIn} />
+            <Stack.Screen name="Register" component={SignUp} />
+          </Stack.Group>
+        ) : (
+          // User is signed in
+          user.metadata.creationTime === user.metadata.lastSignInTime ? (
+            // First time user - show info screen
+            <Stack.Group>
+              <Stack.Screen name="Info" component={InfoScreen} />
+              <Stack.Screen name="Home" component={Home} />
+            </Stack.Group>
+          ) : (
+            // Returning user - show home
+            <Stack.Group>
+              <Stack.Screen name="Home" component={Home} />
+            </Stack.Group>
+          )
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
