@@ -65,7 +65,7 @@ const signUp = ({navigation}) => {
       CreateAccountWithEmailAndPassWord(email,password)
       .then(()=>{
         ToastAndroid.show("Account Created",ToastAndroid.SHORT);
-        navigation.navigate("Info");
+        navigation.navigate("InfoScreen");
       })
       .catch(error=>{
         console.log("Sign-up error:", error); // Debugging

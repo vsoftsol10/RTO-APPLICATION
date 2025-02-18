@@ -1,10 +1,11 @@
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import Ionic from "react-native-vector-icons/Ionicons";
 import colors from '../../../constents/colors';
 import DatePicker from 'react-native-date-picker';
-
+import firestore from '@react-native-firebase/firestore'
+import auth from "@react-native-firebase/auth"
 
 const InfoScreen=({navigation})=> {
 const[name,setName]=useState("");
@@ -16,34 +17,71 @@ const [dob, setDob] = useState('');
 const [open, setOpen] = useState(false);
 const [errors,setErrors]=useState({});
 const [showErrors,setShowErrors]=useState(false);
+
 const getErrors=(name,mobileNo,date,pincode)=>{
   const errors={}
   if(!name){
-    errors.name="Please Enter Your Name";
+    errors.name="Name is Required";
+  }else if(name.length<2){
+    errors.name= "Name must be at least 2 characters"
   }
+
   if(!mobileNo){
-    errors.mobileNo="Please Enter Your Mobile No."
+    errors.mobileNo="Mobile Number is required";
+  }
+  else if(!/^\d{10}$/.test(mobileNo)){
+    errors.mobileNo="Enter Valid 10-digit mobile number"
   }
   if(!date){
-    errors.date="This field is Mandatory"
+    errors.date="Date of Birth is required";
   }
   if(!pincode){
-    errors.pincode="This field is Mandatory"
+    errors.pincode="Pincode is required";
+  }
+  else if(!/^\d{6}$/.test(pincode)){
+    errors.pincode="Enter valid 6-digit pincode"
   }
   return errors;
   
 } 
-const handleSubmit=()=>{
+const handleSubmit=async  ()=>{
   const errors= getErrors(name,mobileNo,date,pincode);
       if(Object.keys(errors).length>0){
         setErrors(errors);
         setShowErrors(true);
+        return;
       }
-      else{
+      try{
+        const currentUser=auth().currentUser;
+        if(!currentUser){
+          Alert.alert('Error','No authenticated user found');
+          return;
+        }
+        await firestore().collection('users').doc(currentUser.uid).set({
+          name,
+          mobileNo,
+          dob,
+          pincode,
+          country,
+          userId:currentUser.uid,
+          createdAt:firestore.FieldValue.serverTimestamp(),
+          updatedAt: firestore.FieldValue.serverTimestamp()
+        });
         setErrors({});
-        setShowErrors(false)
-        navigation.navigate("Home");
-      } 
+        setShowErrors(false);
+        Alert.alert(
+          "Success",
+          "Your information has been saved successfully!"
+          [
+            {
+              text:'OK',
+              onPress: ()=>navigation.navigate("Home")
+            }
+          ]
+        );
+      } catch (error){
+        Alert.alert('Error',error.message);
+      }
 }
   const handleCalendarClick = () => {
     setOpen(true);
@@ -77,7 +115,7 @@ const handleSubmit=()=>{
         <TouchableOpacity
             activeOpacity={0.8}
             style={styles.iconstyle}
-            onPress={()=>navigation.goBack()}>
+            onPress={()=>navigation.navigate("Register")}>
             <Ionic name="chevron-back"
             style={styles.icon}/>
         </TouchableOpacity>
@@ -86,7 +124,7 @@ const handleSubmit=()=>{
           <View style={styles.TextContainer}>
             <Text style={styles.welText}>Enter Your Details</Text>
           </View>
-          <View style={styles.formContainer}>
+          <View >
             {/* Name Input */}
             <View style={{width:'100%',marginTop:0}}> 
               <View 

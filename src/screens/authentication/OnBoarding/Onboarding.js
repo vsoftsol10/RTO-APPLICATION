@@ -59,7 +59,7 @@ const Onboarding = ({navigation}) => {
   )
 }
 
-export default Onboarding
+export default Onboarding;
 
 const styles=StyleSheet.create({
     linearGradient: {
