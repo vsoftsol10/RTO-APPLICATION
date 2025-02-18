@@ -9,6 +9,7 @@ import SignUp from './src/screens/authentication/SignUp/SignUp';
 import SingIn from './src/screens/authentication/SignIn/SingIn';
 import auth from '@react-native-firebase/auth';
 import InfoScreen from './src/screens/authentication/Information/InfoScreen';
+import { StyleSheet,View } from 'react-native';
 
 
 const App = () => {
@@ -27,28 +28,54 @@ const App = () => {
     if (initializing) setInitializing(false);
   }
 
+  const LoadingScreen = () => {
+    return (
+      <View style={styles.centered}>
+      <ActivityIndicator size="large" color="#0000ff" />
+      <Text>Loading...</Text>
+    </View>
+    );
+  };
+
+  if (initializing) {
+    return <LoadingScreen />;
+  }
+
   return (
     <NavigationContainer>
         <Stack.Navigator
         initialRouteName='Onboarding'
         screenOptions={{headerShown:false ,animation:"slide_from_bottom"}}
         >
-          {user?
-            (<>
-              <Stack.Screen name='Info'component={InfoScreen}/>
-              <Stack.Screen name='Home' component={Home}/>
-              
-            </>)
-            :
-            (<>
-            <Stack.Screen name='Onboarding' component={Onboarding}/>
-            <Stack.Screen name='Register' component={SignUp}/>
-            <Stack.Screen name='LogIn' component={SingIn}/>
-            
-            </>)}
+          {user ? (
+          user.metadata.creationTime === user.metadata.lastSignInTime ? (
+            <>
+              <Stack.Screen name="Info" component={InfoScreen} />
+              <Stack.Screen name="Home" component={Home} />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="Home" component={Home} />
+            </>
+          )
+        ) : (
+          <>
+            <Stack.Screen name="Onboarding" component={Onboarding} />
+            <Stack.Screen name="Register" component={SignUp} />
+            <Stack.Screen name="LogIn" component={SingIn} />
+          </>
+        )}
         </Stack.Navigator>
     </NavigationContainer>
   )
 }
 
+const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+});
 export default App

@@ -308,7 +308,7 @@ const styles=StyleSheet.create({
     },
     buttontxt:{
       fontSize:16,
-      color:colors.black,
+      color:colors.white,
       letterSpacing:1,
     },
     lngradient:{

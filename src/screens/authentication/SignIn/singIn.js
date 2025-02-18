@@ -254,12 +254,12 @@ const styles=StyleSheet.create({
    borderRadius:10,
    marginHorizontal:100,
    elevation:8,
-   backgroundColor:colors.accent,
+   backgroundColor:colors.purple,
    color:colors.white
   },
   buttontxt:{
     fontSize:16,
-    color:colors.black,
+    color:colors.white,
     letterSpacing:1,
   },
   lngradient:{
