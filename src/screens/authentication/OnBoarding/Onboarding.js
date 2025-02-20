@@ -1,9 +1,23 @@
 import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../constents/colors';
+import auth from "@react-native-firebase/auth"
 
 const Onboarding = ({navigation}) => {
+  useEffect(() => {
+    const unsubscribe = auth().onAuthStateChanged(user => {
+      if (user) {
+        // If user is already logged in, check if they're a new user
+        if (user.metadata.creationTime === user.metadata.lastSignInTime) {
+          navigation.replace("Info");
+        } else {
+          navigation.replace("Home");
+        }
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
   return (
     <View>
       <StatusBar barStyle="dark-content" backgroundColor={colors.bgLineGradeOne} />

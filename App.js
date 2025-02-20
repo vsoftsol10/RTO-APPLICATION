@@ -2,87 +2,112 @@ import { enableScreens } from 'react-native-screens';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 // Import screens
 import Home from './src/screens/appScreens/Home/Home';
-import Onboarding from './src/screens/authentication/OnBoarding/Onboarding'
-console.log("Onbording Screen",Onboarding);
+import Onboarding from './src/screens/authentication/OnBoarding/Onboarding';
 import SignUp from './src/screens/authentication/SignUp/SignUp';
 import SignIn from './src/screens/authentication/SignIn/SignIn';
 import InfoScreen from './src/screens/authentication/Information/InfoScreen';
+import SplashScreen from './src/component/SplashScreen/SplashScreen';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
-const LoadingScreen = () => {
-  return (
-    <View style={styles.centered}>
-      <ActivityIndicator size="large" />
-      <Text>Loading...</Text>
-    </View>
-  );
-};
-const App = () => {
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
 
-  // Handle user state changes
-  const onAuthStateChanged = (user) => {
+const App = () => {
+  const [user, setUser] = useState(null);
+  const [hasUserInfo, setHasUserInfo] = useState(false);
+  const [onboardingSeen, setOnboardingSeen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
+
+  // Check if user info exists in Firestore
+  const checkUserInfo = async (userId) => {
+    try {
+      const userDoc = await firestore().collection('users').doc(userId).get();
+      setHasUserInfo(userDoc.exists);
+    } catch (error) {
+      console.error("Error checking user info:", error);
+      setHasUserInfo(false);
+    }
+  };
+
+  // Handle authentication state changes
+  const onAuthStateChanged = async (user) => {
     setUser(user);
-    if (initializing) setInitializing(false);
+    if (user) {
+      await checkUserInfo(user.uid);
+    }
+  };
+
+  // Check if onboarding has been seen
+  const checkOnboarding = async () => {
+    try {
+      const seen = await AsyncStorage.getItem('onboardingSeen');
+      setOnboardingSeen(seen === 'true');
+    } catch (error) {
+      console.error("Error checking onboarding status:", error);
+      setOnboardingSeen(false);
+    }
   };
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    const initApp = async () => {
+      try {
+        await checkOnboarding();
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        setIsLoading(false);
+        return subscriber;
+      } catch (error) {
+        console.error("Error initializing app:", error);
+        setIsLoading(false);
+      }
+    };
+
+    initApp();
   }, []);
 
-  if (initializing) {
-    return <LoadingScreen />;
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+  };
+
+  // Determine which screens to show
+  const getInitialRouteName = () => {
+    if (!onboardingSeen) return "Onboarding";
+    if (!user) return "LogIn";
+    if (!hasUserInfo) return "Info";
+    return "Home";
+  };
+
+  if (showSplash) {
+    return <SplashScreen onAnimationComplete={handleSplashComplete} />;
   }
 
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName={getInitialRouteName()}
         screenOptions={{
-          headerShown: false,animation:"slide_from_bottom"
+          headerShown: false,
+          animation: "slide_from_bottom"
         }}
       >
-        {!user ? (
-          // User is not signed in
-          <Stack.Group>
-            <Stack.Screen name="Onboarding" component={Onboarding} />
+        {!onboardingSeen ? (
+          <Stack.Screen name="Onboarding" component={Onboarding} />
+        ) : (
+          <>
             <Stack.Screen name="LogIn" component={SignIn} />
             <Stack.Screen name="Register" component={SignUp} />
-          </Stack.Group>
-        ) : (
-          // User is signed in
-          user.metadata.creationTime === user.metadata.lastSignInTime ? (
-            // First time user - show info screen
-            <Stack.Group>
-              <Stack.Screen name="Info" component={InfoScreen} />
-              <Stack.Screen name="Home" component={Home} />
-            </Stack.Group>
-          ) : (
-            // Returning user - show home
-            <Stack.Group>
-              <Stack.Screen name="Home" component={Home} />
-            </Stack.Group>
-          )
+            <Stack.Screen name="Info" component={InfoScreen} />
+            <Stack.Screen name="Home" component={Home} />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-});
 
 export default App;

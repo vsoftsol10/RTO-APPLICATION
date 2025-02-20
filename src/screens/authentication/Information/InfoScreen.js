@@ -5,7 +5,7 @@ import Ionic from "react-native-vector-icons/Ionicons";
 import colors from '../../../constents/colors';
 import DatePicker from 'react-native-date-picker';
 import firestore from '@react-native-firebase/firestore'
-import auth from "@react-native-firebase/auth"
+import getAuth from "@react-native-firebase/auth"
 
 const InfoScreen=({navigation})=> {
 const[name,setName]=useState("");
@@ -52,7 +52,7 @@ const handleSubmit=async  ()=>{
         return;
       }
       try{
-        const currentUser=auth().currentUser;
+        const currentUser=getAuth().currentUser;
         if(!currentUser){
           Alert.alert('Error','No authenticated user found');
           return;
@@ -70,8 +70,8 @@ const handleSubmit=async  ()=>{
         setErrors({});
         setShowErrors(false);
         Alert.alert(
-          "Success",
-          "Your information has been saved successfully!"
+          
+          "Your information has been saved successfully!","Success"
           [
             {
               text:'OK',
@@ -98,6 +98,14 @@ const handleSubmit=async  ()=>{
     });
     setDob(formattedDate);
   };
+  const handleBack = () => {
+    try {
+      navigation.navigate("Register");
+    } catch (error) {
+      console.log("Navigation error:", error);
+    }
+  };
+  
 
   return (
     <View>
@@ -115,7 +123,7 @@ const handleSubmit=async  ()=>{
         <TouchableOpacity
             activeOpacity={0.8}
             style={styles.iconstyle}
-            onPress={()=>navigation.navigate("Register")}>
+            onPress={handleBack}>
             <Ionic name="chevron-back"
             style={styles.icon}/>
         </TouchableOpacity>
