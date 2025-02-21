@@ -70,12 +70,16 @@ const handleSubmit=async  ()=>{
         setErrors({});
         setShowErrors(false);
         Alert.alert(
-          
-          "Your information has been saved successfully!","Success"
+          "Success",
+          "Your information has been saved successfully!",
           [
             {
-              text:'OK',
-              onPress: ()=>navigation.navigate("Home")
+              text: 'OK',
+              onPress: () => {
+                console.log("OK button pressed");
+                console.log(navigation); // Debugging
+                setTimeout(() => navigation.navigate("Home"), 100);
+              }
             }
           ]
         );

@@ -76,12 +76,10 @@ const App = () => {
 
   // Determine which screens to show
   const getInitialRouteName = () => {
-    if (!onboardingSeen) return "Onboarding";
-    if (!user) return "LogIn";
-    if (!hasUserInfo) return "Info";
-    return "Home";
+   
+    // Always return "Onboarding" since it should appear first
+    return "Onboarding";
   };
-
   if (showSplash) {
     return <SplashScreen onAnimationComplete={handleSplashComplete} />;
   }
@@ -95,16 +93,11 @@ const App = () => {
           animation: "slide_from_bottom"
         }}
       >
-        {!onboardingSeen ? (
-          <Stack.Screen name="Onboarding" component={Onboarding} />
-        ) : (
-          <>
-            <Stack.Screen name="LogIn" component={SignIn} />
-            <Stack.Screen name="Register" component={SignUp} />
-            <Stack.Screen name="Info" component={InfoScreen} />
-            <Stack.Screen name="Home" component={Home} />
-          </>
-        )}
+        <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="Register" component={SignUp} />
+        <Stack.Screen name="LogIn" component={SignIn} />
+        <Stack.Screen name="Info" component={InfoScreen} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );

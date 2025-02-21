@@ -105,7 +105,7 @@ const signUp = ({navigation}) => {
         <TouchableOpacity 
         activeOpacity={0.8}
         style={styles.iconstyle}
-        onPress={()=>navigation.goBack()}>
+        onPress={()=>navigation.navigate("Onboarding")}>
           <Ionic name="chevron-back"
             style={styles.icon}
           />

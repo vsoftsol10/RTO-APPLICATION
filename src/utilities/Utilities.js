@@ -62,5 +62,6 @@ export const SignInAnonymously=()=>{
 }
 
 export const SignOutUser=()=>{
-    return auth().signOut()
+    return auth().signOut();
+
 }

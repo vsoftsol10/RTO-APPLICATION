@@ -1,23 +1,9 @@
 import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import React from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../constents/colors';
-import auth from "@react-native-firebase/auth"
 
 const Onboarding = ({navigation}) => {
-  useEffect(() => {
-    const unsubscribe = auth().onAuthStateChanged(user => {
-      if (user) {
-        // If user is already logged in, check if they're a new user
-        if (user.metadata.creationTime === user.metadata.lastSignInTime) {
-          navigation.replace("Info");
-        } else {
-          navigation.replace("Home");
-        }
-      }
-    });
-    return unsubscribe;
-  }, [navigation]);
   return (
     <View>
       <StatusBar barStyle="dark-content" backgroundColor={colors.bgLineGradeOne} />
@@ -34,7 +20,7 @@ const Onboarding = ({navigation}) => {
       >
         <View style={styles.picContainer}>
           <View style={styles.pic}>
-            <Image source={require("../../../images/authentication/Notes.gif")} />
+            <Image source={require("../../../images/authentication/Onboarding_Pic.png")} />
           </View>
         </View>
         <View style={styles.notesContainer}>
@@ -49,8 +35,8 @@ const Onboarding = ({navigation}) => {
         </View>
         <View style={styles.ButtonContainer}>
             <View style={styles.Buttons}>
-            <TouchableOpacity 
-                    onPress={()=>navigation.navigate("Register")}
+                <TouchableOpacity 
+                    onPress={() => navigation.navigate("Register")}
                     activeOpacity={0.8}
                     style={styles.Buttonthingsleft}>
                     <Text style={styles.ButtonText}>
@@ -58,7 +44,7 @@ const Onboarding = ({navigation}) => {
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={()=>navigation.navigate("LogIn")}
+                    onPress={() => navigation.navigate("LogIn")}
                     activeOpacity={0.8}
                     style={styles.Buttonthingsright}>
                     <Text style={styles.ButtonText}>
@@ -67,7 +53,6 @@ const Onboarding = ({navigation}) => {
                 </TouchableOpacity>
             </View>
         </View>
-       
       </LinearGradient>
     </View>
   )
@@ -81,13 +66,15 @@ const styles=StyleSheet.create({
         height: '100%',
       },
       picContainer: {
-        width: '150%',
-        height: '70%',
+        width: '160%',
+        height: '60%',
         padding: 16,
-        paddingStart: 90,
+        paddingStart: 110,
+        marginTop:30,
+        marginBottom:50
       },
       pic: {
-        width: '50%',
+        width: '40%',
         height: '50%',
         backgroundColor: colors.onBoardCardBG,
         borderRadius: 20,

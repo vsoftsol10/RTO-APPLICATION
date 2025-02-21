@@ -1,97 +1,84 @@
-import { View, Text, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import LinearGradient from 'react-native-linear-gradient';
-import colors from '../../../constents/colors';
-import { SignOutUser } from '../../../utilities/Utilities';
-import auth from '@react-native-firebase/auth';
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import firestore from "@react-native-firebase/firestore";
+import auth from "@react-native-firebase/auth";
+import Ionic from "react-native-vector-icons"
 
-const Home = () => {
-  const [user, setUser] = useState(null);
+const HomeScreen = () => {
+  const navigation = useNavigation();
+  const [userName, setUserName] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const currentUser = auth().currentUser;
-      if (currentUser) {
-        await currentUser.reload(); // Force reload to fetch latest user details
-        setUser(auth().currentUser); // Update user state
+    const fetchUserName = async () => {
+      try {
+        const currentUser = auth().currentUser;
+        if (!currentUser) {
+          console.log("No authenticated user found");
+          return;
+        }
+
+        // Fetch user data from Firestore
+        const userDoc = await firestore().collection("users").doc(currentUser.uid).get();
+
+        if (userDoc.exists) {
+          setUserName(userDoc.data().name); // Set user name
+        } else {
+          console.log("No user data found");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
       }
     };
-  
-    const unsubscribe = auth().onAuthStateChanged((updatedUser) => {
-      if (updatedUser) {
-        fetchUser(); // Ensure we get the latest user data
-      } else {
-        setUser(null); // Handle logout case
-      }
-    });
-  
-    return () => unsubscribe();
-  }, []);
-  
 
-  const handleSignOut = async () => {
-    try {
-      await SignOutUser();
-      setUser(null); // Reset state after sign-out
-      console.log("Signed out");
-    } catch (error) {
-      console.log("Sign-out error:", error);
-    }
-  };
+    fetchUserName();
+  }, []);
 
   return (
-    <View>
-      <StatusBar backgroundColor={colors.bgLineGradeOne} barStyle={"dark-content"} />
-      <LinearGradient
-        colors={[
-          colors.bgLineGradeOne,
-          colors.bgLineGradeTwo,
-          colors.bgLineGradeThree,
-          colors.bgLineGradeFour,
-          colors.bgLineGradeFive,
-          colors.bgLineGradeSix,
-        ]}
-        style={styles.linearGradient}
-      >
-        <Text style={{ fontSize: 20, color: colors.black }}>Welcome</Text>
-        <Text style={styles.userText}>
-          {user?.displayName ? user.displayName : "Anonymous User"}
-        </Text>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={handleSignOut}
-          style={styles.signoutText}
-        >
-          <Text style={{ color: colors.white }}>Sign Out</Text>
+    <View style={styles.container}>
+      {/* Welcome Section */}
+      {loading ? (
+        <ActivityIndicator size="large" color="blue" />
+      ) : (
+        <Text style={styles.welcomeText}>Hello, {userName}! </Text>
+      )}
+
+      {/* License Status */}
+      <View style={styles.statusCard}>
+        <Text style={styles.statusTitle}>Your License Status</Text>
+        <Text style={styles.statusText}>Pending Approval</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Status")}>
+          <Text style={styles.viewDetails}>View Details</Text>
         </TouchableOpacity>
-      </LinearGradient>
+      </View>
+
+      {/* Quick Actions */}
+      <View style={styles.quickActions}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("ApplyLicense")}>
+          <Text style={styles.buttonText}>Apply for License</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("FindDrivingSchools")}>
+          <Text style={styles.buttonText}>Find Driving Schools</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-export default Home;
-
 const styles = StyleSheet.create({
-  linearGradient: {
-    width: '100%',
-    height: '100%',
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  userText: {
-    fontSize: 40,
-    color: colors.black,
-    letterSpacing: 2,
-    fontWeight: "700",
-    marginTop: 10,
-    marginBottom: 20
-  },
-  signoutText: {
-    fontWeight: "400",
-    marginTop: 10,
-    backgroundColor: colors.warning,
-    paddingHorizontal: 18,
-    paddingVertical: 10,
-    borderRadius: 10
-  }
+  container: { flex: 1, padding: 20, backgroundColor: "#F5F5F5" },
+  welcomeText: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
+  statusCard: { padding: 20, backgroundColor: "#fff", borderRadius: 10, marginBottom: 20 },
+  statusTitle: { fontSize: 18, fontWeight: "bold" },
+  statusText: { fontSize: 16, color: "blue" },
+  viewDetails: { color: "red", marginTop: 5 },
+  quickActions: { flexDirection: "row", justifyContent: "space-between" },
+  button: { backgroundColor: "blue", padding: 15, borderRadius: 8, width: "48%" },
+  buttonText: { color: "white", textAlign: "center", fontWeight: "bold" },
 });
+
+export default HomeScreen;
