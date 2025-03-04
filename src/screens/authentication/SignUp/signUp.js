@@ -4,15 +4,9 @@ import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../../constents/colors';
 import { CreateAccountWithEmailAndPassWord, SignInAnonymously, SignInWithGoogle } from '../../../utilities/Utilities';
-import emailjs from '@emailjs/browser';
-
-// EmailJS configuration
-const EMAILJS_PUBLIC_KEY = "oXZ0mwl-VdHI8AylU";
-const EMAILJS_SERVICE_ID = "service_xm2so94";
-const EMAILJS_TEMPLATE_ID = "template_bff9mt7";
-
-// Initialize EmailJS
-emailjs.init(EMAILJS_PUBLIC_KEY);
+import auth from '@react-native-firebase/auth';
+import firestore,{ FieldValue } from '@react-native-firebase/firestore';
+import axios from 'axios'; // Add axios for API requests
 
 // Retry mechanism for failed attempts
 const retry = async (fn, retries = 3, delay = 1000) => {
@@ -25,32 +19,10 @@ const retry = async (fn, retries = 3, delay = 1000) => {
     }
 };
 
-const sendEmailWithOTP = async (email, otp) => {
-    try {
-        const templateParams = {
-            to_email: email,
-            otp: otp,
-        };
-
-        const response = await emailjs.send(
-            EMAILJS_SERVICE_ID,
-            EMAILJS_TEMPLATE_ID,
-            templateParams,
-            EMAILJS_PUBLIC_KEY
-        );
-
-        console.log('Email sent successfully:', response);
-        return true;
-    } catch (error) {
-        console.error('Email sending error:', error);
-        throw error;
-    }
-};
-
 const SignUp = ({ navigation }) => {
-    const [email, setEmail] = useState("");
+    const [userInput, setUserInput] = useState("");
+    const [inputType, setInputType] = useState("");
     const [otp, setOtp] = useState("");
-    const [generatedOTP, setGeneratedOTP] = useState("");
     const [otpSent, setOtpSent] = useState(false);
     const [otpVerified, setOtpVerified] = useState(false);
     const [passWord, setPassWord] = useState("");
@@ -60,65 +32,319 @@ const SignUp = ({ navigation }) => {
     const [errors, setErrors] = useState({});
     const [showErrors, setShowErrors] = useState(false);
     const [loading, setLoading] = useState(false);
-
-    const isValidEmail = (email) => {
-        return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+    const [confirmation, setConfirmation] = useState(null);
+    
+    // Validate input type (email or phone)
+    const validateInput = (input) => {
+        // Email regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        // Phone regex (simple version)
+        const phoneRegex = /^\+?[0-9]{10,15}$/;
+        
+        if (emailRegex.test(input)) {
+            return { type: 'email', value: input };
+        } else if (phoneRegex.test(input.replace(/\D/g, ''))) {
+            return { type: 'phone', value: input };
+        } else {
+            return { type: 'invalid', value: input };
+        }
     };
 
+    // Format phone number to ensure it has a + prefix
+    const formatPhoneNumber = (phoneNumber) => {
+        // Remove non-digits except the + at the beginning
+        const cleaned = phoneNumber.replace(/[^\d+]/g, '');
+        
+        // Add + prefix if missing
+        if (!cleaned.startsWith('+')) {
+            return '+' + cleaned;
+        }
+        return cleaned;
+    };
+
+    // Generate random OTP for email verification
     const generateOTP = () => {
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        setGeneratedOTP(otp);
-        return otp;
+        return Math.floor(100000 + Math.random() * 900000).toString();
     };
 
+    // Store OTP in Firestore for email verification
+    const storeOTPForVerification = async (email, otp) => {
+        try {
+            await firestore().collection('otpVerifications').doc(email).set({
+                otp,
+                createdAt: firestore.FieldValue.serverTimestamp(),
+                verified: false,
+                attempts: 0
+            });
+            return true;
+        } catch (error) {
+            console.error("Error storing OTP:", error);
+            return false;
+        }
+    };
+
+    // Verify email OTP against Firestore
+    const verifyEmailOTP = async (email, otp) => {
+        try {
+            const otpDoc = await firestore().collection('otpVerifications').doc(email).get();
+            
+            if (!otpDoc.exists) {
+                return { success: false, error: "No OTP request found" };
+            }
+            
+            const otpData = otpDoc.data();
+            
+            // Check if OTP is expired (10 minutes)
+            const createdAt = otpData.createdAt.toDate();
+            const now = new Date();
+            if ((now - createdAt) > 10 * 60 * 1000) {
+                return { success: false, error: "OTP expired" };
+            }
+            
+            // Check if OTP matches
+            if (otpData.otp !== otp) {
+                // Increment attempts
+                await firestore().collection('otpVerifications').doc(email).update({
+                    attempts: firestore.FieldValue.increment(1)
+                });
+                return { success: false, error: "Invalid OTP" };
+            }
+            
+            // Mark as verified
+            await firestore().collection('otpVerifications').doc(email).update({
+                verified: true
+            });
+            
+            return { success: true };
+        } catch (error) {
+            console.error("Error verifying email OTP:", error);
+            return { success: false, error: "Verification failed" };
+        }
+    };
+
+    // Send OTP via email using a free email API service
+    // Send OTP via email using EmailJS
+    const sendEmailOTP = async (email) => {
+        // Diagnostic logging for network and API configuration
+        console.log('Email OTP Request Details:', {
+            email: email,
+            timestamp: new Date().toISOString(),
+            environment: __DEV__ ? 'Development' : 'Production'
+        });
+    
+        try {
+            // Generate a random OTP
+            const otp = generateOTP();
+            
+            // Store OTP in Firestore for later verification
+            const stored = await storeOTPForVerification(email, otp);
+            
+            if (!stored) {
+                throw new Error("Failed to store OTP");
+            }
+            
+            // Comprehensive configuration logging
+            const emailjsEndpoint = 'https://api.emailjs.com/api/v1.0/email/send';
+            const emailjsData = {
+                service_id: 'service_k7k3zcj',
+                template_id: 'template_a8oemco', 
+                user_id: 'tpNU42sxp3WhjZDdz',
+                template_params: {
+                    to_email: email,
+                    otp_code: otp,
+                    app_name: 'Urimam'
+                }
+            };
+            
+            // Enhanced configuration logging
+            console.log('API Request Configuration:', {
+                endpoint: emailjsEndpoint,
+                serviceId: emailjsData.service_id,
+                templateId: emailjsData.template_id,
+                templateParams: {
+                    ...emailjsData.template_params,
+                    otp_code: '[REDACTED]' // Hide actual OTP
+                }
+            });
+    
+            // Detailed request configuration
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Optional: Add additional headers for debugging
+                    'X-Debug-Request': 'true'
+                },
+                // Add timeout to help diagnose network issues
+                timeout: 10000 // 10 seconds timeout
+            };
+            
+            try {
+                const response = await axios.post(emailjsEndpoint, emailjsData, config);
+                
+                // Comprehensive response logging
+                console.log('API Response Details:', {
+                    status: response.status,
+                    headers: response.headers,
+                    data: response.data
+                });
+    
+                if (response.status === 200) {
+                    console.log(`Email OTP sent successfully to ${email}`);
+                    
+                    // KEEP THIS FOR DEVELOPMENT, REMOVE IN PRODUCTION
+                    if (__DEV__) {
+                        ToastAndroid.show(`DEV MODE: Your OTP is ${otp}`, ToastAndroid.LONG);
+                    }
+                    
+                    return { success: true, otp };
+                } else {
+                    throw new Error(`Unexpected response status: ${response.status}`);
+                }
+            } catch (axiosError) {
+                // Detailed error logging for Axios errors
+                console.error("Detailed Axios Error:", {
+                    message: axiosError.message,
+                    code: axiosError.code,
+                    status: axiosError.response?.status,
+                    data: axiosError.response?.data,
+                    headers: axiosError.response?.headers
+                });
+    
+                // Specific error handling for 403 Forbidden
+                if (axiosError.response && axiosError.response.status === 403) {
+                    console.error("403 Forbidden Error Details:", {
+                        url: axiosError.config.url,
+                        method: axiosError.config.method,
+                        headers: axiosError.config.headers
+                    });
+                }
+    
+                throw axiosError;
+            }
+        } catch (error) {
+            // Comprehensive error logging
+            console.error("Complete Error Object:", {
+                name: error.name,
+                message: error.message,
+                stack: error.stack,
+                code: error.code,
+                config: error.config
+            });
+            
+            // FALLBACK FOR DEVELOPMENT - simulate sending
+            if (__DEV__) {
+                const otp = await firestore().collection('otpVerifications').doc(email).get().then(doc => doc.data().otp);
+                ToastAndroid.show(`DEV FALLBACK: Your OTP is ${otp}`, ToastAndroid.LONG);
+                return { success: true, otp };
+            }
+            
+            throw error;
+        }
+    };
+
+    // Send OTP via phone using Firebase Phone Auth
+    const sendPhoneOTP = async (phoneNumber) => {
+        try {
+            // Format phone number (ensure it has a + prefix)
+            const formattedPhone = formatPhoneNumber(phoneNumber);
+            
+            // Use Firebase Phone Auth without explicit recaptcha verifier
+            // This will trigger the reCAPTCHA flow automatically
+            const phoneConfirmation = await auth().signInWithPhoneNumber(formattedPhone);
+            
+            return { success: true, confirmation: phoneConfirmation };
+        } catch (error) {
+            console.error("Error sending phone OTP:", error);
+            throw error;
+        }
+    };
+
+    // Unified OTP sending function
     const sendOTP = async () => {
-        if (!email) {
-            setErrors({ email: "Please enter email" });
+        if (!userInput) {
+            setErrors({ userInput: "Please enter email or phone number" });
             setShowErrors(true);
             return;
         }
 
-        if (!isValidEmail(email)) {
-            setErrors({ email: "Invalid email format" });
+        const { type, value } = validateInput(userInput);
+        setInputType(type);
+
+        if (type === 'invalid') {
+            setErrors({ userInput: "Invalid email or phone number format" });
             setShowErrors(true);
             return;
         }
 
         setLoading(true);
         try {
-            const otp = generateOTP();
-            // Use retry mechanism for sending email
-            await retry(async () => await sendEmailWithOTP(email, otp));
+            if (type === 'email') {
+                // For email - use our custom email OTP function
+                const result = await sendEmailOTP(value);
+                if (result.success) {
+                    ToastAndroid.show("OTP sent to email", ToastAndroid.SHORT);
+                }
+            } else if (type === 'phone') {
+                // For phone - use Firebase phone authentication
+                const result = await sendPhoneOTP(value);
+                if (result.success) {
+                    setConfirmation(result.confirmation);
+                    ToastAndroid.show("OTP sent to phone number", ToastAndroid.SHORT);
+                }
+            }
             
-            ToastAndroid.show("OTP sent to email", ToastAndroid.SHORT);
             setOtpSent(true);
             setErrors({});
             setShowErrors(false);
+            
         } catch (error) {
             console.error("Failed to send OTP:", error);
             ToastAndroid.show("Failed to send OTP. Please try again.", ToastAndroid.SHORT);
-            setErrors({ email: "Failed to send OTP. Please try again." });
+            setErrors({ userInput: "Failed to send OTP. Please try again." });
             setShowErrors(true);
         } finally {
             setLoading(false);
         }
     };
 
-    const verifyOTP = () => {
-        if (!otp || otp.length !== 6) {
-            setErrors({ otp: "Please enter valid 6-digit OTP" });
+    // Unified OTP verification function
+    const verifyOTP = async () => {
+        if (!otp || otp.length < 4) {
+            setErrors({ otp: "Please enter valid OTP" });
             setShowErrors(true);
             return;
         }
 
-        if (otp === generatedOTP) {
-            setOtpVerified(true);
-            setErrors({});
-            setShowErrors(false);
-            ToastAndroid.show("Email verified successfully", ToastAndroid.SHORT);
-        } else {
-            setErrors({ otp: "Invalid OTP" });
+        setLoading(true);
+        try {
+            if (inputType === 'email') {
+                // Verify email OTP against Firestore
+                const result = await verifyEmailOTP(userInput, otp);
+                
+                if (result.success) {
+                    setOtpVerified(true);
+                    setErrors({});
+                    setShowErrors(false);
+                    ToastAndroid.show("Email verified successfully", ToastAndroid.SHORT);
+                } else {
+                    setErrors({ otp: result.error || "Invalid OTP" });
+                    setShowErrors(true);
+                }
+            } else if (inputType === 'phone') {
+                // For phone, use Firebase confirmation
+                await confirmation.confirm(otp);
+                setOtpVerified(true);
+                setErrors({});
+                setShowErrors(false);
+                ToastAndroid.show("Phone number verified successfully", ToastAndroid.SHORT);
+            }
+        } catch (error) {
+            console.error("OTP verification failed:", error);
+            setErrors({ otp: "Invalid OTP. Please try again." });
             setShowErrors(true);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -144,7 +370,7 @@ const SignUp = ({ navigation }) => {
 
     const handleSubmit = () => {
         if (!otpVerified) {
-            setErrors({ general: "Please verify your email first" });
+            setErrors({ general: "Please verify your email or phone first" });
             setShowErrors(true);
             return;
         }
@@ -162,20 +388,48 @@ const SignUp = ({ navigation }) => {
     };
 
     const handleSignin = () => {
-        CreateAccountWithEmailAndPassWord(email, passWord)
-            .then(() => {
-                ToastAndroid.show("Account Created", ToastAndroid.SHORT);
-                navigation.navigate("Info");
-            })
-            .catch(error => {
-                console.log("Sign-up error:", error);
-                if (error.code === "auth/email-already-in-use") {
-                    setErrors({ email: "Email already in use" });
-                } else {
-                    setErrors({ general: "Sign-up failed. Try again." });
-                }
+        // For phone authentication, the user is already authenticated at this point
+        // We just need to update their password
+        if (inputType === 'email') {
+            CreateAccountWithEmailAndPassWord(userInput, passWord)
+                .then(() => {
+                    ToastAndroid.show("Account Created", ToastAndroid.SHORT);
+                    navigation.navigate("Info");
+                })
+                .catch(error => {
+                    console.log("Sign-up error:", error);
+                    if (error.code === "auth/email-already-in-use") {
+                        setErrors({ userInput: "Email already in use" });
+                    } else {
+                        setErrors({ general: "Sign-up failed. Try again." });
+                    }
+                    setShowErrors(true);
+                });
+        } else {
+            // For phone users, they're already signed in via phone auth
+            // We can update their account with a password
+            const user = auth().currentUser;
+            
+            if (user) {
+                // Link the phone credential with a password
+                const credential = auth.EmailAuthProvider.credential(userInput + '@phone.auth', passWord);
+                
+                user.linkWithCredential(credential)
+                    .then(() => {
+                        ToastAndroid.show("Account Created", ToastAndroid.SHORT);
+                        navigation.navigate("Info");
+                    })
+                    .catch(error => {
+                        console.log("Account linking error:", error);
+                        setErrors({ general: "Account setup failed. Try again." });
+                        setShowErrors(true);
+                    });
+            } else {
+                // This shouldn't happen since phone verification already creates a user
+                setErrors({ general: "Authentication error. Please try again." });
                 setShowErrors(true);
-            });
+            }
+        }
     };
 
     const LoginWithIcon = ({ iconName, onPress, buttonTitle }) => {
@@ -212,18 +466,18 @@ const SignUp = ({ navigation }) => {
                         <Text style={styles.welText}>Welcome</Text>
                     </View>
                     <View>
-                        {/* Email Input */}
+                        {/* Email/Phone Input */}
                         <View style={{ width: '100%' }}>
                             <TextInput
-                                placeholder='Enter Email'
+                                placeholder='Enter Email or Phone Number'
                                 placeholderTextColor={colors.lightText}
                                 keyboardType="email-address"
-                                value={email}
-                                onChangeText={setEmail}
+                                value={userInput}
+                                onChangeText={setUserInput}
                                 style={styles.txtInput}
                                 editable={!otpVerified}
                             />
-                            {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+                            {errors.userInput && <Text style={styles.errorText}>{errors.userInput}</Text>}
 
                             {!otpVerified && (
                                 <TouchableOpacity
@@ -243,7 +497,7 @@ const SignUp = ({ navigation }) => {
                         {otpSent && !otpVerified && (
                             <View style={{ width: '100%', marginTop: 20 }}>
                                 <TextInput
-                                    placeholder='Enter 6-digit OTP'
+                                    placeholder='Enter OTP'
                                     placeholderTextColor={colors.lightText}
                                     keyboardType="number-pad"
                                     maxLength={6}
@@ -254,10 +508,13 @@ const SignUp = ({ navigation }) => {
                                 {errors.otp && <Text style={styles.errorText}>{errors.otp}</Text>}
 
                                 <TouchableOpacity
-                                    style={styles.verifyButton}
+                                    style={[styles.verifyButton, loading && styles.disabledButton]}
                                     onPress={verifyOTP}
+                                    disabled={loading}
                                 >
-                                    <Text style={styles.otpButtonText}>Verify OTP</Text>
+                                    <Text style={styles.otpButtonText}>
+                                        {loading ? "Verifying..." : "Verify OTP"}
+                                    </Text>
                                 </TouchableOpacity>
                             </View>
                         )}
@@ -505,24 +762,27 @@ const styles=StyleSheet.create({
       color: "red",
       fontSize: 14,
       marginTop: 5
-  },
-  otpButton: {
+    },
+    otpButton: {
       backgroundColor: colors.accent,
       padding: 10,
       borderRadius: 8,
       marginTop: 10,
       alignItems: 'center'
-  },
-  verifyButton: {
+    },
+    disabledButton: {
+      opacity: 0.7
+    },
+    verifyButton: {
       backgroundColor: colors.accent,
       padding: 10,
       borderRadius: 8,
       marginTop: 10,
       alignItems: 'center'
-  },
-  otpButtonText: {
+    },
+    otpButtonText: {
       color: colors.white,
       fontSize: 14,
       fontWeight: '600'
-  }
+    }
 })
