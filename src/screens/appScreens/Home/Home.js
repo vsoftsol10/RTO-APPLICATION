@@ -72,7 +72,7 @@ const HomeScreen = () => {
   const handleLogoutPress = () => {
     setShowPopup(false);
     SignOutUser();
-    navigation.navigate("Login")
+    navigation.navigate("Onboarding")
   };
 
   return (

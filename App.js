@@ -13,6 +13,8 @@ import SignUp from './src/screens/authentication/SignUp/SignUp';
 import SignIn from './src/screens/authentication/SignIn/SignIn';
 import InfoScreen from './src/screens/authentication/Information/InfoScreen';
 import SplashScreen from './src/component/SplashScreen/SplashScreen';
+import Profile from './src/screens/appScreens/Profile/Profile';
+import EditProfile from './src/screens/appScreens/EditProfile/EditProfile';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -98,6 +100,8 @@ const App = () => {
         <Stack.Screen name="LogIn" component={SignIn} />
         <Stack.Screen name="Info" component={InfoScreen} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Profile" component={Profile}/>
+        <Stack.Screen name="Edit_Profile" component={EditProfile}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
