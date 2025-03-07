@@ -11,6 +11,10 @@ const  EditProfile=({navigation})=> {
     const [dob,setDob]=useState("");
     const [pincode,setPincode]=useState("");
     const [country,setCountry]=useState("");
+
+    const handleBack=()=>{
+        navigation.navigate("Profile")
+    }
   return (
     <View>
         <LinearGradient
@@ -27,7 +31,7 @@ const  EditProfile=({navigation})=> {
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.iconcontainer}
-                    // onPress={navigation.navigate("Profile")}
+                    onPress={handleBack}
                 >
                     <Ionic name="chevron-back" style={styles.icon}/>
                 </TouchableOpacity>
