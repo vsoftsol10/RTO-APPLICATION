@@ -104,20 +104,20 @@ const HomeScreen = () => {
                       </Text>
                     </View>
                   )}
-                  
-                  <TouchableOpacity 
+
+                  <TouchableOpacity
                     ref={buttonRef}
-                    style={styles.settingButton} 
+                    style={styles.settingButton}
                     activeOpacity={0.8}
                     onPress={togglePopup}
                   >
-                    <Image 
+                    <Image
                       source={require("../../../images/Home/Setting.png")}
                       style={styles.settingIcon}
                     />
                   </TouchableOpacity>
                 </View>
-                
+
                 <View style={styles.quoteContainer}>
                   <Text style={styles.quoteText}>
                     Drive Legally - get started.
@@ -134,7 +134,7 @@ const HomeScreen = () => {
                     <Text style={styles.statusTitle}>License Status</Text>
                   </View>
                   <Text style={styles.statusText}>Pending Approval</Text>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.viewDetailsButton}
                     onPress={() => navigation.navigate("Status")}
                   >
@@ -144,8 +144,8 @@ const HomeScreen = () => {
 
                 {/* Main Action Buttons */}
                 <View style={styles.actionsContainer}>
-                  <TouchableOpacity 
-                    style={styles.primaryButton} 
+                  <TouchableOpacity
+                    style={styles.primaryButton}
                     onPress={() => navigation.navigate("ApplyLicense")}
                   >
                     <LinearGradient
@@ -158,8 +158,8 @@ const HomeScreen = () => {
                     </LinearGradient>
                   </TouchableOpacity>
 
-                  <TouchableOpacity 
-                    style={styles.primaryButton} 
+                  <TouchableOpacity
+                    style={styles.primaryButton}
                     onPress={() => navigation.navigate("ApplyLicense")}
                   >
                     <LinearGradient
@@ -172,71 +172,108 @@ const HomeScreen = () => {
                     </LinearGradient>
                   </TouchableOpacity>
 
-                  <TouchableOpacity 
-                    style={styles.secondaryButton} 
+                  <TouchableOpacity
+                    style={styles.secondaryButton}
                     onPress={() => navigation.navigate("FindDrivingSchools")}
                   >
                     <Text style={styles.secondaryButtonText}>Find Driving Schools</Text>
                   </TouchableOpacity>
-                  
+
                 </View>
 
                 {/* Quick Info Cards - Horizontal Scrollable */}
                 <View style={styles.infoCardsWrapper}>
-                  <ScrollView 
-                    horizontal 
+                  <ScrollView
+                    horizontal
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.infoCardsScrollContainer}
                   >
-                    <TouchableOpacity 
+                    <TouchableOpacity
+                      style={styles.infoCard}
+                      activeOpacity={0.9}
+                      onPress={() => navigation.navigate("eligibility")}
+                    >
+                      <View style={styles.infoCardContent}>
+                        <View style={styles.infoIconContainer}>
+                          <Image
+                            source={require("../../../images/Home/Setting.png")}
+                            style={styles.infoIcon}
+                          />
+                        </View>
+                        <View style={styles.infoTextContainer}>
+                          <Text style={styles.infoTitle}>Eligibility</Text>
+                          <Text style={styles.infoDescription}>Applicant Criteria</Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={styles.infoCard}
+                      activeOpacity={0.9}
+                      onPress={() => navigation.navigate("HelpCenter")}
+                    >
+                      <View style={styles.infoCardContent}>
+
+                        <View style={styles.infoIconContainer}>
+                          <Image
+                            source={require("../../../images/Home/Setting.png")}
+                            style={styles.infoIcon}
+                          />
+                        </View>
+                        <View style={styles.infoTextContainer}>
+
+                          <Text style={styles.infoTitle}>Documents</Text>
+                          <Text style={styles.infoDescription}>Documents Needed to Apply</Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={styles.infoCard}
+                      activeOpacity={0.9}
+                      onPress={() => navigation.navigate("HelpCenter")}
+                    >
+                      <View style={styles.infoCardContent}>
+
+                        <View style={styles.infoIconContainer}>
+                          <Image
+                            source={require("../../../images/Home/Setting.png")}
+                            style={styles.infoIcon}
+                          />
+                        </View>
+                        <View style={styles.infoTextContainer}>
+                          <Text style={styles.infoTitle}>Driving License</Text>
+                          <Text style={styles.infoDescription}>Steps to get Driving license</Text>
+
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
                       style={styles.infoCard}
                       activeOpacity={0.9}
                       onPress={() => navigation.navigate("Resources")}
                     >
-                      <View style={styles.infoIconContainer}>
-                        <Image 
-                          source={require("../../../images/Home/Setting.png")} 
-                          style={styles.infoIcon}
-                        />
-                      </View>
-                      <Text style={styles.infoTitle}>Eligibility</Text>
-                      <Text style={styles.infoDescription}>Applicant Criteria</Text>
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity 
-                      style={styles.infoCard}
-                      activeOpacity={0.9}
-                      onPress={() => navigation.navigate("HelpCenter")}
-                    >
-                      <View style={styles.infoIconContainer}>
-                        <Image 
-                          source={require("../../../images/Home/Setting.png")} 
-                          style={styles.infoIcon}
-                        />
-                      </View>
-                      <Text style={styles.infoTitle}>Documents</Text>
-                      <Text style={styles.infoDescription}>Documents Needed to Apply</Text>
-                    </TouchableOpacity>
+                      <View style={styles.infoCardContent}>
+                        <View style={styles.infoIconContainer}>
+                          <Image
+                            source={require("../../../images/Home/Setting.png")}
+                            style={styles.infoIcon}
+                          />
+                        </View>
+                        <View style={styles.infoTextContainer}>
 
-                    <TouchableOpacity 
-                      style={styles.infoCard}
-                      activeOpacity={0.9}
-                      onPress={() => navigation.navigate("HelpCenter")}
-                    >
-                      <View style={styles.infoIconContainer}>
-                        <Image 
-                          source={require("../../../images/Home/Setting.png")} 
-                          style={styles.infoIcon}
-                        />
+                          <Text style={styles.infoTitle}>Fees</Text>
+                          <Text style={styles.infoDescription}>Fee Details</Text>
+
+                        </View>
                       </View>
-                      <Text style={styles.infoTitle}>Driving License</Text>
-                      <Text style={styles.infoDescription}>Steps to get Driving license</Text>
                     </TouchableOpacity>
                   </ScrollView>
                 </View>
-                
+
                 {/* Additional Info Card */}
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.tipsCard}
                   activeOpacity={0.9}
                   onPress={() => navigation.navigate("DrivingTips")}
@@ -278,9 +315,9 @@ const HomeScreen = () => {
               >
                 <Text style={styles.menuText}>Profile</Text>
               </TouchableOpacity>
-              
+
               <View style={styles.separator} />
-              
+
               <TouchableOpacity
                 style={styles.menuItem}
                 onPress={handleLogoutPress}
@@ -463,6 +500,11 @@ const styles = StyleSheet.create({
   infoCardsScrollContainer: {
     paddingRight: 20, // Extra padding at the end for better UX
   },
+  infoCardContent: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
   infoCard: {
     backgroundColor: THEME.white,
     borderRadius: 5,
@@ -474,8 +516,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 1,
     width: 130, // Fixed width for consistent layout
-    justifyContent: "center",
-    alignItems: "center",
+    height: 160,
   },
   infoIconContainer: {
     backgroundColor: THEME.lightPurple,
@@ -491,6 +532,10 @@ const styles = StyleSheet.create({
     height: 24,
     tintColor: THEME.primary,
     resizeMode: "contain",
+  },
+  infoTextContainer: {
+    width: '100%',
+    alignItems: 'center',
   },
   infoTitle: {
     fontSize: 16,

@@ -173,9 +173,9 @@ const handleSubmit=async  ()=>{
                      style={styles.txtInput}
                     />
                 <Ionic name="call" style={{fontSize:18,color:"#7A3c6D" ,paddingHorizontal:15}}/>
-                </View>  
+              </View>  
                 {errors.mobileNo && <Text style={{ color: "red", fontSize: 14 }}>{errors.mobileNo}</Text>}
-                </View>
+            </View>
             {/*DOB Input */}
             <View style={{width:'100%',marginTop:20}}>  
               <View 

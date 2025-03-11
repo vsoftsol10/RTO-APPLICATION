@@ -15,6 +15,7 @@ import InfoScreen from './src/screens/authentication/Information/InfoScreen';
 import SplashScreen from './src/component/SplashScreen/SplashScreen';
 import Profile from './src/screens/appScreens/Profile/Profile';
 import EditProfile from './src/screens/appScreens/EditProfile/EditProfile';
+import Eligibility from './src/screens/quickActionPage/Eligibility/Eligibility';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -102,6 +103,7 @@ const App = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Profile" component={Profile}/>
         <Stack.Screen name="Edit_Profile" component={EditProfile}/>
+        <Stack.Screen name="eligibility" component={Eligibility} />
       </Stack.Navigator>
     </NavigationContainer>
   );
