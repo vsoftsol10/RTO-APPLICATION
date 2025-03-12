@@ -91,7 +91,7 @@ const Eligibility = ({navigation}) => {
           </View>
           <View style={styles.backBtnContainer}>
             <TouchableOpacity activeOpacity={0.8} style={styles.backButton} onPress={handleBack} >
-                <Text style={styles.backButtonTxt}>Back</Text>
+                <Text style={styles.backButtonTxt}>Back to Home</Text>
             </TouchableOpacity>
           </View>
           {/* Added some bottom padding to prevent overflow issues */}

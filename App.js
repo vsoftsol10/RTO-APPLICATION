@@ -16,6 +16,9 @@ import SplashScreen from './src/component/SplashScreen/SplashScreen';
 import Profile from './src/screens/appScreens/Profile/Profile';
 import EditProfile from './src/screens/appScreens/EditProfile/EditProfile';
 import Eligibility from './src/screens/quickActionPage/Eligibility/Eligibility';
+import Documents from './src/screens/quickActionPage/Documents/Documents';
+import DrivngLicense from './src/screens/quickActionPage/Driving License/DrivngLicense';
+import DrivingTips from './src/screens/quickActionPage/DrivingTips/DrivingTips';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -104,6 +107,9 @@ const App = () => {
         <Stack.Screen name="Profile" component={Profile}/>
         <Stack.Screen name="Edit_Profile" component={EditProfile}/>
         <Stack.Screen name="eligibility" component={Eligibility} />
+        <Stack.Screen name="doc" component={Documents}/>
+        <Stack.Screen name="license" component={DrivngLicense}/>
+        <Stack.Screen name="Tips" component={DrivingTips}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

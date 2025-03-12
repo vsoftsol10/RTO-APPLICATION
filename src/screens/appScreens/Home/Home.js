@@ -210,7 +210,7 @@ const HomeScreen = () => {
                     <TouchableOpacity
                       style={styles.infoCard}
                       activeOpacity={0.9}
-                      onPress={() => navigation.navigate("HelpCenter")}
+                      onPress={() => navigation.navigate("doc")}
                     >
                       <View style={styles.infoCardContent}>
 
@@ -231,7 +231,7 @@ const HomeScreen = () => {
                     <TouchableOpacity
                       style={styles.infoCard}
                       activeOpacity={0.9}
-                      onPress={() => navigation.navigate("HelpCenter")}
+                      onPress={() => navigation.navigate("license")}
                     >
                       <View style={styles.infoCardContent}>
 
@@ -276,7 +276,7 @@ const HomeScreen = () => {
                 <TouchableOpacity
                   style={styles.tipsCard}
                   activeOpacity={0.9}
-                  onPress={() => navigation.navigate("DrivingTips")}
+                  onPress={() => navigation.navigate("Tips")}
                 >
                   <Text style={styles.tipsTitle}>Driving Tips</Text>
                   <Text style={styles.tipsDescription}>

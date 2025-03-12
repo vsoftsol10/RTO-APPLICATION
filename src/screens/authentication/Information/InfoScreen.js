@@ -165,7 +165,7 @@ const handleSubmit=async  ()=>{
                         alignItems:"center",
                         justifyContent:"space-between"}}>
                     <TextInput
-                     placeholder='Mobile No.'
+                     placeholder='Mobile No.' 
                      placeholderTextColor={colors.lightText}
                      value={mobileNo}
                      keyboardType='numeric'
