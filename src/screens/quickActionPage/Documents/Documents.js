@@ -3,9 +3,9 @@ import React from 'react'
 import colors from '../../../constents/colors';
 
 const Documents=({navigation})=> {
-    const handleBack=()=>{
-        navigation.navigate("Home")
-    }
+    // const handleBack=()=>{
+    //     navigation.navigate("Home")
+    // }
   return (
     <View>
         <StatusBar barStyle="light-content" backgroundColor={colors.purple} />
@@ -51,9 +51,9 @@ export default Documents;
 const styles = StyleSheet.create({
     headerContainer:{
         backgroundColor:colors.purple,
-        padding:20,
-        top:50,
-        marginBottom:70,
+        paddingTop:70,
+        paddingBottom:20,
+        marginBottom:20,
         alignItems:"center"
 
     },
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         padding:5,
         alignItems:"center",
         borderRadius:5,
-        marginBottom:10
+        marginBottom:15
     },
     topText:{
         color:"#22243",

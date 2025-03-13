@@ -675,7 +675,7 @@ const styles=StyleSheet.create({
       zIndex:1
     },
     TextContainer:{
-      marginVertical:20,
+      marginVertical:80,
       marginBottom:80,
     },
     welText:{

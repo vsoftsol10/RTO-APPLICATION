@@ -138,7 +138,7 @@ const handleSubmit=async  ()=>{
           </View>
           <View >
             {/* Name Input */}
-            <View style={{width:'100%',marginTop:0}}> 
+            <View style={{width:'100%',marginTop:0}}>  
               <View 
               style={{flexDirection:"row",
                 borderRadius:10,

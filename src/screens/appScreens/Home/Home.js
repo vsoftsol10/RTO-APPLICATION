@@ -252,7 +252,7 @@ const HomeScreen = () => {
                     <TouchableOpacity
                       style={styles.infoCard}
                       activeOpacity={0.9}
-                      onPress={() => navigation.navigate("Resources")}
+                      onPress={() => navigation.navigate("Fee")}
                     >
                       <View style={styles.infoCardContent}>
                         <View style={styles.infoIconContainer}>
@@ -445,6 +445,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 20,
     backgroundColor: THEME.lightPurple,
+    
   },
   viewDetailsText: {
     color: THEME.primary,

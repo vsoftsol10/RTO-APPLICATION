@@ -59,14 +59,14 @@ const Profile = ({navigation}) => {
                 ]}
                 style={styles.linearGradient}
             >
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.iconstyle}
                     onPress={() => navigation.navigate("Home")}>
                     <Ionic name="chevron-back"
                         style={styles.icon}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View>
 
                     <Text style={{ textAlign: "center", fontSize: 24, fontWeight: "700", marginTop: 100 }}>Profile</Text>
