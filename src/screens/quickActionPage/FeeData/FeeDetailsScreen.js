@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
 import colors from '../../../constents/colors';
 import { StackActions } from '@react-navigation/native';
 
-const FeeDetailsScreen = () => {
+const FeeDetailsScreen = ({navigation}) => {
+  const hanldleBack=()=>{
+    navigation.navigate("Home")
+  }
   const feeData = [
     {
       id: 1,
@@ -87,6 +90,11 @@ const FeeDetailsScreen = () => {
             </View>
           ))}
         </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button } activeOpacity={0.8} onPress={hanldleBack}>
+            <Text style={styles.btnTxt}>Back to Home</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -152,6 +160,24 @@ const styles = StyleSheet.create({
     color: '#333',
     fontWeight:"500"
   },
+  buttonContainer:{
+    alignItems:"center",
+    backgroundColor:colors.purple,
+    width:"50%",
+    marginLeft:"25%",
+    marginVertical:10,
+    marginBottom:20,
+    borderRadius:10
+  },
+  button:{
+    padding:10,
+  },
+  btnTxt:{
+    color:colors.white,
+    fontSize:16,
+    fontWeight:"600",
+    letterSpacing:1.5,
+  }
 });
 
 export default FeeDetailsScreen;

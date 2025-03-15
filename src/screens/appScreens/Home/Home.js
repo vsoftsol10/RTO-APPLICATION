@@ -4,6 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import LinearGradient from 'react-native-linear-gradient';
+import Ionic from 'react-native-vector-icons/Ionicons'
+
 import colors from "../../../constents/colors";
 import { SignOutUser } from "../../../utilities/Utilities";
 
@@ -111,10 +113,7 @@ const HomeScreen = () => {
                     activeOpacity={0.8}
                     onPress={togglePopup}
                   >
-                    <Image
-                      source={require("../../../images/Home/Setting.png")}
-                      style={styles.settingIcon}
-                    />
+                    <Ionic name="person" style={styles.iconStyle}/>
                   </TouchableOpacity>
                 </View>
 
@@ -346,6 +345,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 0,
   },
+  iconStyle:{
+    fontSize:16,
+    color:colors.purple,
+    backgroundColor:colors.white,
+    padding:8,
+    borderRadius:50
+  }
+  ,
   headerContainer: {
     paddingHorizontal: 20,
     paddingTop: 50,

@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Dimensions, SafeAreaView, StatusBar, Platform, Touchable, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Dimensions, SafeAreaView, StatusBar, Platform, TouchableOpacity } from 'react-native';
 import colors from '../../../constents/colors';
 
 const { width, height } = Dimensions.get('window');
 
-
 const Eligibility = ({navigation}) => {
-    const handleBack=()=>{
-        navigation.navigate("Home")
+    const handleBack = () => {
+        navigation.navigate("Home");
     }
+    
   const licenseData = [
     {
       type: 'Cars and Motorcycles with Gear',
@@ -90,11 +90,10 @@ const Eligibility = ({navigation}) => {
             ))}
           </View>
           <View style={styles.backBtnContainer}>
-            <TouchableOpacity activeOpacity={0.8} style={styles.backButton} onPress={handleBack} >
+            <TouchableOpacity activeOpacity={0.8} style={styles.backButton} onPress={handleBack}>
                 <Text style={styles.backButtonTxt}>Back to Home</Text>
             </TouchableOpacity>
           </View>
-          {/* Added some bottom padding to prevent overflow issues */}
           <View style={styles.bottomPadding} />
         </ScrollView>
       </View>
@@ -106,7 +105,6 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: colors.purple,
-    // Remove fixed top positioning
   },
   container: {
     flex: 1,
@@ -119,7 +117,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#333',
   },
   title: {
-    paddingTop:50,
+    paddingTop: 50,
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollViewContent: {
-    paddingBottom: 24, // Ensure content doesn't get cut off at bottom
+    paddingBottom: 24,
   },
   tableContainer: {
     marginTop: 16,
@@ -205,25 +203,24 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   bottomPadding: {
-    height: 20, // Extra space at bottom to prevent overflow
+    height: 20,
   },
-  backButton:{
-    alignItems:"center",
-    backgroundColor:colors.purple,
-    width:"50%",
-    padding:10,
-    borderRadius:10
-
+  backButton: {
+    alignItems: "center",
+    backgroundColor: colors.purple,
+    width: "50%",
+    padding: 10,
+    borderRadius: 10
   },
-  backBtnContainer:{
-    alignItems:"center",
-    justifyContent:"center"
+  backBtnContainer: {
+    alignItems: "center",
+    justifyContent: "center"
   },
-  backButtonTxt:{
-    fontSize:18,
-    color:colors.white,
-    letterSpacing:2,
-    fontWeight:"600"
+  backButtonTxt: {
+    fontSize: 18,
+    color: colors.white,
+    letterSpacing: 2,
+    fontWeight: "600" 
   }
 });
 

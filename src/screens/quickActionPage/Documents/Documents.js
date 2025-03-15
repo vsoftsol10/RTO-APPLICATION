@@ -3,9 +3,9 @@ import React from 'react'
 import colors from '../../../constents/colors';
 
 const Documents=({navigation})=> {
-    // const handleBack=()=>{
-    //     navigation.navigate("Home")
-    // }
+    const handleBack=()=>{
+        navigation.navigate("Home")
+    }
   return (
     <View>
         <StatusBar barStyle="light-content" backgroundColor={colors.purple} />

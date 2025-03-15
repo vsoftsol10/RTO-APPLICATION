@@ -89,13 +89,13 @@ const  EditProfile=({navigation})=> {
                 ]}
                 style={styles.linearGradient}
             >
-                {/* <TouchableOpacity
+                <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.iconcontainer}
                     onPress={handleBack}
                 >
                     <Ionic name="chevron-back" style={styles.icon}/>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
 
                 <Text style={styles.title}>Edit Profile</Text>
                 <View style={styles.inputContainer}>
