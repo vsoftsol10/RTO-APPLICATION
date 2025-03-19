@@ -20,6 +20,7 @@ import Documents from './src/screens/quickActionPage/Documents/Documents';
 import DrivngLicense from './src/screens/quickActionPage/Driving License/DrivngLicense';
 import DrivingTips from './src/screens/quickActionPage/DrivingTips/DrivingTips';
 import FeeDetailsScreen from './src/screens/quickActionPage/FeeData/FeeDetailsScreen';
+import DrivingLicense from './src/screens/License/LicenseDetails/LicenseDetails';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -112,6 +113,7 @@ const App = () => {
         <Stack.Screen name="license" component={DrivngLicense}/>
         <Stack.Screen name="Tips" component={DrivingTips}/>
         <Stack.Screen name="Fee" component={FeeDetailsScreen}/>
+        <Stack.Screen name='DL' component={DrivingLicense}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

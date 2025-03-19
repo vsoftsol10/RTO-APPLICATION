@@ -145,7 +145,7 @@ const HomeScreen = () => {
                 <View style={styles.actionsContainer}>
                   <TouchableOpacity
                     style={styles.primaryButton}
-                    onPress={() => navigation.navigate("ApplyLicense")}
+                    onPress={() => navigation.navigate("DL")}
                   >
                     <LinearGradient
                       colors={[THEME.primary, THEME.accent]}
