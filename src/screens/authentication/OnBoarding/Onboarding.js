@@ -1,141 +1,112 @@
-import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
-import LinearGradient from 'react-native-linear-gradient';
+import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import colors from '../../../constents/colors';
 
 const Onboarding = ({navigation}) => {
+  // For CLI projects, you don't need to dynamically load fonts
+  // They should be linked through the native project setup
+  
   return (
-    <View>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.bgLineGradeOne} />
-      <LinearGradient
-        colors={[
-          colors.bgLineGradeOne,
-          colors.bgLineGradeTwo,
-          colors.bgLineGradeThree,
-          colors.bgLineGradeFour,
-          colors.bgLineGradeFive,
-          colors.bgLineGradeSix,
-        ]}
-        style={styles.linearGradient}
-      >
-        <View style={styles.picContainer}>
-          <View style={styles.pic}>
-            <Image source={require("../../../images/authentication/Onboarding_Pic.png")} />
+    <View style={styles.mainContainer}>
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+      
+      <Image
+        source={require("../../../images/authentication/Onboarding_Pic.jpg")}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
+      
+      <View style={styles.overlay}>
+        <View style={styles.contentContainer}>
+          <View style={styles.textContainer}>
+            <Text style={styles.welcomeText}>Welcome</Text>
+            <Text style={styles.subText}>Effortless Licensing at Your Fingertips!</Text>
           </View>
-        </View>
-        <View style={styles.notesContainer}>
-            <Text style={styles.notesTxt}>Get Your License with Ease!</Text>
-            <Text style={styles.notesTxt}>No More Long Queues!</Text>
-        </View>
-        <View style={styles.subNoteContainer}>
-          <View>
-            <Text style={styles.subNoteText}>  Drive your dreams with ease,</Text>
-            <Text style={styles.subNoteText}>apply, learn & hit the road today!</Text>
-          </View>
-        </View>
-        <View style={styles.ButtonContainer}>
-            <View style={styles.Buttons}>
-                <TouchableOpacity 
-                    onPress={() => navigation.navigate("Register")}
-                    activeOpacity={0.8}
-                    style={styles.Buttonthingsleft}>
-                    <Text style={styles.ButtonText}>
-                        Register
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    onPress={() => navigation.navigate("LogIn")}
-                    activeOpacity={0.8}
-                    style={styles.Buttonthingsright}>
-                    <Text style={styles.ButtonText}>
-                        LogIn
-                    </Text>
-                </TouchableOpacity>
+          
+          <TouchableOpacity
+            onPress={() => navigation.navigate("login&Register")}
+            activeOpacity={0.8}
+            style={styles.continueButton}>
+            <Text style={styles.buttonText}>Continue</Text>
+            <View style={styles.arrowCircle}>
+              <Text style={styles.arrowText}>→</Text>
             </View>
+          </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </View>
     </View>
-  )
-}
+  );
+};
 
 export default Onboarding;
 
-const styles=StyleSheet.create({
-    linearGradient: {
-        width: '100%',
-        height: '100%',
-      },
-      picContainer: {
-        width: '160%',
-        height: '60%',
-        padding: 16,
-        paddingStart: 110,
-        marginTop:30,
-        marginBottom:50
-      },
-      pic: {
-        width: '40%',
-        height: '50%',
-        backgroundColor: colors.onBoardCardBG,
-        borderRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      notesTxt: {
-        fontSize: 24,
-        color: colors.black,
-        fontWeight: '800',
-        letterSpacing: 1,
-      },
-      notesContainer: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: -200,
-        marginBottom: 40,
-      },
-      subNoteContainer: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 40,
-      },
-      subNoteText: {
-        color: colors.black,
-        fontWeight: 'bold',
-        letterSpacing: 1,
-      },
-      ButtonContainer: {
-        paddingHorizontal: 40,
-        marginTop: 60,
-      },
-      Buttons: {
-        width: '100%',
-        flexDirection: 'row',
-      },
-      Buttonthingsleft: {
-        width: '50%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingVertical: 16,
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10,
-        backgroundColor: colors.white,
-      },
-      Buttonthingsright: {
-        width: '50%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingVertical: 16,
-        borderTopRightRadius: 10,
-        borderBottomRightRadius: 10,
-        backgroundColor: colors.transparent,
-        borderColor: colors.white,
-        borderWidth: 5,
-      },
-      ButtonText: {
-        fontSize: 24,
-        color: colors.black,
-        fontWeight: '600',
-      },
-})
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: 'black', // To match the phone frame
+  },
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.35)', // Subtle overlay for contrast
+    marginTop: '130%', // Push content down to match image
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 25,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+  textContainer: {
+    alignItems: 'flex-start',
+    marginTop: 5,
+  },
+  welcomeText: {
+    fontSize: 38,
+    fontWeight: '900',
+    color: colors.black,
+    fontFamily: Platform.OS === 'ios' ? 'Noteworthy' : 'cursive', // More script-like font
+    marginBottom: 5,
+  },
+  subText: {
+    fontSize: 18,
+    color: colors.black,
+    fontWeight: '500',
+    letterSpacing:1
+  },
+  continueButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    marginBottom: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: colors.black,
+    fontWeight: '500',
+    marginRight: 10,
+  },
+  arrowCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#30C4D1', // Teal circle color
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  arrowText: {
+    color: colors.white,
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    lineHeight: 28,
+    marginTop:-10
+  }
+});

@@ -57,7 +57,7 @@ const FeeDetailsScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-              <StatusBar barStyle="light-content" backgroundColor={colors.purple} />
+              <StatusBar barStyle="light-content" backgroundColor={"#35cad1"} />
       
       <ScrollView horizontal={false}>
         <View style={styles.headerContainer}>
@@ -108,9 +108,9 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     padding: 16,
-    backgroundColor: colors.purple,
+    backgroundColor: "#35cad1",
     alignItems: 'center',
-    paddingTop:50
+    paddingTop:70
   },
   header: {
     fontSize: 22,
@@ -120,12 +120,12 @@ const styles = StyleSheet.create({
   tableContainer: {
     margin: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#35cad1',
     backgroundColor: '#fff',
   },
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: colors.purple,
+    backgroundColor: "#35cad1",
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     
@@ -133,20 +133,20 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: '#35cad1',
   },
   idCell: {
     flex: 0.5,
     padding: 10,
     borderRightWidth: 1,
-    borderRightColor: '#ddd',
+    borderRightColor: '#35cad1',
     justifyContent: 'center',
   },
   descriptionCell: {
     flex: 3,
     padding: 10,
     borderRightWidth: 1,
-    borderRightColor: '#ddd',
+    borderRightColor: '#35cad1',
   },
   feeCell: {
     flex: 1,
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontWeight: 'bold',
     color: '#fff',
+    fontSize:16,
   },
   cellText: {
     color: '#333',
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer:{
     alignItems:"center",
-    backgroundColor:colors.purple,
+    backgroundColor:"#35cad1",
     width:"50%",
     marginLeft:"25%",
     marginVertical:10,

@@ -14,7 +14,7 @@ const DrivingLicense = ({ navigation }) => {
   
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+        <StatusBar barStyle="light-content" backgroundColor={"#35cad1"} />
       
       {/* Progress indicator */}
       <View style={styles.progressContainer}>
@@ -32,7 +32,7 @@ const DrivingLicense = ({ navigation }) => {
       {/* Icon */}
       <View style={styles.iconContainer}>
         <View style={styles.iconCircle}>
-          <Icon name="car" size={36} color={colors.purple} />
+          <Icon name="car" size={36} color={"#35cad1"} />
         </View>
       </View>
       
@@ -56,7 +56,7 @@ const DrivingLicense = ({ navigation }) => {
       
       {/* Important note */}
       <View style={styles.noteContainer}>
-        <Icon name="information-circle" size={20} color={colors.purple} />
+        <Icon name="information-circle" size={24} color={"#35cad1"} />
         <Text style={styles.noteText}>
           This service includes both LLR and DL.
         </Text>
@@ -69,7 +69,7 @@ const DrivingLicense = ({ navigation }) => {
           onPress={handleBack} 
           style={[styles.button, styles.backButton]}
         >
-          <Icon name="arrow-back" size={16} color={colors.purple} />
+          <Icon name="arrow-back" size={16} color={"#35cad1"} />
           <Text style={styles.backBtnText}>Back</Text>
         </TouchableOpacity>
         
@@ -91,23 +91,24 @@ export default DrivingLicense;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#ffffff',
     paddingHorizontal: 20,
     paddingTop: 50,
   },
   progressContainer: {
     marginBottom: 20,
+    marginTop:20
   },
   progressBar: {
     height: 8,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#dbf3f3',
     borderRadius: 4,
     marginBottom: 8,
   },
   progressFill: {
     width: '25%', // First step of 4
     height: '100%',
-    backgroundColor: colors.purple,
+    backgroundColor: "#35cad1",
     borderRadius: 4,
   },
   stepText: {
@@ -131,11 +132,9 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: 'rgba(128, 0, 128, 0.1)', // Light purple background
+    backgroundColor: '#dbf3f3', // Light purple background
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor:colors.purple,
-    borderWidth:2
   },
   contentContainer: {
     backgroundColor: '#fff',
@@ -146,23 +145,25 @@ const styles = StyleSheet.create({
   },
   paraText: {
     fontSize: 16,
-    color: '#457',
+    color: '#333',
     lineHeight: 23,
     marginBottom: 16,
+    fontWeight:"500"
   },
   noteContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(128, 0, 128, 0.1)',
+    backgroundColor: '#dbf3f3',
     padding: 12,
     borderRadius: 8,
     marginBottom: 30,
   },
   noteText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: colors.purple,
+    fontSize: 17,
+    fontWeight: '700',
+    color: "#35cad1",
     marginLeft: 8,
+    letterSpacing:0.5
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -181,15 +182,15 @@ const styles = StyleSheet.create({
   backButton: {
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: colors.purple,
+    borderColor: "#35cad1",
   },
   nextButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: "#35cad1",
   },
   backBtnText: {
     fontSize: 16,
     fontWeight: '500',
-    color: colors.purple,
+    color: "#35cad1",
     marginLeft: 8,
   },
   nextBtnText: {

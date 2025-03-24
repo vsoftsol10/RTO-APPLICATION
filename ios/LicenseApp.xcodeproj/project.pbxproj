@@ -12,6 +12,8 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		1A8BF24CFEEB48FFAFF3C2FF /* MellyShopia.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3CBBBC52ED1E4B1488FDB713 /* MellyShopia.otf */; };
+		6A45D44FC6F14CACB16C71E9 /* MellyShoopia.otf in Resources */ = {isa = PBXBuildFile; fileRef = AAB8783141074FB08054446F /* MellyShoopia.otf */; };
+		D85A3FFCBCAE4866B1ECCF82 /* Boldonse-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC856B9D60C643049DF78509 /* Boldonse-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,8 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LicenseApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		3CBBBC52ED1E4B1488FDB713 /* MellyShopia.otf */ = {isa = PBXFileReference; name = "MellyShopia.otf"; path = "../assets/fonts/MellyShopia.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AAB8783141074FB08054446F /* MellyShoopia.otf */ = {isa = PBXFileReference; name = "MellyShoopia.otf"; path = "../assets/fonts/MellyShoopia.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CC856B9D60C643049DF78509 /* Boldonse-Regular.ttf */ = {isa = PBXFileReference; name = "Boldonse-Regular.ttf"; path = "../assets/fonts/Boldonse-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,8 @@
 			isa = "PBXGroup";
 			children = (
 				3CBBBC52ED1E4B1488FDB713 /* MellyShopia.otf */,
+				AAB8783141074FB08054446F /* MellyShoopia.otf */,
+				CC856B9D60C643049DF78509 /* Boldonse-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -198,6 +204,8 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				1A8BF24CFEEB48FFAFF3C2FF /* MellyShopia.otf in Resources */,
+				6A45D44FC6F14CACB16C71E9 /* MellyShoopia.otf in Resources */,
+				D85A3FFCBCAE4866B1ECCF82 /* Boldonse-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

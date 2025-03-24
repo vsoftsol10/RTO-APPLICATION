@@ -80,7 +80,7 @@ const HomeScreen = () => {
   return (
     <>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
-      <LinearGradient
+      {/* <LinearGradient
         colors={[
           THEME.primary,
           "#8D4980",  // Slightly lighter purple
@@ -90,7 +90,7 @@ const HomeScreen = () => {
           THEME.secondary, // End with light gray
         ]}
         style={styles.linearGradient}
-      >
+      > */}
         <SafeAreaView style={styles.safeArea}>
           <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
             <View style={styles.container}>
@@ -147,28 +147,28 @@ const HomeScreen = () => {
                     style={styles.primaryButton}
                     onPress={() => navigation.navigate("DL")}
                   >
-                    <LinearGradient
+                    {/* <LinearGradient
                       colors={[THEME.primary, THEME.accent]}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 1, y: 0 }}
                       style={styles.buttonGradient}
-                    >
+                    > */}
                       <Text style={styles.buttonText}>Apply for License</Text>
-                    </LinearGradient>
+                    {/* </LinearGradient> */}
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={styles.primaryButton}
                     onPress={() => navigation.navigate("ApplyLicense")}
                   >
-                    <LinearGradient
+                    {/* <LinearGradient
                       colors={[THEME.primary, THEME.accent]}
                       start={{ x: 1, y: 0 }}
                       end={{ x: 0, y: 0 }}
                       style={styles.buttonGradient}
-                    >
+                    > */}
                       <Text style={styles.buttonText}>Apply for Learner</Text>
-                    </LinearGradient>
+                    {/* </LinearGradient> */}
                   </TouchableOpacity>
 
                   <TouchableOpacity
@@ -287,7 +287,7 @@ const HomeScreen = () => {
             </View>
           </ScrollView>
         </SafeAreaView>
-      </LinearGradient>
+      {/* </LinearGradient> */}
 
       {/* Settings popup menu */}
       <Modal
@@ -347,22 +347,25 @@ const styles = StyleSheet.create({
   },
   iconStyle:{
     fontSize:16,
-    color:colors.purple,
-    backgroundColor:colors.white,
-    padding:8,
+    color:colors.white,
+    backgroundColor:"#35cad1",
+    padding:6,
     borderRadius:50
   }
   ,
   headerContainer: {
     paddingHorizontal: 20,
     paddingTop: 50,
-    paddingBottom: 20,
+    paddingBottom: 40,
+    backgroundColor:"#35cad1",
+    height:260
   },
   headerTop: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 15,
+   
   },
   welcomeContainer: {
     flex: 1,
@@ -380,7 +383,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 10,
@@ -391,29 +394,30 @@ const styles = StyleSheet.create({
     tintColor: THEME.white,
   },
   quoteContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: "#dbf3f3",
     borderRadius: 12,
     padding: 12,
     marginTop: 10,
   },
   quoteText: {
     fontSize: 18,
-    color: THEME.white,
+    color: "#5ed4d9",
     fontWeight: "600",
     letterSpacing: 0.5,
     textAlign: "center",
   },
   contentContainer: {
-    backgroundColor: THEME.secondary,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    backgroundColor: "#dbf3f3",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     paddingHorizontal: 20,
     paddingTop: 30,
     paddingBottom: 20,
     flex: 1,
+    marginTop:-70
   },
   card: {
-    backgroundColor: THEME.white,
+    backgroundColor: "#35cad1",
     borderRadius: 16,
     padding: 20,
     marginBottom: 20,
@@ -431,34 +435,35 @@ const styles = StyleSheet.create({
   statusDot: {
     width: 12,
     height: 12,
-    borderRadius: 6,
-    backgroundColor: THEME.primary,
+    borderRadius: 10,
+    backgroundColor: "white",
     marginRight: 10,
   },
   statusTitle: {
     fontSize: 16,
     fontWeight: "600",
-    color: THEME.darkText,
+    color: "white",
   },
   statusText: {
     fontSize: 22,
     fontWeight: "bold",
-    color: THEME.primary,
+    color: "white",
     marginBottom: 15,
   },
   viewDetailsButton: {
-    alignSelf: "flex-start",
+    alignSelf: "flex-end",
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 20,
-    backgroundColor: THEME.lightPurple,
+    borderRadius: 10,
+    backgroundColor: "white",
     
   },
   viewDetailsText: {
-    color: THEME.primary,
+    color: "black",
     fontWeight: "600",
-    fontSize: 14,
-  },
+    fontSize: 12,
+    textTransform:"uppercase"
+    },
   actionsContainer: {
     marginBottom: 25,
   },
@@ -467,21 +472,21 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: "hidden",
     elevation: 4,
+    backgroundColor:"#35cad1",
     shadowColor: THEME.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
-  },
-  buttonGradient: {
     paddingVertical: 16,
     alignItems: "center",
     justifyContent: "center",
   },
+
   buttonText: {
     color: THEME.white,
     fontSize: 16,
     fontWeight: "bold",
-    letterSpacing: 0.5,
+    letterSpacing:1,
   },
   secondaryButton: {
     backgroundColor: THEME.white,
@@ -490,23 +495,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: THEME.primary,
-    shadowColor: THEME.primary,
+    borderColor: "#35cad1",
+    shadowColor: "#35cad1",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 2,
   },
   secondaryButtonText: {
-    color: THEME.primary,
+    color: "#35cad1",
     fontSize: 16,
     fontWeight: "600",
   },
   infoCardsWrapper: {
     marginBottom: 25,
+    height:"25%"
   },
   infoCardsScrollContainer: {
     paddingRight: 20, // Extra padding at the end for better UX
+    marginLeft:5,
+    marginTop:10
   },
   infoCardContent: {
     height: '100%',
@@ -514,20 +522,23 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   infoCard: {
-    backgroundColor: THEME.white,
+    backgroundColor: "#dbf3f3",
     borderRadius: 5,
     padding: 16,
     marginRight: 15,
-    shadowColor: THEME.primary,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 1,
+    
+    // Android shadow (elevation)
+    elevation: 9,
     width: 130, // Fixed width for consistent layout
     height: 160,
+    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   },
   infoIconContainer: {
-    backgroundColor: THEME.lightPurple,
+    backgroundColor: "#dbf3f3",
     borderRadius: 12,
     width: 48,
     height: 48,
@@ -538,7 +549,7 @@ const styles = StyleSheet.create({
   infoIcon: {
     width: 24,
     height: 24,
-    tintColor: THEME.primary,
+    tintColor: "#35cad1",
     resizeMode: "contain",
   },
   infoTextContainer: {
@@ -560,20 +571,22 @@ const styles = StyleSheet.create({
   },
   tipsCard: {
     backgroundColor: THEME.white,
-    borderRadius: 16,
+    borderRadius: 10,
     padding: 20,
-    shadowColor: THEME.primary,
+    shadowColor: "#35cad1",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.5,
     shadowRadius: 3,
     elevation: 2,
     borderLeftWidth: 5,
-    borderLeftColor: THEME.primary,
+    borderLeftColor: "#35cad1",
+    marginBottom:50,
+    marginTop:-15
   },
   tipsTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: THEME.primary,
+    color: "#35cad1",
     marginBottom: 8,
   },
   tipsDescription: {
@@ -585,7 +598,7 @@ const styles = StyleSheet.create({
   tipsReadMore: {
     fontSize: 14,
     fontWeight: "600",
-    color: THEME.primary,
+    color: "#35cad1",
     alignSelf: "flex-end",
   },
   // New styles for popup menu
@@ -597,11 +610,11 @@ const styles = StyleSheet.create({
     backgroundColor: THEME.white,
     borderRadius: 8,
     width: 120,
-    shadowColor: '#000',
+    shadowColor: '#35cad1',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowRadius: 4,
+    elevation: 8,
   },
   menuItem: {
     paddingVertical: 12,
@@ -610,12 +623,12 @@ const styles = StyleSheet.create({
   },
   menuText: {
     fontSize: 16,
-    color: THEME.primary,
+    color: "#35cad1",
     fontWeight: "500",
   },
   separator: {
     height: 1,
-    backgroundColor: THEME.lightPurple,
+    backgroundColor: "#d4f3f8",
   },
 });
 

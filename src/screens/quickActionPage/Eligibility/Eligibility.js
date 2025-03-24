@@ -53,7 +53,7 @@ const Eligibility = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.purple} />
+      <StatusBar barStyle="light-content" backgroundColor={"#35cad1"} />
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Eligibility for Driving License in Tamil Nadu</Text>
@@ -104,7 +104,7 @@ const Eligibility = ({navigation}) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.purple,
+    backgroundColor: "#35cad1",
   },
   container: {
     flex: 1,
@@ -112,9 +112,9 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     padding: 16,
-    backgroundColor: colors.purple,
+    backgroundColor: "#35cad1",
     borderBottomWidth: 1,
-    borderBottomColor: '#333',
+    borderBottomColor: '#35cad1',
   },
   title: {
     paddingTop: 50,
@@ -125,10 +125,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 14,
-    color: '#E0E7FF',
+    fontSize: 16,
+    color: '#FFFFFF',
     textAlign: 'center',
     lineHeight: 20,
+    fontWeight:"bold"
   },
   scrollView: {
     flex: 1,
@@ -143,12 +144,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#CBD5E1',
+    borderColor: '#35cad1',
     backgroundColor: 'white',
   },
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: colors.purple,
+    backgroundColor: "#35cad1",
     padding: 12,
   },
   tableHeaderText: {
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
     borderTopWidth: 1,
-    borderTopColor: '#E2E8F0',
+    borderTopColor: '#35cad1',
   },
   evenRow: {
     backgroundColor: 'white',
@@ -175,6 +176,7 @@ const styles = StyleSheet.create({
     padding: 12,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    
   },
   typeCellText: {
     fontSize: 14,
@@ -207,7 +209,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignItems: "center",
-    backgroundColor: colors.purple,
+    backgroundColor: "#35cad1",
     width: "50%",
     padding: 10,
     borderRadius: 10

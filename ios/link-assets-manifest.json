@@ -2,6 +2,14 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "assets/fonts/Boldonse-Regular.ttf",
+      "sha1": "4cbe9b11f0db000b499ee91b154564c36495fcb8"
+    },
+    {
+      "path": "assets/fonts/MellyShoopia.otf",
+      "sha1": "1be69836a8343f733a3e89108c600f0e226d9a5c"
+    },
+    {
       "path": "assets/fonts/MellyShopia.otf",
       "sha1": "1be69836a8343f733a3e89108c600f0e226d9a5c"
     }

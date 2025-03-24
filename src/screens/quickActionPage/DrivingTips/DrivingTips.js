@@ -6,7 +6,8 @@ import {
   Text, 
   View, 
   TouchableOpacity,
-  Image
+  Image,
+  StatusBar
 } from 'react-native';
 import colors from '../../../constents/colors';
 
@@ -99,6 +100,8 @@ const DrivingTips = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <StatusBar barStyle="light-content" backgroundColor={"#35cad1"} />
+        
         <View style={styles.header}>
           <Text style={styles.title}>🚗 Driving Test Preparation</Text>
           <Text style={styles.subtitle}>Essential Tips & Guidance</Text>
@@ -148,7 +151,7 @@ const DrivingTips = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ffffff',
     top:50
   },
   scrollContainer: {
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     marginBottom: 24,
-    backgroundColor: colors.purple,
+    backgroundColor: "#35cad1",
     padding: 16,
     borderRadius: 8,
   },
@@ -234,7 +237,7 @@ const styles = StyleSheet.create({
   },
   backButton:{
     alignItems:"center",
-    backgroundColor:colors.purple,
+    backgroundColor:"#35cad1",
     width:"50%",
     padding:10,
     borderRadius:10,

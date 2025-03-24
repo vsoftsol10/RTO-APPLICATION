@@ -21,6 +21,7 @@ import DrivngLicense from './src/screens/quickActionPage/Driving License/DrivngL
 import DrivingTips from './src/screens/quickActionPage/DrivingTips/DrivingTips';
 import FeeDetailsScreen from './src/screens/quickActionPage/FeeData/FeeDetailsScreen';
 import DrivingLicense from './src/screens/License/LicenseDetails/LicenseDetails';
+import login from './src/screens/authentication/login/login';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -104,6 +105,7 @@ const App = () => {
         <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="Register" component={SignUp} />
         <Stack.Screen name="LogIn" component={SignIn} />
+        <Stack.Screen name="login&Register" component={login}/>
         <Stack.Screen name="Info" component={InfoScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Profile" component={Profile}/>

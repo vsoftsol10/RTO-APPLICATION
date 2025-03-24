@@ -50,6 +50,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>MellyShopia.otf</string>
+		<string>MellyShoopia.otf</string>
+		<string>Boldonse-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

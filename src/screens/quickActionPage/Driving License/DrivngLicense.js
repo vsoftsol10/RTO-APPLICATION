@@ -9,7 +9,7 @@ const DrivingLicense = ({navigation}) => {
 
     return (
         <View style={styles.mainContainer}>
-            <StatusBar barStyle="light-content" backgroundColor={colors.purple} />
+            <StatusBar barStyle="light-content" backgroundColor={"#35cad1"} />
             
             {/* Header Section */}
             <View style={styles.headerContainer}>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
     },
     headerContainer: {
-        backgroundColor: colors.purple,
+        backgroundColor: "#35cad1",
         paddingVertical: 30,
         paddingHorizontal: 20,
         alignItems: "center",
@@ -82,10 +82,10 @@ const styles = StyleSheet.create({
         gap: 16,
     },
     stepContainer: {
-        backgroundColor: colors.border,
+        backgroundColor: colors.white,
         padding: 20,
         borderRadius: 12,
-        elevation: 3,
+        // elevation: 3,
         shadowColor: colors.darkGrey,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     stepNumberContainer: {
-        backgroundColor: colors.purple,
+        backgroundColor: "#35cad1",
         width: 36,
         height: 36,
         borderRadius: 18,
@@ -121,12 +121,12 @@ const styles = StyleSheet.create({
     },
     backButton: {
         alignItems: "center",
-        backgroundColor: colors.purple,
+        backgroundColor: "#35cad1",
         width: "50%",
         padding: 14,
         borderRadius: 10,
         elevation: 4,
-        shadowColor: colors.purple,
+        shadowColor: "#35cad1",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity:0.25,
         shadowRadius: 3,
