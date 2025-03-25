@@ -76,13 +76,14 @@ const Login = ({navigation}) => {
         <View style={styles.container}>
             {/* Background Image */}
             <Image 
-                source={require('../../../../assets/login_page.png')} 
+                source={require('../../../../assets/login.jpeg')} 
                 style={styles.backgroundImage} 
                 resizeMode="cover"
             />
             
             {/* Content Container */}
-            <View style={styles.contentContainer}>
+         <View style={styles.overlay}>
+                <View style={styles.contentContainer}>
                 {/* Login Title */}
                 <Text style={styles.loginTitle}>Login</Text>
                 
@@ -98,7 +99,7 @@ const Login = ({navigation}) => {
                         <Ionic name="person-outline" style={styles.inputIcon} />
                             <TextInput
                                 placeholder='Email Id'
-                                placeholderTextColor="#fff"
+                                placeholderTextColor="#333"
                                 keyboardType="email-address"
                                 value={email}
                                 onChangeText={e => setEmail(e)}
@@ -112,7 +113,7 @@ const Login = ({navigation}) => {
                         <Ionic name="lock-closed-outline" style={styles.inputIcon} />
                         <TextInput
                             placeholder='Password'
-                            placeholderTextColor="#fff"
+                            placeholderTextColor="#333"
                             secureTextEntry={!hidePassword}
                             value={password}
                             onChangeText={p => setPassword(p)}
@@ -166,6 +167,7 @@ const Login = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
+         </View>
         </View>
     )
 }
@@ -180,7 +182,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: '100%',
         height: '100%',
-        opacity: 0.9,
+        opacity: 0.8,
+    },
+    overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(27, 27, 27, 0.46)',
     },
     contentContainer: {
         flex: 1,
@@ -191,15 +197,19 @@ const styles = StyleSheet.create({
     loginTitle: {
         fontSize: 40,
         fontWeight: 'bold',
-        color: 'black',
+        color: 'white',
         marginBottom: 100,
         fontFamily:FONTS.BOLD,
-        marginTop:-80
+        marginTop:-80,
+        textShadowOffset:3,
+        textShadowRadius:6,
+        textShadowColor: '#777E8B',
+        
     },
     formContainer: {
         width: '100%',
         maxWidth: 350,
-        backgroundColor: 'rgba(17, 17, 17, 0.7)',
+        backgroundColor: 'rgba(184, 184, 184, 0.7)',
         borderRadius: 15,
         padding: 25,
         alignItems: 'center',
@@ -223,20 +233,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: 50,
-        backgroundColor: 'rgba(255, 255, 255, 0.17)',
+        backgroundColor: 'rgb(255, 255, 255)',
         borderRadius: 8,
         marginBottom: 15,
         paddingHorizontal: 10,
     },
     inputIcon: {
         fontSize: 20,
-        color: '#fff',
+        color: '#333',
         marginRight: 10,
+        fontWeight:"600"
     },
     input: {
         flex: 1,
         height: '100%',
-        color: '#fff',
+        color: '#333',
         fontSize: 16,
     },
     eyeIcon: {

@@ -103,7 +103,13 @@ const DrivingTips = ({navigation}) => {
         <StatusBar barStyle="light-content" backgroundColor={"#35cad1"} />
         
         <View style={styles.header}>
-          <Text style={styles.title}>🚗 Driving Test Preparation</Text>
+          <View style={styles.head}> 
+            <Image
+              source={require("../../../../assets/car.png")}
+              style={styles.carImage}
+            />
+            <Text style={styles.title}> Driving Test Preparation</Text>
+          </View>
           <Text style={styles.subtitle}>Essential Tips & Guidance</Text>
         </View>
 
@@ -157,6 +163,13 @@ const styles = StyleSheet.create({
   scrollContainer: {
     padding: 16,
   },
+  head:{
+    flexDirection:"row"
+  },
+  carImage:{
+    width:50,
+    height:38
+  },
   header: {
     alignItems: 'center',
     marginBottom: 24,
@@ -179,11 +192,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     marginBottom: 12,
-    elevation: 2,
+    elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
   },
   sectionHeader: {
     flexDirection: 'row',

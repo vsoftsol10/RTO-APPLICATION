@@ -195,7 +195,7 @@ const HomeScreen = () => {
                       <View style={styles.infoCardContent}>
                         <View style={styles.infoIconContainer}>
                           <Image
-                            source={require("../../../images/Home/Setting.png")}
+                            source={require("../../../../assets/requirements.png")}
                             style={styles.infoIcon}
                           />
                         </View>
@@ -215,7 +215,7 @@ const HomeScreen = () => {
 
                         <View style={styles.infoIconContainer}>
                           <Image
-                            source={require("../../../images/Home/Setting.png")}
+                            source={require("../../../../assets/folders.png")}
                             style={styles.infoIcon}
                           />
                         </View>
@@ -236,7 +236,7 @@ const HomeScreen = () => {
 
                         <View style={styles.infoIconContainer}>
                           <Image
-                            source={require("../../../images/Home/Setting.png")}
+                            source={require("../../../../assets/drivers-license.png")}
                             style={styles.infoIcon}
                           />
                         </View>
@@ -256,7 +256,7 @@ const HomeScreen = () => {
                       <View style={styles.infoCardContent}>
                         <View style={styles.infoIconContainer}>
                           <Image
-                            source={require("../../../images/Home/Setting.png")}
+                            source={require("../../../../assets/payment.png")}
                             style={styles.infoIcon}
                           />
                         </View>
@@ -547,9 +547,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   infoIcon: {
-    width: 24,
-    height: 24,
-    tintColor: "#35cad1",
+    width: "100%",
+    height: "100%",
+    // tintColor: "#35cad1",
     resizeMode: "contain",
   },
   infoTextContainer: {

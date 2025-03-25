@@ -408,7 +408,7 @@ const SignUp = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Image
-                source={require('../../../../assets/login_page.jpg')}
+                source={require('../../../../assets/Sign-up.png')}
                 style={styles.backgroundImage}
                 blurRadius={2}
             />
@@ -431,7 +431,7 @@ const SignUp = ({ navigation }) => {
                                     <Ionic name="mail-outline" style={styles.inputIcon} />
                                     <TextInput
                                         placeholder='Email or Mobile number'
-                                        placeholderTextColor="#fff"
+                                        placeholderTextColor="#333"
                                         value={userInput}
                                         onChangeText={setUserInput}
                                         style={styles.input}
@@ -581,10 +581,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: '100%',
         height: '100%',
+        opacity:0.9
     },
     overlay: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        backgroundColor: 'rgba(27, 27, 27, 0.52)',
     },
     contentContainer: {
         flexGrow: 1,
@@ -598,7 +599,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
         marginBottom: 30,
-        marginTop:50
+        marginTop:100
     },
     avatarContainer: {
         alignItems: 'center',
@@ -619,8 +620,8 @@ const styles = StyleSheet.create({
     formContainer: {
         width: '100%',
         maxWidth: 350,
-        backgroundColor: 'rgba(70, 70, 70, 0.7)',
-        borderRadius: 15,
+        backgroundColor: 'rgba(221, 221, 221, 0.54)',
+        borderRadius:20,
         padding: 20,
         alignItems: 'center',
         justifyContent:"center",
@@ -630,14 +631,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        backgroundColor: 'rgba(255, 255, 255, 0.17)',
-        borderRadius: 25,
+        backgroundColor: 'rgb(255, 255, 255)',
+        borderRadius: 8,
         paddingHorizontal: 15,
         marginBottom: 15,
     },
     inputIcon: {
         fontSize: 20,
-        color: '#fff',
+        color: '#333',
         marginRight: 10,
     },
     eyeIcon: {
@@ -647,13 +648,13 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         height: 45,
-        color: '#fff',
+        color: '#333',
         fontSize: 14,
     },
     continueButton: {
         width: '100%',
         backgroundColor: '#00BCD4',
-        borderRadius: 25,
+        borderRadius: 8,
         height: 45,
         alignItems: 'center',
         justifyContent: 'center',
@@ -665,8 +666,9 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     errorText: {
-        color: '#ff6b6b',
-        fontSize: 12,
+        color: '#D63031',
+        fontSize: 13.5,
+        fontWeight:"400",
         alignSelf: 'flex-start',
         marginBottom: 5,
     },

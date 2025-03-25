@@ -7,8 +7,8 @@ const Documents=({navigation})=> {
         navigation.navigate("Home")
     }
   return (
-    <View>
-        <StatusBar barStyle="light-content" backgroundColor={colors.purple} />
+    <View style={styles.mainContainer}>
+        <StatusBar barStyle="light-content" backgroundColor={"#35cad1"} />
         <View style={styles.headerContainer}>
             <Text style={styles.headerText}>Documents Needed to apply for license</Text>
         </View>
@@ -49,8 +49,12 @@ const Documents=({navigation})=> {
 
 export default Documents;
 const styles = StyleSheet.create({
+    mainContainer:{
+        backgroundColor:"white",
+        height:"100%"
+    },
     headerContainer:{
-        backgroundColor:colors.purple,
+        backgroundColor:"#35cad1",
         paddingTop:70,
         paddingBottom:20,
         marginBottom:20,
@@ -73,17 +77,17 @@ const styles = StyleSheet.create({
         shadowOpacity:1.5,
     },
     addressContainer:{
-        elevation:3,
+        elevation:5,
         padding:16,
         shadowColor:colors.black,
-        shadowOffset:10,
-        shadowOpacity:1.5,
-        backgroundColor:colors.border,
+        shadowOffset:15,
+        shadowOpacity:2.5,
+        backgroundColor:"white",
         marginBottom:20
     },
     header:{
         textAlign:"center",
-        color:colors.purple,
+        color:"#35cad1",
         fontSize:22,
         fontWeight:"600",
         padding:8,
@@ -96,9 +100,12 @@ const styles = StyleSheet.create({
         letterSpacing:1,
     },
     ageContainer:{
-        backgroundColor:colors.border,
+        elevation:5,
         padding:16,
-        elevation:3,
+        shadowColor:colors.black,
+        shadowOffset:15,
+        shadowOpacity:2.5,
+        backgroundColor:"white",
     },
     line:{
         width:"50%",
@@ -109,34 +116,33 @@ const styles = StyleSheet.create({
         marginBottom:20
     },
     topContainer:{
-        backgroundColor:"#BF6BA8",
+        backgroundColor:"#35cad1",
         padding:5,
         alignItems:"center",
         borderRadius:5,
         marginBottom:15
     },
     topText:{
-        color:"#22243",
+        color:"#fff",
         fontSize:16,
         letterSpacing:0.5, 
     },
     backButton:{
         alignItems:"center",
-        backgroundColor:colors.purple,
+        backgroundColor:"#35cad1",
         width:"50%",
         padding:10,
-        borderRadius:10
-    
-      },
-      backBtnContainer:{
+        borderRadius:10,
+    },
+    backBtnContainer:{
         alignItems:"center",
         justifyContent:"center"
-      },
-      backButtonTxt:{
+    },
+    backButtonTxt:{
         fontSize:18,
         color:colors.white,
         letterSpacing:2,
         fontWeight:"600"
-      }
+    }
 
 })

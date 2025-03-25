@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ImageBackground } from 'react-native'
 import Ionic from "react-native-vector-icons/Ionicons"
 import LinearGradient from 'react-native-linear-gradient';
 import auth, { firebase } from "@react-native-firebase/auth";
@@ -47,18 +47,12 @@ const Profile = ({navigation}) => {
         navigation.navigate("Onboarding")
     }
     return (
-        <View>
-            <LinearGradient
-                colors={[
-                    colors.bgLineGradeOne,
-                    colors.bgLineGradeTwo,
-                    colors.bgLineGradeThree,
-                    colors.bgLineGradeFour,
-                    colors.bgLineGradeFive,
-                    colors.bgLineGradeSix,
-                ]}
-                style={styles.linearGradient}
-            >
+        <View style={styles.mainContainer}>
+            <ImageBackground
+                source={require('../../../../assets/Profile-page.png')} 
+                style={styles.backgroundImage} 
+                resizeMode="cover"
+                />
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.iconstyle}
@@ -69,28 +63,28 @@ const Profile = ({navigation}) => {
                 </TouchableOpacity>
                 <View>
 
-                    <Text style={{ textAlign: "center", fontSize: 24, fontWeight: "700", marginTop: 100 }}>Profile</Text>
+                    <Text style={ styles.header}>Profile</Text>
                 </View>
                 <View style={styles.container}>
                     <View style={styles.textcontainer}>
                         <Text style={styles.text}>{userName}</Text>
-                        <Ionic name="person" style={{fontSize:18,color:"#7A3c6D",paddingHorizontal:15}} />
+                        <Ionic name="person" style={{fontSize:18,color:"#35cad1",paddingHorizontal:15}} />
                     </View>
                     <View style={styles.textcontainer}>
                         <Text style={styles.text}> {mobileNo}</Text>       
-                        <Ionic name="call" style={{fontSize:18,color:"#7A3c6D",paddingHorizontal:15}} />             
+                        <Ionic name="call" style={{fontSize:18,color:"#35cad1",paddingHorizontal:15}} />             
                     </View>
                     <View style={styles.textcontainer}>
                         <Text style={styles.text}>{dob}</Text>
-                        <Ionic name="calendar" style={{fontSize:18,color:"#7A3c6D",paddingHorizontal:15}} />
+                        <Ionic name="calendar" style={{fontSize:18,color:"#35cad1",paddingHorizontal:15}} />
                     </View>
                     <View style={styles.textcontainer}>
                         <Text style={styles.text}>{pincode}</Text>
-                        <Ionic name="location" style={{fontSize:18,color:"#7A3c6D",paddingHorizontal:15}} />
+                        <Ionic name="location" style={{fontSize:18,color:"#35cad1",paddingHorizontal:15}} />
                     </View>
                     <View style={styles.textcontainer}>
                         <Text style={styles.text}>{country}</Text>
-                        <Ionic name="flag" style={{fontSize:18,color:"#7A3c6D",paddingHorizontal:15}} />
+                        <Ionic name="flag" style={{fontSize:18,color:"#35cad1",paddingHorizontal:15}} />
                     </View>
                 </View>
                 <View style={styles.container}>
@@ -112,24 +106,36 @@ const Profile = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
 
-            </LinearGradient>
         </View>
     )
 }
 export default Profile;
 const styles = StyleSheet.create({
-    linearGradient:{
-        width:"100%",
-        height:"100%",
-        padding: 4,
+  
+    mainContainer:{
+        backgroundColor:"white",
 
     },
+    header:{
+         textAlign: "center", 
+         fontSize: 28, 
+         fontWeight: "700", 
+         marginTop: 100,
+         color:"#35cad1"
+    },
+    backgroundImage: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        opacity: 0.8,
+    },
+
     icon:{
         fontSize:20,
-        color:colors.black,
+        color:"white",
     },
     iconstyle:{
-        backgroundColor:colors.white,
+        backgroundColor:"#aeeaed",
         marginTop:50,
         padding:10,
         borderRadius:100,
@@ -155,7 +161,12 @@ const styles = StyleSheet.create({
         borderRadius:15,
         flexDirection:"row",
         alignItems:"center",
-        justifyContent:"space-between"
+        justifyContent:"space-between",
+        elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
     },
     text:{
         fontSize:16,
@@ -163,7 +174,7 @@ const styles = StyleSheet.create({
         letterSpacing:1
     },
     editContainer:{
-        backgroundColor:colors.purple,
+        backgroundColor:"#35cad1",
         width:"90%",
         alignItems:"center",
         justifyContent:"space-between",
@@ -180,8 +191,8 @@ const styles = StyleSheet.create({
         letterSpacing:2,
     },
     logoutContainer:{
-        backgroundColor:colors.purple,
-        width:365,
+        backgroundColor:"#35cad1",
+        width:"90%",
         alignItems:"center",
         justifyContent:"space-between",
         padding:20,

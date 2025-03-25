@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Ionic from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient';
@@ -77,8 +77,8 @@ const  EditProfile=({navigation})=> {
         }
     }
   return (
-    <View>
-        <LinearGradient
+    <View style={styles.mainContainer}>
+        {/* <LinearGradient
                 colors={[
                     colors.bgLineGradeOne,
                     colors.bgLineGradeTwo,
@@ -88,7 +88,12 @@ const  EditProfile=({navigation})=> {
                     colors.bgLineGradeSix,
                 ]}
                 style={styles.linearGradient}
-            >
+            > */}
+            <ImageBackground
+                source={require('../../../../assets/Edit-page.png')} 
+                style={styles.backgroundImage} 
+                resizeMode="cover"
+                />
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.iconcontainer}
@@ -108,7 +113,7 @@ const  EditProfile=({navigation})=> {
                         onChangeText={txt=>setName(txt)}
                         style={styles.textInput}
                     />
-                    <Ionic name="person" style={{fontSize:16,color:colors.purple,paddingHorizontal:20}}/>
+                    <Ionic name="person" style={{fontSize:16,color:"#35cad1",paddingHorizontal:20}}/>
                     </View>
 
                     <View style={styles.textContainer}>
@@ -120,7 +125,7 @@ const  EditProfile=({navigation})=> {
                         onChangeText={mob=>setMobileNo(mob)}
                         style={styles.textInput}
                     />
-                    <Ionic name="call" style={{fontSize:16,color:colors.purple,paddingHorizontal:20}}/>
+                    <Ionic name="call" style={{fontSize:16,color:"#35cad1",paddingHorizontal:20}}/>
                     </View>
 
                     <View style={styles.textContainer}>
@@ -132,7 +137,7 @@ const  EditProfile=({navigation})=> {
                         onChangeText={date=>setDob(date)}
                         style={styles.textInput}
                     />
-                    <Ionic name="calendar" style={{fontSize:16,color:colors.purple,paddingHorizontal:20}}/>
+                    <Ionic name="calendar" style={{fontSize:16,color:"#35cad1",paddingHorizontal:20}}/>
                     </View>
 
                     <View style={styles.textContainer}>
@@ -144,7 +149,7 @@ const  EditProfile=({navigation})=> {
                         onChangeText={pin=>setPincode(pin)}
                         style={styles.textInput}
                     />
-                    <Ionic name="location" style={{fontSize:16,color:colors.purple,paddingHorizontal:20}}/>
+                    <Ionic name="location" style={{fontSize:16,color:"#35cad1",paddingHorizontal:20}}/>
                     </View>
 
                     <View style={styles.textContainer}>
@@ -156,7 +161,7 @@ const  EditProfile=({navigation})=> {
                         onChangeText={cntry=>setCountry(cntry)}
                         style={styles.textInput}
                     />
-                    <Ionic name="flag" style={{fontSize:16,color:colors.purple,paddingHorizontal:20}}/>
+                    <Ionic name="flag" style={{fontSize:16,color:"#35cad1",paddingHorizontal:20}}/>
                     </View>  
                 </View>
                 <View style={styles.btnContainer}>
@@ -164,30 +169,36 @@ const  EditProfile=({navigation})=> {
                             <Text style={styles.btnTxt}>Submit</Text>
                         </TouchableOpacity>
                     </View>
-            </LinearGradient>
+            {/* </LinearGradient> */}
     </View>
   )
 }
 export default EditProfile;
 const styles = StyleSheet.create({
-    linearGradient:{
-        width:"100%",
-        height:"100%",
-
+    mainContainer:{
+        backgroundColor:"white",
+        height:"100%"
+    },
+    backgroundImage: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        opacity: 0.8,
     },
     title:{
-        fontSize:24,
+        fontSize:32,
         fontWeight:"600",
         marginTop:100,
         textAlign:"center",
-        letterSpacing:1
+        letterSpacing:1,
+        color:"#35cad1"
     },
     icon:{
         fontSize:20,
-        color:colors.black 
+        color:"white" 
     },
     iconcontainer:{
-        backgroundColor:colors.white,
+        backgroundColor:"#aeeaed",
         aspectRatio:1/1,
         borderRadius:"50%",
         elevation:3, 
@@ -207,14 +218,19 @@ const styles = StyleSheet.create({
         justifyContent:"center",
     },
     textContainer:{
+        backgroundColor:colors.white,
+        padding:8,
+        width:"90%",
+        marginBottom:20,
+        borderRadius:15,
         flexDirection:"row",
         alignItems:"center",
         justifyContent:"space-between",
-        backgroundColor:colors.white,
-        width:"90%",
-        borderRadius:20,
-        marginBottom:20,
-        padding:10, 
+        elevation: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
     },
     textInput:{
         fontSize:16,
@@ -226,14 +242,14 @@ const styles = StyleSheet.create({
         marginTop:50,
         justifyContent:"center",
         width:"50%",
-        backgroundColor:colors.purple,
+        backgroundColor:"#35cad1",
         padding:20,
         borderRadius:10,
         marginStart:"25%"
     },
     btnTxt:{
-        color:colors.border,
-        fontSize:18,
+        color:"white",
+        fontSize:22,
         fontWeight:"700",
         letterSpacing:2,
     },
