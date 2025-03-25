@@ -238,14 +238,15 @@ const styles = StyleSheet.create({
         letterSpacing:1
     },
     btnContainer:{
-        alignItems:"center",
-        marginTop:50,
-        justifyContent:"center",
-        width:"50%",
         backgroundColor:"#35cad1",
-        padding:20,
-        borderRadius:10,
-        marginStart:"25%"
+        width:"90%",
+        alignItems:"center",
+        justifyContent:"center",
+        padding:16,
+        borderRadius:15,
+        flexDirection:"row",
+        marginTop:40,
+        marginLeft:"5%"
     },
     btnTxt:{
         color:"white",
