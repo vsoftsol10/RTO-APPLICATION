@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Image, SafeAreaView, StatusBar, ScrollView, Modal, TouchableWithoutFeedback } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Image, SafeAreaView, StatusBar, ScrollView, Modal, TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import LinearGradient from 'react-native-linear-gradient';
-import Ionic from 'react-native-vector-icons/Ionicons'
+import Ionic from 'react-native-vector-icons/Ionicons';
+import { TouchableOpacity } from 'react-native';
+
 
 import colors from "../../../constents/colors";
 import { SignOutUser } from "../../../utilities/Utilities";
@@ -270,7 +272,46 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                   </ScrollView>
                 </View>
+                {/*RTO Helps */}
+                <View style={styles.rtoCardWrapper}>
+                  <TouchableOpacity
+                    style={styles.rtoCard}
+                    activeOpacity={0.8}
+                    >
+                    <View style={styles.rtoCardContainer}>
+                      <View style={styles.rtoIconContainer}>
+                        <Image
+                          source={require("../../../images/Home/Setting.png")}
+                          style={styles.rtoIcon}
+                        />
+                      </View>
+                     <View style={styles.rtoTextContainer}>
+                        <Text style={styles.rtoCardTitle}>Rules of RTO</Text>
+                        <Text style={styles.rtoCardSubtitle}>Rules made simple</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
 
+                  <TouchableOpacity
+                    style={styles.rtoCard}
+                    activeOpacity={0.8}
+                    onPress={()=>navigation.navigate("symbol")}
+                    >
+                    <View style={styles.rtoCardContainer}>
+                      <View style={styles.rtoIconContainer}>
+                        <Image
+                          source={require("../../../images/Home/Setting.png")}
+                          style={styles.rtoIcon}
+                        />
+                      </View>
+                      <View style={styles.rtoTextContainer}>
+                        <Text style={styles.rtoCardTitle}>RTO Symbol</Text>
+                        <Text style={styles.rtoCardSubtitle}>Know your road signs</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                  
                 {/* Additional Info Card */}
                 <TouchableOpacity
                   style={styles.tipsCard}
@@ -427,11 +468,13 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
   },
+  
   statusIndicator: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
   },
+  
   statusDot: {
     width: 12,
     height: 12,
@@ -439,17 +482,20 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginRight: 10,
   },
+  
   statusTitle: {
     fontSize: 16,
     fontWeight: "600",
     color: "white",
   },
+  
   statusText: {
     fontSize: 22,
     fontWeight: "bold",
     color: "white",
     marginBottom: 15,
   },
+  
   viewDetailsButton: {
     alignSelf: "flex-end",
     paddingVertical: 8,
@@ -458,15 +504,18 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     
   },
+  
   viewDetailsText: {
     color: "black",
     fontWeight: "600",
     fontSize: 12,
     textTransform:"uppercase"
-    },
-  actionsContainer: {
+  },
+  
+    actionsContainer: {
     marginBottom: 25,
   },
+  
   primaryButton: {
     marginBottom: 15,
     borderRadius: 12,
@@ -488,6 +537,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing:1,
   },
+  
   secondaryButton: {
     backgroundColor: THEME.white,
     paddingVertical: 16,
@@ -502,25 +552,30 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 2,
   },
+ 
   secondaryButtonText: {
     color: "#35cad1",
     fontSize: 16,
     fontWeight: "600",
   },
+  
   infoCardsWrapper: {
-    marginBottom: 25,
+    marginBottom: -45,
     height:"25%"
   },
+  
   infoCardsScrollContainer: {
     paddingRight: 20, // Extra padding at the end for better UX
     marginLeft:5,
     marginTop:10
   },
+  
   infoCardContent: {
     height: '100%',
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  
   infoCard: {
     backgroundColor: "#dbf3f3",
     borderRadius: 5,
@@ -569,6 +624,63 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 16,
   },
+  rtoCardWrapper: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    marginTop: 5,
+    marginBottom: 60,
+  },
+  rtoCard: {
+    backgroundColor: THEME.white,
+    borderRadius: 12,
+    padding: 16,
+    marginHorizontal: 10,
+    shadowColor: "#35cad1",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
+    elevation: 10,
+    width: 182,
+    height: 170,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  rtoCardContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  rtoIconContainer: {
+    backgroundColor: "#dbf3f3",
+    borderRadius: 50,
+    width: 70,
+    height: 70,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  rtoIcon: {
+    width: 40,
+    height: 40,
+    tintColor: "#35cad1",
+    resizeMode: "contain",
+  },
+  rtoTextContainer: {
+    alignItems: 'center',
+  },
+  rtoCardTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#35cad1",
+    marginTop: 10,
+    textAlign: "center",
+  },
+  rtoCardSubtitle: {
+    fontSize: 12,
+    color: THEME.lightText,
+    textAlign: "center",
+  },
   tipsCard: {
     backgroundColor: THEME.white,
     borderRadius: 10,
@@ -580,8 +692,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderLeftWidth: 5,
     borderLeftColor: "#35cad1",
-    marginBottom:50,
-    marginTop:-15
+    marginBottom:100,
+    marginTop:-25
   },
   tipsTitle: {
     fontSize: 18,

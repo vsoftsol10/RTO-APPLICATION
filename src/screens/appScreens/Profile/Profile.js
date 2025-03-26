@@ -47,7 +47,7 @@ const Profile = ({navigation}) => {
         navigation.navigate("Onboarding")
     }
     return (
-        <View style={styles.mainContainer}>
+        <View>
             <ImageBackground
                 source={require('../../../../assets/Profile-page.png')} 
                 style={styles.backgroundImage} 
@@ -112,16 +112,14 @@ const Profile = ({navigation}) => {
 export default Profile;
 const styles = StyleSheet.create({
   
-    mainContainer:{
-        backgroundColor:"white",
-
-    },
+   
     header:{
          textAlign: "center", 
-         fontSize: 28, 
+         fontSize: 32, 
          fontWeight: "700", 
          marginTop: 100,
-         color:"#35cad1"
+         color:"#35cad1",
+         letterSpacing:2
     },
     backgroundImage: {
         position: 'absolute',
@@ -163,10 +161,10 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"space-between",
         elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
     },
     text:{
         fontSize:16,
