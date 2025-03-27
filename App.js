@@ -23,6 +23,8 @@ import FeeDetailsScreen from './src/screens/quickActionPage/FeeData/FeeDetailsSc
 import DrivingLicense from './src/screens/License/LicenseDetails/LicenseDetails';
 import login from './src/screens/authentication/login/login';
 import Symbolpage from './src/screens/Rto/SymbolPage/Symbolpage';
+import Mandatory from './src/screens/Rto/Mandatory/Mandatory';
+import Cautionary from './src/screens/Rto/Cautionary/Cautionary';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -118,6 +120,8 @@ const App = () => {
         <Stack.Screen name="Fee" component={FeeDetailsScreen}/>
         <Stack.Screen name='DL' component={DrivingLicense}/>
         <Stack.Screen name='symbol' component={Symbolpage}/>
+        <Stack.Screen name="mandatory" component={Mandatory}/>
+        <Stack.Screen name='cautionary' component={Cautionary}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

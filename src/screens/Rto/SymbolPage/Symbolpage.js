@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View,  Image } from 'react-native';
+import {TouchableOpacity} from 'react-native'
 import Ionic from 'react-native-vector-icons/Ionicons';
 
 const SymbolPage = ({ navigation }) => {
@@ -21,7 +22,7 @@ const SymbolPage = ({ navigation }) => {
       <View style={styles.symbolContainer}>
         <TouchableOpacity 
           style={styles.symbolItem} 
-          onPress={() => navigation.navigate('MandatorySymbols')}
+          onPress={() => navigation.navigate('mandatory')}
           activeOpacity={0.8}
         >
           <View style={[styles.symbolIconContainer]}>
@@ -32,7 +33,7 @@ const SymbolPage = ({ navigation }) => {
 
         <TouchableOpacity 
           style={styles.symbolItem} 
-          onPress={() => navigation.navigate('CautionarySymbols')}
+          onPress={() => navigation.navigate('cautionary')}
           activeOpacity={0.8}
         >
           <View style={[styles.symbolIconContainer]}>
