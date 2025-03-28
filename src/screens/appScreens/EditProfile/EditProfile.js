@@ -177,7 +177,7 @@ export default EditProfile;
 const styles = StyleSheet.create({
     mainContainer:{
         backgroundColor:"white",
-        height:"100%"
+        height:"110%"
     },
     backgroundImage: {
         position: 'absolute',

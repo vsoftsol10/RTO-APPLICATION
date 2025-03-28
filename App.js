@@ -25,6 +25,8 @@ import login from './src/screens/authentication/login/login';
 import Symbolpage from './src/screens/Rto/SymbolPage/Symbolpage';
 import Mandatory from './src/screens/Rto/Mandatory/Mandatory';
 import Cautionary from './src/screens/Rto/Cautionary/Cautionary';
+import Informatory from './src/screens/Rto/Informatory/Informatory';
+import RoadSignals from './src/screens/Rto/RoadSignals/RoadSignals';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -102,7 +104,7 @@ const App = () => {
         initialRouteName={getInitialRouteName()}
         screenOptions={{
           headerShown: false,
-          animation: "slide_from_bottom"
+          animation: "fade_from_bottom"
         }}
       >
         <Stack.Screen name="Onboarding" component={Onboarding} />
@@ -122,6 +124,8 @@ const App = () => {
         <Stack.Screen name='symbol' component={Symbolpage}/>
         <Stack.Screen name="mandatory" component={Mandatory}/>
         <Stack.Screen name='cautionary' component={Cautionary}/>
+        <Stack.Screen name='Informatory' component={Informatory}/>
+        <Stack.Screen name='RoadSignals' component={RoadSignals}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -44,7 +44,7 @@ const SymbolPage = ({ navigation }) => {
 
         <TouchableOpacity 
           style={styles.symbolItem} 
-          onPress={() => navigation.navigate('InformatorySymbols')}
+          onPress={() => navigation.navigate('Informatory')}
           activeOpacity={0.8}
         >
           <View style={[styles.symbolIconContainer]}>
@@ -55,7 +55,7 @@ const SymbolPage = ({ navigation }) => {
 
         <TouchableOpacity 
           style={styles.symbolItem} 
-          onPress={() => navigation.navigate('RoadAndSignals')}
+          onPress={() => navigation.navigate('RoadSignals')}
           activeOpacity={0.8}
         >
           <View style={[styles.symbolIconContainer, ]}>

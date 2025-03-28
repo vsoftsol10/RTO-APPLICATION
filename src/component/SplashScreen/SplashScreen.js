@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginTop: 10,
+    marginTop: -40,
   },
   textContainer: {
     flexDirection: 'row',

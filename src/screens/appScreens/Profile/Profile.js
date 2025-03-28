@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     backgroundImage: {
         position: 'absolute',
         width: '100%',
-        height: '100%',
+        height: '110%',
         opacity: 0.8,
     },
 
