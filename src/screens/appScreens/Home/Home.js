@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, Image, SafeAreaView, StatusBar, ScrollView, Modal, TouchableWithoutFeedback } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Image, SafeAreaView, StatusBar, ScrollView, Modal, TouchableWithoutFeedback, Dimensions, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
-import LinearGradient from 'react-native-linear-gradient';
 import Ionic from 'react-native-vector-icons/Ionicons';
-import { TouchableOpacity } from 'react-native';
-
 
 import colors from "../../../constents/colors";
 import { SignOutUser } from "../../../utilities/Utilities";
@@ -31,6 +28,45 @@ const HomeScreen = () => {
   const [showPopup, setShowPopup] = useState(false);
   const buttonRef = useRef(null);
   const [buttonPosition, setButtonPosition] = useState({ x: 0, y: 0 });
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const scrollViewRef = useRef(null);
+  
+  // Info cards data
+  const infoCards = [
+    {
+      id: 1,
+      title: "Eligibility",
+      description: "Applicant Criteria",
+      icon: require("../../../../assets/requirements.png"),
+      navigateTo: "eligibility"
+    },
+    {
+      id: 2,
+      title: "Documents",
+      description: "Documents Needed to Apply",
+      icon: require("../../../../assets/folders.png"),
+      navigateTo: "doc"
+    },
+    {
+      id: 3,
+      title: "Driving License",
+      description: "Steps to get Driving license",
+      icon: require("../../../../assets/drivers-license.png"),
+      navigateTo: "license"
+    },
+    {
+      id: 4,
+      title: "Fees",
+      description: "Fee Details",
+      icon: require("../../../../assets/payment.png"),
+      navigateTo: "Fee"
+    }
+  ];
+  
+  // Get window width for calculating card width
+  const windowWidth = Dimensions.get('window').width;
+  const cardWidth = 130; // Same as your infoCard width
+  const cardMargin = 15; // Your infoCard marginRight
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -78,21 +114,49 @@ const HomeScreen = () => {
     SignOutUser();
     navigation.navigate("Onboarding")
   };
+  
+  // Handle scroll to update active index
+  const handleScroll = (event) => {
+    const scrollPosition = event.nativeEvent.contentOffset.x;
+    // Calculate visible card index more precisely
+    const itemWidth = cardWidth + cardMargin;
+    const index = Math.round(scrollPosition / itemWidth);
+    
+    // Make sure index is within bounds
+    const boundedIndex = Math.max(0, Math.min(index, infoCards.length - 1));
+    
+    if (activeCardIndex !== boundedIndex) {
+      setActiveCardIndex(boundedIndex);
+    }
+  };
+
+  // Handle scroll to previous card
+  const scrollToPrevious = () => {
+    if (activeCardIndex > 0) {
+      const newIndex = activeCardIndex - 1;
+      setActiveCardIndex(newIndex);
+      scrollViewRef.current.scrollTo({
+        x: newIndex * (cardWidth + cardMargin),
+        animated: true,
+      });
+    }
+  };
+
+  // Handle scroll to next card
+  const scrollToNext = () => {
+    if (activeCardIndex < infoCards.length - 1) {
+      const newIndex = activeCardIndex + 1;
+      setActiveCardIndex(newIndex);
+      scrollViewRef.current.scrollTo({
+        x: newIndex * (cardWidth + cardMargin),
+        animated: true,
+      });
+    }
+  };
 
   return (
     <>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
-      {/* <LinearGradient
-        colors={[
-          THEME.primary,
-          "#8D4980",  // Slightly lighter purple
-          "#9D5691",  // Even lighter purple
-          "#AD64A1",  // Transitioning to lighter shade
-          THEME.accent,
-          THEME.secondary, // End with light gray
-        ]}
-        style={styles.linearGradient}
-      > */}
         <SafeAreaView style={styles.safeArea}>
           <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
             <View style={styles.container}>
@@ -149,28 +213,14 @@ const HomeScreen = () => {
                     style={styles.primaryButton}
                     onPress={() => navigation.navigate("DL")}
                   >
-                    {/* <LinearGradient
-                      colors={[THEME.primary, THEME.accent]}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 0 }}
-                      style={styles.buttonGradient}
-                    > */}
                       <Text style={styles.buttonText}>Apply for License</Text>
-                    {/* </LinearGradient> */}
                   </TouchableOpacity>
 
                   <TouchableOpacity
                     style={styles.primaryButton}
                     onPress={() => navigation.navigate("ApplyLicense")}
                   >
-                    {/* <LinearGradient
-                      colors={[THEME.primary, THEME.accent]}
-                      start={{ x: 1, y: 0 }}
-                      end={{ x: 0, y: 0 }}
-                      style={styles.buttonGradient}
-                    > */}
                       <Text style={styles.buttonText}>Apply for Learner</Text>
-                    {/* </LinearGradient> */}
                   </TouchableOpacity>
 
                   <TouchableOpacity
@@ -185,93 +235,63 @@ const HomeScreen = () => {
                 {/* Quick Info Cards - Horizontal Scrollable */}
                 <View style={styles.infoCardsWrapper}>
                   <ScrollView
+                    ref={scrollViewRef}
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.infoCardsScrollContainer}
+                    onScroll={handleScroll}
+                    scrollEventThrottle={16}
+                    snapToInterval={cardWidth + cardMargin}
+                    snapToAlignment="start"
+                    decelerationRate="fast"
                   >
-                    <TouchableOpacity
-                      style={styles.infoCard}
-                      activeOpacity={0.9}
-                      onPress={() => navigation.navigate("eligibility")}
-                    >
-                      <View style={styles.infoCardContent}>
-                        <View style={styles.infoIconContainer}>
-                          <Image
-                            source={require("../../../../assets/requirements.png")}
-                            style={styles.infoIcon}
-                          />
+                    {infoCards.map((item, index) => (
+                      <TouchableOpacity
+                        key={item.id}
+                        style={styles.infoCard}
+                        activeOpacity={0.9}
+                        onPress={() => navigation.navigate(item.navigateTo)}
+                      >
+                        <View style={styles.infoCardContent}>
+                          <View style={styles.infoIconContainer}>
+                            <Image
+                              source={item.icon}
+                              style={styles.infoIcon}
+                            />
+                          </View>
+                          <View style={styles.infoTextContainer}>
+                            <Text style={styles.infoTitle}>{item.title}</Text>
+                            <Text style={styles.infoDescription}>{item.description}</Text>
+                          </View>
                         </View>
-                        <View style={styles.infoTextContainer}>
-                          <Text style={styles.infoTitle}>Eligibility</Text>
-                          <Text style={styles.infoDescription}>Applicant Criteria</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={styles.infoCard}
-                      activeOpacity={0.9}
-                      onPress={() => navigation.navigate("doc")}
-                    >
-                      <View style={styles.infoCardContent}>
-
-                        <View style={styles.infoIconContainer}>
-                          <Image
-                            source={require("../../../../assets/folders.png")}
-                            style={styles.infoIcon}
-                          />
-                        </View>
-                        <View style={styles.infoTextContainer}>
-
-                          <Text style={styles.infoTitle}>Documents</Text>
-                          <Text style={styles.infoDescription}>Documents Needed to Apply</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={styles.infoCard}
-                      activeOpacity={0.9}
-                      onPress={() => navigation.navigate("license")}
-                    >
-                      <View style={styles.infoCardContent}>
-
-                        <View style={styles.infoIconContainer}>
-                          <Image
-                            source={require("../../../../assets/drivers-license.png")}
-                            style={styles.infoIcon}
-                          />
-                        </View>
-                        <View style={styles.infoTextContainer}>
-                          <Text style={styles.infoTitle}>Driving License</Text>
-                          <Text style={styles.infoDescription}>Steps to get Driving license</Text>
-
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={styles.infoCard}
-                      activeOpacity={0.9}
-                      onPress={() => navigation.navigate("Fee")}
-                    >
-                      <View style={styles.infoCardContent}>
-                        <View style={styles.infoIconContainer}>
-                          <Image
-                            source={require("../../../../assets/payment.png")}
-                            style={styles.infoIcon}
-                          />
-                        </View>
-                        <View style={styles.infoTextContainer}>
-
-                          <Text style={styles.infoTitle}>Fees</Text>
-                          <Text style={styles.infoDescription}>Fee Details</Text>
-
-                        </View>
-                      </View>
-                    </TouchableOpacity>
+                      </TouchableOpacity>
+                    ))}
                   </ScrollView>
+                  
+                  {/* Arrow Pagination */}
+                  <View style={styles.arrowPaginationContainer}>
+                    <TouchableOpacity 
+                      style={[styles.arrowButton, activeCardIndex === 0 && styles.disabledArrow]}
+                      disabled={activeCardIndex === 0}
+                      onPress={scrollToPrevious}
+                    >
+                      <Ionic name="chevron-back" size={24} color={activeCardIndex === 0 ? "#cce8ea" : "#35cad1"} />
+                    </TouchableOpacity>
+                    
+                    <View style={styles.pageIndicator}>
+                      <Text style={styles.pageText}>{activeCardIndex + 1}/{infoCards.length}</Text>
+                    </View>
+                    
+                    <TouchableOpacity
+                      style={[styles.arrowButton, activeCardIndex === infoCards.length-1 && styles.disabledArrow]}
+                      disabled={activeCardIndex === infoCards.length-1}
+                      onPress={scrollToNext}
+                    >
+                      <Ionic name="chevron-forward" size={24} color={activeCardIndex === infoCards.length-1 ? "#cce8ea" : "#35cad1"} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
+                
                 {/*RTO Helps */}
                 <View style={styles.rtoCardWrapper}>
                   <TouchableOpacity
@@ -328,7 +348,6 @@ const HomeScreen = () => {
             </View>
           </ScrollView>
         </SafeAreaView>
-      {/* </LinearGradient> */}
 
       {/* Settings popup menu */}
       <Modal
@@ -392,8 +411,7 @@ const styles = StyleSheet.create({
     backgroundColor:"#35cad1",
     padding:6,
     borderRadius:50
-  }
-  ,
+  },
   headerContainer: {
     paddingHorizontal: 20,
     paddingTop: 50,
@@ -435,17 +453,24 @@ const styles = StyleSheet.create({
     tintColor: THEME.white,
   },
   quoteContainer: {
-    backgroundColor: "#dbf3f3",
-    borderRadius: 12,
+    backgroundColor: "#35cad1",
+    borderRadius: 8,
     padding: 12,
     marginTop: 10,
+    elevation: 15,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 50 }, // Adds shadow below the element
+    shadowRadius: 4,
+    shadowOpacity: 0.5,
   },
   quoteText: {
-    fontSize: 18,
-    color: "#5ed4d9",
-    fontWeight: "600",
+    fontSize: 21,
+    color: "white",
+    fontWeight: "700",
     letterSpacing: 0.5,
     textAlign: "center",
+    textShadowColor:"#35cad1",
+    textShadowRadius:2,
   },
   contentContainer: {
     backgroundColor: "#dbf3f3",
@@ -512,7 +537,7 @@ const styles = StyleSheet.create({
     textTransform:"uppercase"
   },
   
-    actionsContainer: {
+  actionsContainer: {
     marginBottom: 25,
   },
   
@@ -560,12 +585,12 @@ const styles = StyleSheet.create({
   },
   
   infoCardsWrapper: {
-    marginBottom: -45,
+    marginBottom: 10,
     height:"25%"
   },
   
   infoCardsScrollContainer: {
-    paddingRight: 20, // Extra padding at the end for better UX
+    paddingRight: 20,
     marginLeft:5,
     marginTop:10
   },
@@ -585,12 +610,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    
-    // Android shadow (elevation)
     elevation: 9,
-    width: 130, // Fixed width for consistent layout
+    width: 130,
     height: 160,
-    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   },
   infoIconContainer: {
     backgroundColor: "#dbf3f3",
@@ -604,7 +626,6 @@ const styles = StyleSheet.create({
   infoIcon: {
     width: "100%",
     height: "100%",
-    // tintColor: "#35cad1",
     resizeMode: "contain",
   },
   infoTextContainer: {
@@ -624,11 +645,37 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 16,
   },
+  // Arrow pagination styles
+  arrowPaginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: -55,
+  },
+  arrowButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgb(255, 255, 255)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  disabledArrow: {
+    backgroundColor: 'rgba(112, 117, 117, 0.47)',
+  },
+  pageIndicator: {
+    paddingHorizontal: 15,
+  },
+  pageText: {
+    color: '#35cad1',
+    fontWeight: '700',
+    fontSize: 18,
+  },
   rtoCardWrapper: {
     flexDirection: "row",
     justifyContent: "center",
     paddingHorizontal: 20,
-    marginTop: 5,
+    marginTop: 30,
     marginBottom: 60,
   },
   rtoCard: {
@@ -713,7 +760,7 @@ const styles = StyleSheet.create({
     color: "#35cad1",
     alignSelf: "flex-end",
   },
-  // New styles for popup menu
+  // Modal styles
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.1)',

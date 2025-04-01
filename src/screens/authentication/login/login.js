@@ -9,6 +9,8 @@ import {
   SafeAreaView,
   Dimensions,
 } from 'react-native';
+import Ionic from "react-native-vector-icons/Ionicons"
+
 
 const LoginScreen = ({navigation}) => {
     const handleLogin=()=>{
@@ -25,6 +27,14 @@ const LoginScreen = ({navigation}) => {
         style={styles.backgroundImage}
         resizeMode="cover"
       >
+        <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.iconstyle}
+            onPress={() => navigation.navigate("Onboarding")}>
+            <Ionic name="chevron-back"
+                style={styles.icon}
+            />
+        </TouchableOpacity>
         <View style={styles.overlay}>
           <View style={styles.contentContainer}>
             <View style={styles.textContainer}>
@@ -73,6 +83,24 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  icon:{
+    fontSize:20,
+    color:"white",
+},
+iconstyle:{
+    backgroundColor: 'rgba(27, 25, 25, 0.37)',
+    marginTop:50,
+    padding:10,
+    borderRadius:100,
+    // elevation:5,
+    alignItems:"center",
+    aspectRatio:1/1,
+    width:40,
+    position:"absolute",
+    top:20,
+    left:20,
+    zIndex:1,
+},
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',

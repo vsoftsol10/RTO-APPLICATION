@@ -69,15 +69,15 @@ const SymbolPage = ({ navigation }) => {
           onPress={() => navigation.navigate('DrivingRules')}
           activeOpacity={0.8}
         >
-          <View style={[styles.symbolIconContainer, { backgroundColor: 'green' }]}>
-            <Ionic name="car" style={[styles.symbolIcon, { fontSize: 24 }]} />
+          <View style={[styles.symbolIconContainer]}>
+           <Image source={require("../../../../assets/rules.jpg")} style={styles.RoadSignalIcon} />
           </View>
           <Text style={styles.symbolLabel}>Driving Rules</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
           style={styles.symbolItem} 
-          onPress={() => navigation.navigate('TrafficPoliceSignals')}
+          onPress={() => navigation.navigate('TrafficPolice')}
           activeOpacity={0.8}
         >
           <View style={[styles.symbolIconContainer, ]}>

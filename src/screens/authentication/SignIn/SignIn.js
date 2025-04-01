@@ -80,6 +80,14 @@ const Login = ({navigation}) => {
                 style={styles.backgroundImage} 
                 resizeMode="cover"
             />
+            <TouchableOpacity
+                        activeOpacity={0.8}
+                        style={styles.iconstyle}
+                        onPress={() => navigation.navigate("login&Register")}>
+                        <Ionic name="chevron-back"
+                            style={styles.icon}
+                        />
+                    </TouchableOpacity>
             
             {/* Content Container */}
          <View style={styles.overlay}>
@@ -187,6 +195,24 @@ const styles = StyleSheet.create({
     overlay: {
         flex: 1,
         backgroundColor: 'rgba(27, 27, 27, 0.46)',
+    },
+    icon:{
+        fontSize:20,
+        color:"white",
+    },
+    iconstyle:{
+        backgroundColor: 'rgba(27, 25, 25, 0.37)',
+        marginTop:50,
+        padding:10,
+        borderRadius:100,
+        // elevation:5,
+        alignItems:"center",
+        aspectRatio:1/1,
+        width:40,
+        position:"absolute",
+        top:20,
+        left:20,
+        zIndex:1,
     },
     contentContainer: {
         flex: 1,

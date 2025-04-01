@@ -1,8 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, ToastAndroid, Image } from 'react-native';
 import Ionic from "react-native-vector-icons/Ionicons";
 import React, { useState } from 'react';
-import LinearGradient from 'react-native-linear-gradient';
-import colors from '../../../constents/colors';
 import { CreateAccountWithEmailAndPassWord, SignInAnonymously, SignInWithGoogle } from '../../../utilities/Utilities';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -412,6 +410,14 @@ const SignUp = ({ navigation }) => {
                 style={styles.backgroundImage}
                 blurRadius={2}
             />
+            <TouchableOpacity
+                 activeOpacity={0.8}
+                 style={styles.iconstyle}
+                 onPress={() => navigation.navigate("login&Register")}>
+                 <Ionic name="chevron-back"
+                     style={styles.icon}
+                 />
+            </TouchableOpacity>
             <View style={styles.overlay}>
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainer}>
                     <Text style={styles.headerText}>Signup</Text>
@@ -564,7 +570,7 @@ const SignUp = ({ navigation }) => {
                             style={styles.loginLinkContainer}
                             onPress={() => navigation.navigate("LogIn")}
                         >
-                            <Text style={styles.loginLinkText}>Already Account ? Login now</Text>
+                            <Text style={styles.loginLinkText}>Already a member ? Login now</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
@@ -585,7 +591,25 @@ const styles = StyleSheet.create({
     },
     overlay: {
         flex: 1,
-        backgroundColor: 'rgba(27, 27, 27, 0.52)',
+        backgroundColor: 'rgba(0, 0, 0, 0.54)',
+    },
+    icon:{
+        fontSize:20,
+        color:"white",
+    },
+    iconstyle:{
+        backgroundColor: 'rgba(27, 25, 25, 0.37)',
+        marginTop:50,
+        padding:10,
+        borderRadius:100,
+        // elevation:5,
+        alignItems:"center",
+        aspectRatio:1/1,
+        width:40,
+        position:"absolute",
+        top:20,
+        left:20,
+        zIndex:1,
     },
     contentContainer: {
         flexGrow: 1,
@@ -620,7 +644,7 @@ const styles = StyleSheet.create({
     formContainer: {
         width: '100%',
         maxWidth: 350,
-        backgroundColor: 'rgba(221, 221, 221, 0.54)',
+        backgroundColor: 'rgba(184, 184, 184, 0.7)',
         borderRadius:20,
         padding: 20,
         alignItems: 'center',

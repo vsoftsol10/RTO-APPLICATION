@@ -27,6 +27,8 @@ import Mandatory from './src/screens/Rto/Mandatory/Mandatory';
 import Cautionary from './src/screens/Rto/Cautionary/Cautionary';
 import Informatory from './src/screens/Rto/Informatory/Informatory';
 import RoadSignals from './src/screens/Rto/RoadSignals/RoadSignals';
+import DrivingRules from './src/screens/Rto/DrivingRules/DrivingRules';
+import TrafficPoliceSignal from './src/screens/Rto/TrafficPoliceSignal/TrafficPoliceSignal';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -126,6 +128,8 @@ const App = () => {
         <Stack.Screen name='cautionary' component={Cautionary}/>
         <Stack.Screen name='Informatory' component={Informatory}/>
         <Stack.Screen name='RoadSignals' component={RoadSignals}/>
+        <Stack.Screen name='DrivingRules' component={DrivingRules}/>
+        <Stack.Screen name='TrafficPolice' component={TrafficPoliceSignal}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
