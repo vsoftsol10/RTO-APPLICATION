@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
 import colors from '../../../constents/colors';
-import { StackActions } from '@react-navigation/native';
+import Ionic from "react-native-vector-icons/Ionicons"
 
 const FeeDetailsScreen = ({navigation}) => {
   const hanldleBack=()=>{
@@ -90,11 +90,19 @@ const FeeDetailsScreen = ({navigation}) => {
             </View>
           ))}
         </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button } activeOpacity={0.8} onPress={hanldleBack}>
-            <Text style={styles.btnTxt}>Back to Home</Text>
-          </TouchableOpacity>
-        </View>
+        <View style={styles.backBtnContainer}>
+                     <TouchableOpacity
+                        activeOpacity={0.8}
+                        style={styles.iconstyle}
+                        onPress={() => navigation.navigate("Onboarding")}>
+                        <Ionic name="caret-back-outline"
+                            style={styles.icon}
+                        />
+                     </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.8} style={styles.backButton} onPress={hanldleBack}>
+               <Text style={styles.backButtonTxt}>Back to Home</Text>
+             </TouchableOpacity>
+          </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -161,23 +169,35 @@ const styles = StyleSheet.create({
     color: '#333',
     fontWeight:"500"
   },
-  buttonContainer:{
-    alignItems:"center",
-    backgroundColor:"#35cad1",
-    width:"50%",
-    marginLeft:"25%",
-    marginVertical:10,
-    marginBottom:20,
-    borderRadius:10
+  icon:{
+    fontSize:20,
+    color:"white",
   },
-  button:{
-    padding:10,
+  iconstyle:{
+    width:40,
   },
-  btnTxt:{
-    color:colors.white,
-    fontSize:16,
-    fontWeight:"600",
-    letterSpacing:1.5,
+  backButton: {
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 10
+  },
+  backBtnContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#35cad1",
+    width: "60%",
+    flexDirection:"row",
+    marginLeft:"20%",
+    borderRadius:10,
+    gap:-12,
+    marginVertical:30
+  },
+  backButtonTxt: {
+    fontSize: 18,
+    color: colors.white,
+    letterSpacing: 2,
+    fontWeight: "600" ,
+    paddingLeft:-5
   }
 });
 

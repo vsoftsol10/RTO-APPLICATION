@@ -297,6 +297,7 @@ const HomeScreen = () => {
                   <TouchableOpacity
                     style={styles.rtoCard}
                     activeOpacity={0.8}
+                    onPress={()=>navigation.navigate("rules")}
                     >
                     <View style={styles.rtoCardContainer}>
                       <View style={styles.rtoIconContainer}>

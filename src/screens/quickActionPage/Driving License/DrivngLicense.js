@@ -1,6 +1,8 @@
 import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import colors from '../../../constents/colors';
+import Ionic from "react-native-vector-icons/Ionicons"
+
 
 const DrivingLicense = ({navigation}) => {
     const handleBack = () => {
@@ -37,6 +39,14 @@ const DrivingLicense = ({navigation}) => {
             </View>
             
             <View style={styles.backBtnContainer}>
+                 <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.iconstyle}
+                    onPress={() => navigation.navigate("Onboarding")}>
+                    <Ionic name="caret-back-outline"
+                    style={styles.icon}
+                    />
+                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.backButton} 
                     activeOpacity={0.7} 
@@ -113,30 +123,35 @@ const styles = StyleSheet.create({
         color: colors.darkGrey,
         flex: 1,
     },
-    backBtnContainer: {
+    icon:{
+        fontSize:20,
+        color:"white",
+      },
+      iconstyle:{
+        width:40,
+    
+      },
+      backButton: {
+        alignItems: "center",
+        padding: 10,
+        borderRadius: 10
+      },
+      backBtnContainer: {
         alignItems: "center",
         justifyContent: "center",
-        paddingBottom: 30,
-        marginTop:50,
-    },
-    backButton: {
-        alignItems: "center",
         backgroundColor: "#35cad1",
-        width: "50%",
-        padding: 14,
-        borderRadius: 10,
-        elevation: 4,
-        shadowColor: "#35cad1",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity:0.25,
-        shadowRadius: 3,
-
-    },
-    backButtonTxt: {
+        width: "60%",
+        flexDirection:"row",
+        marginLeft:"20%",
+        borderRadius:10,
+        gap:-12,
+        marginBottom:60
+      },
+      backButtonTxt: {
         fontSize: 18,
-        color: "#ffffff",
+        color: colors.white,
         letterSpacing: 2,
-        fontWeight: "600",
-
-    }
+        fontWeight: "600" ,
+        paddingLeft:-5
+      }
 });

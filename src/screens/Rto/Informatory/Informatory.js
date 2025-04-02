@@ -158,18 +158,18 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         padding: 10,
         backgroundColor: '#fff',
-        borderRadius: 60,
+        borderRadius: 10,
         elevation: 0,
         flexDirection: "row",
         justifyContent: "flex-start",
-        gap: 30
+        gap:15
     },
     symbolIconContainer: {
         width: 50,
         height: 50,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 10,
+        paddingVertical: 5,
         marginLeft: 10
     },
     symbolImage: {

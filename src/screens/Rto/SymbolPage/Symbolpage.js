@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 32,
     fontWeight: "700",
-    marginTop: 70,
+    marginTop: 80,
     color: "#fff",
     letterSpacing: 2
   },
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1/1,
     width: 40,
     position: "absolute",
-    top: 20,
+    top: 50,
     left: 20,
     zIndex: 1
   },

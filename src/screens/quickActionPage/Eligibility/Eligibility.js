@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Dimensions, SafeAreaView, StatusBar, Platform, TouchableOpacity } from 'react-native';
 import colors from '../../../constents/colors';
+import Ionic from "react-native-vector-icons/Ionicons"
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -90,6 +92,14 @@ const Eligibility = ({navigation}) => {
             ))}
           </View>
           <View style={styles.backBtnContainer}>
+             <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.iconstyle}
+                onPress={() => navigation.navigate("Onboarding")}>
+                <Ionic name="caret-back-outline"
+                    style={styles.icon}
+                />
+             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8} style={styles.backButton} onPress={handleBack}>
                 <Text style={styles.backButtonTxt}>Back to Home</Text>
             </TouchableOpacity>
@@ -207,22 +217,35 @@ const styles = StyleSheet.create({
   bottomPadding: {
     height: 20,
   },
+  icon:{
+    fontSize:20,
+    color:"white",
+  },
+  iconstyle:{
+    width:40,
+
+  },
   backButton: {
     alignItems: "center",
-    backgroundColor: "#35cad1",
-    width: "50%",
     padding: 10,
     borderRadius: 10
   },
   backBtnContainer: {
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "#35cad1",
+    width: "60%",
+    flexDirection:"row",
+    marginLeft:"20%",
+    borderRadius:10,
+    gap:-12
   },
   backButtonTxt: {
     fontSize: 18,
     color: colors.white,
     letterSpacing: 2,
-    fontWeight: "600" 
+    fontWeight: "600" ,
+    paddingLeft:-5
   }
 });
 

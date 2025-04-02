@@ -122,46 +122,47 @@ const styles = StyleSheet.create({
         borderTopLeftRadius:12,
         paddingTop:30,
         marginLeft:20,
-        
-       
     },
     symbolGrid: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         flexWrap: 'wrap',
         justifyContent: 'space-between'
     },
     symbolItem: {
         width: "100%", 
         alignItems: 'center',
-        marginVertical: 10,
+        paddingVertical: 15,
         padding: 10,
         backgroundColor: '#fff',
-        borderRadius: 60,
+        borderRadius: 10,
         elevation: 0,
-        flexDirection:"row",
+        flexDirection:"column",
         justifyContent:"flex-start",
-        gap:30
+        gap:15,
+        marginBottom:10
     },
     symbolIconContainer: {
-        width: 50,
-        height: 50,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginBottom: 10,
-        marginLeft:10
+        width: 100,
+        height: 100,
+        justifyContent:"center",
+        alignItems:"center",
+
+        marginLeft:0
     },
     symbolImage: {
         width: '100%',
         height: '100%',
         maxWidth: 100,
         maxHeight: 100,
-        borderRadius:70
+        borderRadius:10,
     },
     symbolLabel: {
         fontSize: 16,
         fontWeight: '800',
-        textAlign: 'flex-start',
-        color: '#333'
+        textAlign: 'center',
+        color: '#333',
+        marginTop:-10
+
     },
     fallbackText: {
         fontSize: 12,

@@ -1,6 +1,8 @@
 import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import colors from '../../../constents/colors';
+import Ionic from "react-native-vector-icons/Ionicons"
+
 
 const Documents=({navigation})=> {
     const handleBack=()=>{
@@ -10,11 +12,11 @@ const Documents=({navigation})=> {
     <View style={styles.mainContainer}>
         <StatusBar barStyle="light-content" backgroundColor={"#35cad1"} />
         <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>Documents Needed to apply for license</Text>
+            <Text style={styles.headerText}> Documents Required </Text>
         </View>
         <View style={styles.container}>
             <View style={styles.topContainer}>
-                <Text style={styles.topText}>• Select one Address Proof and one Age Proof •</Text>
+                <Text style={styles.topText}>• Pick any one from Address Proof and Age Proof •</Text>
             </View>
             <View style={styles.addressContainer}>
                 <Text style={styles.header}>Address Proof</Text>
@@ -39,6 +41,13 @@ const Documents=({navigation})=> {
             </View>
         </View>
           <View style={styles.backBtnContainer}>
+              <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.iconstyle}
+                  onPress={() => navigation.navigate("Onboarding")}>
+                  <Ionic name="caret-back-outline"
+                   style={styles.icon} />
+                </TouchableOpacity>
               <TouchableOpacity activeOpacity={0.8} style={styles.backButton} onPress={handleBack} >
                   <Text style={styles.backButtonTxt}>Back to Home</Text>
               </TouchableOpacity>
@@ -58,13 +67,12 @@ const styles = StyleSheet.create({
         paddingTop:70,
         paddingBottom:20,
         marginBottom:20,
-        alignItems:"center"
-
     },
     headerText:{
+        textAlign:"center",
         color:colors.white,
-        fontSize:20,
-        fontWeight:"600",
+        fontSize:28,
+        fontWeight:"800",
         letterSpacing:0.2,
         top:10,
         paddingBottom:10
@@ -127,22 +135,35 @@ const styles = StyleSheet.create({
         fontSize:16,
         letterSpacing:0.5, 
     },
-    backButton:{
-        alignItems:"center",
-        backgroundColor:"#35cad1",
-        width:"50%",
-        padding:10,
+    icon:{
+        fontSize:20,
+        color:"white",
+      },
+      iconstyle:{
+        width:40,
+      },
+      backButton: {
+        alignItems: "center",
+        padding: 10,
+        borderRadius: 10
+      },
+      backBtnContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#35cad1",
+        width: "60%",
+        flexDirection:"row",
+        marginLeft:"20%",
         borderRadius:10,
-    },
-    backBtnContainer:{
-        alignItems:"center",
-        justifyContent:"center"
-    },
-    backButtonTxt:{
-        fontSize:18,
-        color:colors.white,
-        letterSpacing:2,
-        fontWeight:"600"
-    }
+        gap:-12,
+        marginTop:10
+      },
+      backButtonTxt: {
+        fontSize: 18,
+        color: colors.white,
+        letterSpacing: 2,
+        fontWeight: "600" ,
+        paddingLeft:-5
+      }
 
 })
