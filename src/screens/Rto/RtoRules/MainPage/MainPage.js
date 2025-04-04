@@ -1,129 +1,144 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React from 'react';
 import Ionic from 'react-native-vector-icons/Ionicons';
 
-const MainPage = ({ navigation }) => {
+const MainPage = ({navigation}) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.headerContainer}>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
+          onPress={() => navigation.goBack()}>
           <Ionic name="chevron-back" style={styles.backIcon} />
         </TouchableOpacity>
-        
+
         <Text style={styles.headerText}>Rules of RTO</Text>
       </View>
       <ScrollView style={styles.scrollView}>
         <View style={styles.gridContainer}>
           {/* Row 1 */}
           <View style={styles.row}>
-            <TouchableOpacity style={styles.item} activeOpacity={0.8}>
+            <TouchableOpacity
+              style={styles.item}
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('temporary')}>
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../../../../assets/file.png")}
+                  source={require('../../../../../assets/Rules/temporary-registration.png')}
                   style={styles.icon}
                   resizeMode="contain"
                 />
-              </View> 
+              </View>
               <Text style={styles.itemText}>Temporary Registration</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.item} activeOpacity={0.8}>
+            <TouchableOpacity
+              style={styles.item}
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('permanent')}>
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../../../../assets/form.png")}
+                  source={require('../../../../../assets/Rules/Permanent-registration.png')}
                   style={styles.icon}
                   resizeMode="contain"
                 />
-              </View> 
+              </View>
               <Text style={styles.itemText}>Permanent Registration</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.item} activeOpacity={0.8}>
+            <TouchableOpacity
+              style={styles.item}
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('renewal')}>
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../../../../assets/car.png")}
+                  source={require('../../../../../assets/Rules/Renewal.png')}
                   style={styles.icon}
                   resizeMode="contain"
                 />
-              </View> 
+              </View>
               <Text style={styles.itemText}>Renewal of Registration</Text>
             </TouchableOpacity>
           </View>
-          
+
           {/* Row 2 */}
           <View style={styles.row}>
-            <TouchableOpacity style={styles.item} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.item} activeOpacity={0.8} onPress={()=>navigation.navigate("Duplicate")}>
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../../../../assets/car.png")}
+                  source={require('../../../../../assets/Rules/Duplicate-RC.png')}
                   style={styles.icon}
                   resizeMode="contain"
                 />
-              </View> 
+              </View>
               <Text style={styles.itemText}>Duplicate RC</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.item} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.item} activeOpacity={0.8} onPress={()=>navigation.navigate("noObjection")}>
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../../../../assets/car.png")}
+                  source={require('../../../../../assets/Rules/NoObjectionCertificate.png')}
                   style={styles.icon}
                   resizeMode="contain"
                 />
-              </View> 
+              </View>
               <Text style={styles.itemText}>No Objection Certificate</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.item} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.item} activeOpacity={0.8} onPress={()=>navigation.navigate("Address")}>
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../../../../assets/car.png")}
+                  source={require('../../../../../assets/Rules/address.png')}
                   style={styles.icon}
                   resizeMode="contain"
                 />
-              </View> 
+              </View>
               <Text style={styles.itemText}>Address Change</Text>
             </TouchableOpacity>
           </View>
-          
+
           {/* Row 3 */}
           <View style={styles.row}>
-            <TouchableOpacity style={styles.item} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.item} activeOpacity={0.8} onPress={()=>navigation.navigate("Reassignment")}>
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../../../../assets/car.png")}
+                  source={require('../../../../../assets/Rules/Reassignment.png')}
                   style={styles.icon}
                   resizeMode="contain"
                 />
-              </View> 
+              </View>
               <Text style={styles.itemText}>Reassignment of Vehicle</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.item} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.item} activeOpacity={0.8} onPress={()=>navigation.navigate("owner")}>
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../../../../assets/car.png")}
+                  source={require('../../../../../assets/Rules/ownership.png')}
                   style={styles.icon}
                   resizeMode="contain"
                 />
-              </View> 
+              </View>
               <Text style={styles.itemText}>Ownership Transfer</Text>
             </TouchableOpacity>
-            
+
             <View style={styles.emptyItem}></View>
           </View>
         </View>
-        
+
         {/* Add some padding at the bottom for better scrolling */}
         <View style={styles.bottomPadding} />
       </ScrollView>
     </View>
-  )
-}
+  );
+};
 
 export default MainPage;
 
@@ -213,5 +228,5 @@ const styles = StyleSheet.create({
   },
   bottomPadding: {
     height: 30,
-  }
+  },
 });

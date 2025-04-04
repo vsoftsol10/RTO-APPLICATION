@@ -30,6 +30,14 @@ import RoadSignals from './src/screens/Rto/RoadSignals/RoadSignals';
 import DrivingRules from './src/screens/Rto/DrivingRules/DrivingRules';
 import TrafficPoliceSignal from './src/screens/Rto/TrafficPoliceSignal/TrafficPoliceSignal';
 import MainPage from './src/screens/Rto/RtoRules/MainPage/MainPage';
+import TemporaryRegistration from './src/screens/Rto/RtoRules/Temporary/TemporaryRegistration';
+import PermanentRegistration from './src/screens/Rto/RtoRules/Permanent/PermanentRegistration';
+import RenewalOfRegistration from './src/screens/Rto/RtoRules/Renewal/RenewalOfRegistration';
+import DuplicateRc from './src/screens/Rto/RtoRules/DuplicateRC/DuplicateRc';
+import NoObjection from './src/screens/Rto/RtoRules/NoObjection/NoObjection';
+import AddressChange from './src/screens/Rto/RtoRules/AddressChange/AddressChange';
+import Reassignment from './src/screens/Rto/RtoRules/Reassignment/Reassignment';
+import OwnershipTransferScreen from './src/screens/Rto/RtoRules/OwnerShip/OwnershipTransferScreen ';
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -132,6 +140,14 @@ const App = () => {
         <Stack.Screen name='DrivingRules' component={DrivingRules}/>
         <Stack.Screen name='TrafficPolice' component={TrafficPoliceSignal}/>
         <Stack.Screen name='rules' component={MainPage}/>
+        <Stack.Screen name='temporary' component={TemporaryRegistration}/>
+        <Stack.Screen name='permanent' component={PermanentRegistration}/>
+        <Stack.Screen name='renewal' component={RenewalOfRegistration}/>
+        <Stack.Screen name='Duplicate' component={DuplicateRc}/>
+        <Stack.Screen name='noObjection' component={NoObjection}/>
+        <Stack.Screen name='Address' component={AddressChange}/>
+        <Stack.Screen name='Reassignment' component={Reassignment}/>
+        <Stack.Screen name='owner' component={OwnershipTransferScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
