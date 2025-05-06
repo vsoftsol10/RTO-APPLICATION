@@ -38,6 +38,8 @@ import NoObjection from './src/screens/Rto/RtoRules/NoObjection/NoObjection';
 import AddressChange from './src/screens/Rto/RtoRules/AddressChange/AddressChange';
 import Reassignment from './src/screens/Rto/RtoRules/Reassignment/Reassignment';
 import OwnershipTransferScreen from './src/screens/Rto/RtoRules/OwnerShip/OwnershipTransferScreen ';
+import SchoolFinder from './src/screens/DrivingSchools/SchoolFinder';
+
 
 enableScreens();
 const Stack = createNativeStackNavigator();
@@ -148,6 +150,7 @@ const App = () => {
         <Stack.Screen name='Address' component={AddressChange}/>
         <Stack.Screen name='Reassignment' component={Reassignment}/>
         <Stack.Screen name='owner' component={OwnershipTransferScreen}/>
+        <Stack.Screen name='FindSchools' component={SchoolFinder} />
       </Stack.Navigator>
     </NavigationContainer>
   );

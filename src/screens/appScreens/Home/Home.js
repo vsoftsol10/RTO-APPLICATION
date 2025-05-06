@@ -225,7 +225,7 @@ const HomeScreen = () => {
 
                   <TouchableOpacity
                     style={styles.secondaryButton}
-                    onPress={() => navigation.navigate("FindDrivingSchools")}
+                    onPress={() => navigation.navigate("FindSchools")}
                   >
                     <Text style={styles.secondaryButtonText}>Find Driving Schools</Text>
                   </TouchableOpacity>
