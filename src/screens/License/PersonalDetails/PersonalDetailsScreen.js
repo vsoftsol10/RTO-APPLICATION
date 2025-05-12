@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 8,
     marginHorizontal: 20,
-    marginVertical: 20,
+marginBottom:50,   
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

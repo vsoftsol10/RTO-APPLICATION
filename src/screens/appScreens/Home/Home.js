@@ -8,6 +8,17 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import colors from "../../../constents/colors";
 import { SignOutUser } from "../../../utilities/Utilities";
 
+const { width, height } = Dimensions.get('window');
+const screenHeight = Dimensions.get('screen').height;
+
+const wp = (percentage) => {
+  return width * (percentage / 100);
+};
+
+const hp = (percentage) => {
+  return height * (percentage / 100);
+};
+
 // Define theme colors
 const THEME = {
   primary: "#7A3C6D",     // Rich purple
@@ -156,9 +167,17 @@ const HomeScreen = () => {
 
   return (
     <>
-      <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
-        <SafeAreaView style={styles.safeArea}>
-          <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
+      <StatusBar 
+        translucent 
+        backgroundColor="transparent" 
+        barStyle="light-content" 
+      />         <SafeAreaView 
+        style={styles.safeArea} 
+        edges={['right', 'left']} // Don't include top/bottom in edges so we can control them manually
+      >
+          <ScrollView showsVerticalScrollIndicator={false} 
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollViewContent}>
             <View style={styles.container}>
               {/* Header Section */}
               <View style={styles.headerContainer}>
@@ -397,7 +416,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   safeArea: {
-    flex: 1,
+      flex: 1,
+    backgroundColor: '#dbf3f3', 
   },
   scrollView: {
     flex: 1,
@@ -414,11 +434,12 @@ const styles = StyleSheet.create({
     borderRadius:50
   },
   headerContainer: {
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    paddingBottom: 40,
-    backgroundColor:"#35cad1",
-    height:260
+    paddingHorizontal: wp(5),
+    paddingTop: Platform.OS === 'ios' ? hp(5) : hp(8), // Account for status bar height
+    paddingBottom: hp(5),
+    backgroundColor: "#35cad1",
+    // Remove fixed height, use percentage of screen height instead
+    height: hp(30),
   },
   headerTop: {
     flexDirection: "row",
@@ -477,11 +498,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#dbf3f3",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    paddingHorizontal: 20,
-    paddingTop: 30,
-    paddingBottom: 20,
+    paddingHorizontal: wp(5),
+    paddingTop: hp(4),
+    paddingBottom: hp(2),
     flex: 1,
-    marginTop:-70
+    marginTop: -hp(7),
   },
   card: {
     backgroundColor: "#35cad1",
@@ -586,8 +607,8 @@ const styles = StyleSheet.create({
   },
   
   infoCardsWrapper: {
-    marginBottom: 10,
-    height:"25%"
+    marginBottom: hp(1),
+    height: hp(25),
   },
   
   infoCardsScrollContainer: {
@@ -605,15 +626,15 @@ const styles = StyleSheet.create({
   infoCard: {
     backgroundColor: "#dbf3f3",
     borderRadius: 5,
-    padding: 16,
-    marginRight: 15,
+    padding: wp(4),
+    marginRight: wp(4),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 9,
-    width: 130,
-    height: 160,
+    width: wp(32), // 32% of screen width
+    height: hp(20), // 20% of screen height
   },
   infoIconContainer: {
     backgroundColor: "#dbf3f3",
@@ -651,7 +672,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -55,
+    marginTop: -50,
   },
   arrowButton: {
     width: 40,
@@ -660,12 +681,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(255, 255, 255)',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom:-30
   },
   disabledArrow: {
     backgroundColor: 'rgba(112, 117, 117, 0.47)',
   },
   pageIndicator: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
+    marginBottom:-30
   },
   pageText: {
     color: '#35cad1',
@@ -676,21 +699,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     paddingHorizontal: 20,
-    marginTop: 30,
-    marginBottom: 60,
+    marginTop: 50,
+    marginBottom: 30,
   },
   rtoCard: {
     backgroundColor: THEME.white,
     borderRadius: 12,
-    padding: 16,
-    marginHorizontal: 10,
+    padding: wp(4),
+    marginHorizontal: wp(2),
     shadowColor: "#35cad1",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.7,
     shadowRadius: 5,
     elevation: 10,
-    width: 182,
-    height: 170,
+    width: wp(42), // 42% of screen width
+    height: hp(20), // 20% of screen height
     alignItems: "center",
     justifyContent: "center",
   },
@@ -730,9 +753,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   tipsCard: {
-    backgroundColor: THEME.white,
+   backgroundColor: THEME.white,
     borderRadius: 10,
-    padding: 20,
+    padding: wp(5),
     shadowColor: "#35cad1",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
@@ -740,8 +763,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderLeftWidth: 5,
     borderLeftColor: "#35cad1",
-    marginBottom:100,
-    marginTop:-25
+    marginBottom: hp(5), // Add extra bottom padding
+    marginTop: hp(3),
   },
   tipsTitle: {
     fontSize: 18,

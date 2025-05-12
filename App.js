@@ -42,6 +42,8 @@ import PersonalDetailsScreen from './src/screens/License/PersonalDetails/Persona
 import AdditionalInfo from './src/screens/License/AdditionalInfo/AdditionalInfo';
 import AddressDetailsScreen from './src/screens/License/AddressDetailsScreen/AddressDetailsScreen';
 import LicenseDetailsForm from './src/screens/License/LicenseDetailsForm/LicenseDetailsForm';
+import TestSlotBooking from './src/screens/License/TestSlotBooking/TestSlotBooking';
+import DocumentUploadScreen from './src/screens/License/DocumentUploadScreen/DocumentUploadScreen';
 
 
 enableScreens();
@@ -157,6 +159,8 @@ const App = () => {
         <Stack.Screen name='AdditionalInfo' component={AdditionalInfo} />
         <Stack.Screen name='AddressDetails' component={AddressDetailsScreen} />
         <Stack.Screen name='details' component={LicenseDetailsForm} />
+        <Stack.Screen name='TestBooking' component={TestSlotBooking} />
+        <Stack.Screen name='UploadDoc' component={DocumentUploadScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
