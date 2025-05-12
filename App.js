@@ -20,7 +20,6 @@ import Documents from './src/screens/quickActionPage/Documents/Documents';
 import DrivngLicense from './src/screens/quickActionPage/Driving License/DrivngLicense';
 import DrivingTips from './src/screens/quickActionPage/DrivingTips/DrivingTips';
 import FeeDetailsScreen from './src/screens/quickActionPage/FeeData/FeeDetailsScreen';
-import DrivingLicense from './src/screens/License/LicenseDetails/LicenseDetails';
 import login from './src/screens/authentication/login/login';
 import Symbolpage from './src/screens/Rto/SymbolPage/Symbolpage';
 import Mandatory from './src/screens/Rto/Mandatory/Mandatory';
@@ -39,6 +38,10 @@ import AddressChange from './src/screens/Rto/RtoRules/AddressChange/AddressChang
 import Reassignment from './src/screens/Rto/RtoRules/Reassignment/Reassignment';
 import OwnershipTransferScreen from './src/screens/Rto/RtoRules/OwnerShip/OwnershipTransferScreen ';
 import SchoolFinder from './src/screens/DrivingSchools/SchoolFinder';
+import PersonalDetailsScreen from './src/screens/License/PersonalDetails/PersonalDetailsScreen';
+import AdditionalInfo from './src/screens/License/AdditionalInfo/AdditionalInfo';
+import AddressDetailsScreen from './src/screens/License/AddressDetailsScreen/AddressDetailsScreen';
+import LicenseDetailsForm from './src/screens/License/LicenseDetailsForm/LicenseDetailsForm';
 
 
 enableScreens();
@@ -133,7 +136,7 @@ const App = () => {
         <Stack.Screen name="license" component={DrivngLicense}/>
         <Stack.Screen name="Tips" component={DrivingTips}/>
         <Stack.Screen name="Fee" component={FeeDetailsScreen}/>
-        <Stack.Screen name='DL' component={DrivingLicense}/>
+        <Stack.Screen name='DL' component={PersonalDetailsScreen}/>
         <Stack.Screen name='symbol' component={Symbolpage}/>
         <Stack.Screen name="mandatory" component={Mandatory}/>
         <Stack.Screen name='cautionary' component={Cautionary}/>
@@ -151,6 +154,9 @@ const App = () => {
         <Stack.Screen name='Reassignment' component={Reassignment}/>
         <Stack.Screen name='owner' component={OwnershipTransferScreen}/>
         <Stack.Screen name='FindSchools' component={SchoolFinder} />
+        <Stack.Screen name='AdditionalInfo' component={AdditionalInfo} />
+        <Stack.Screen name='AddressDetails' component={AddressDetailsScreen} />
+        <Stack.Screen name='details' component={LicenseDetailsForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );
