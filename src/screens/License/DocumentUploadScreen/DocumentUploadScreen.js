@@ -16,9 +16,9 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import DocumentPicker from 'react-native-document-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-const DocumentUploadScreen = ({ route }) => {
-  const { personalDetails } = route.params || {};
+import Ionic from "react-native-vector-icons/Ionicons";
+const DocumentUploadScreen = ({ navigation }) => {
+  // const { personalDetails } = route.params || {};
 
   // Document state
   const [documents, setDocuments] = useState({
@@ -270,7 +270,14 @@ const DocumentUploadScreen = ({ route }) => {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoid}
-      >
+      ><TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.iconstyle}
+            onPress={() => navigation.navigate("TestBooking")}>
+            <Ionic name="chevron-back"
+                style={styles.icon}
+            />
+        </TouchableOpacity>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <Text style={styles.headerText}>Apply for License</Text>
@@ -336,6 +343,24 @@ const styles = StyleSheet.create({
   keyboardAvoid: {
     flex: 1,
   },
+  icon:{
+    fontSize:20,
+    color:"white",
+},
+iconstyle:{
+    backgroundColor: '#35cad1',
+    marginTop:50,
+    padding:10,
+    borderRadius:100,
+    elevation:5,
+    alignItems:"center",
+    aspectRatio:1/1,
+    width:40,
+    position:"absolute",
+    top:20,
+    left:20,
+    zIndex:1,
+},
   header: {
     padding: 20,
     backgroundColor: '#35cad1',

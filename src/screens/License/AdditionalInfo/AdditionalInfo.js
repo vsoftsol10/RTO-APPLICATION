@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, TextInput } from 'react-native';
 import { ChevronDown, Check, User, Users } from 'lucide-react-native';
+import Ionic from "react-native-vector-icons/Ionicons";
+
 
 const AdditionalInfo= ({navigation}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +38,14 @@ const AdditionalInfo= ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.iconstyle}
+            onPress={() => navigation.navigate("AddressDetails")}>
+            <Ionic name="chevron-back"
+                style={styles.icon}
+            />
+        </TouchableOpacity>
       <View style={styles.header}>
         <Text style={styles.title}>Apply for License</Text>
         <Text style={styles.subtitle}>Additional Information</Text>
@@ -114,6 +124,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  icon:{
+    fontSize:20,
+    color:"white",
+},
+iconstyle:{
+    backgroundColor: 'rgba(27, 25, 25, 0.37)',
+    marginTop:50,
+    padding:10,
+    borderRadius:100,
+    // elevation:5,
+    alignItems:"center",
+    aspectRatio:1/1,
+    width:40,
+    position:"absolute",
+    top:20,
+    left:20,
+    zIndex:1,
+},
   header: {
     padding: 30,
     backgroundColor: '#35cad1',

@@ -12,6 +12,7 @@ import {
   Modal,
   FlatList,
 } from 'react-native';
+import Ionic from "react-native-vector-icons/Ionicons";
 
 const LicenseDetailsForm = ({ navigation }) => {
   
@@ -90,6 +91,14 @@ const LicenseDetailsForm = ({ navigation }) => {
         style={styles.keyboardAvoid}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.iconstyle}
+            onPress={() => navigation.navigate("AdditionalInfo")}>
+            <Ionic name="chevron-back"
+                style={styles.icon}
+            />
+        </TouchableOpacity>
           <View style={styles.header}>
             <Text style={styles.headerText}>Apply for License</Text>
             <Text style={styles.subHeaderText}>License Details</Text>
@@ -367,6 +376,26 @@ const styles = StyleSheet.create({
   keyboardAvoid: {
     flex: 1,
   },
+  
+
+icon:{
+    fontSize:20,
+    color:"white",
+},
+iconstyle:{
+    backgroundColor: '#35cad1',
+    marginTop:50,
+    padding:10,
+    borderRadius:100,
+    elevation:5,
+    alignItems:"center",
+    aspectRatio:1/1,
+    width:40,
+    position:"absolute",
+    top:20,
+    left:20,
+    zIndex:1,
+},
   header: {
     padding: 20,
     backgroundColor: '#35cad1',

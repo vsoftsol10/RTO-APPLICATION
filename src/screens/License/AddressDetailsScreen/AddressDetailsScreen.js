@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import Ionic from "react-native-vector-icons/Ionicons";
+
 
 const AddressDetailsScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -154,6 +156,14 @@ const AddressDetailsScreen = ({ route }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardAvoid}
       >
+       <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.iconstyle}
+            onPress={() => navigation.navigate("DL")}>
+            <Ionic name="chevron-back"
+                style={styles.icon}
+            />
+        </TouchableOpacity> 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <Text style={styles.headerText}>Apply for License</Text>
@@ -254,6 +264,25 @@ const styles = StyleSheet.create({
   keyboardAvoid: {
     flex: 1,
   },
+  
+icon:{
+    fontSize:20,
+    color:"white",
+},
+iconstyle:{
+    backgroundColor: '#35cad1',
+    marginTop:50,
+    padding:10,
+    borderRadius:100,
+    elevation:5,
+    alignItems:"center",
+    aspectRatio:1/1,
+    width:40,
+    position:"absolute",
+    top:20,
+    left:20,
+    zIndex:1,
+},
   header: {
     padding: 20,
     backgroundColor: '#35cad1',

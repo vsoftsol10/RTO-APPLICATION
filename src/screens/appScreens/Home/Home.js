@@ -237,7 +237,7 @@ const HomeScreen = () => {
 
                   <TouchableOpacity
                     style={styles.primaryButton}
-                    onPress={() => navigation.navigate("ApplyLicense")}
+                    onPress={() => navigation.navigate("DL")}
                   >
                       <Text style={styles.buttonText}>Apply for Learner</Text>
                   </TouchableOpacity>
