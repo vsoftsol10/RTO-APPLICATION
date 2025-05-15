@@ -19,7 +19,7 @@ import Ionic from "react-native-vector-icons/Ionicons";
 
 const PersonalDetailsScreen = ({ route }) => {
   const navigation = useNavigation();
-  const { email } = route.params || { email: '' };
+  const { email, applicationType } = route.params || { email: '', applicationType: 'license' };
   
   // Form state
   const [fullName, setFullName] = useState('');
@@ -129,11 +129,14 @@ const PersonalDetailsScreen = ({ route }) => {
         aadhar
       };
       
-      // Navigate to next screen with data
-      navigation.navigate('AddressDetails', { personalDetails });
+      // Navigate to next screen with data including applicationType
+      navigation.navigate('AddressDetails', { 
+        personalDetails,
+        applicationType 
+      });
       
       // You can also save to redux/context state here
-      console.log('Form submitted:', personalDetails);
+      console.log('Form submitted:', personalDetails, 'Application Type:', applicationType);
     }
   };
 
@@ -194,6 +197,11 @@ const PersonalDetailsScreen = ({ route }) => {
     );
   };
 
+  // Get header text based on application type
+  const getHeaderText = () => {
+    return applicationType === 'learner' ? 'Apply for Learner' : 'Apply for License';
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -210,7 +218,7 @@ const PersonalDetailsScreen = ({ route }) => {
         </TouchableOpacity>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Apply for License</Text>
+            <Text style={styles.headerText}>{getHeaderText()}</Text>
             <Text style={styles.subHeaderText}>Personal Details</Text>
           </View>
           
@@ -348,27 +356,25 @@ const styles = StyleSheet.create({
   keyboardAvoid: {
     flex: 1,
   },
-  
-
-icon:{
-    fontSize:20,
-    color:"white",
-},
-iconstyle:{
-    backgroundColor: '#35cad1',
-    marginTop:50,
-    padding:10,
-    borderRadius:100,
-    borderColor:"#ffff",
-    elevation:5,
-    alignItems:"center",
-    aspectRatio:1/1,
-    width:40,
-    position:"absolute",
-    top:20,
-    left:20,
-    zIndex:1,
-},
+  icon:{
+      fontSize:20,
+      color:"white",
+  },
+  iconstyle:{
+      backgroundColor: '#35cad1',
+      marginTop:50,
+      padding:10,
+      borderRadius:100,
+      borderColor:"#ffff",
+      elevation:5,
+      alignItems:"center",
+      aspectRatio:1/1,
+      width:40,
+      position:"absolute",
+      top:20,
+      left:20,
+      zIndex:1,
+  },
   header: {
     padding: 20,
     backgroundColor: '#35cad1',
@@ -450,7 +456,7 @@ iconstyle:{
     paddingVertical: 15,
     borderRadius: 8,
     marginHorizontal: 20,
-marginBottom:50,   
+    marginBottom:50,   
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

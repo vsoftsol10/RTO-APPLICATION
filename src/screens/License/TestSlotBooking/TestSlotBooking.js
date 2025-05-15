@@ -20,6 +20,7 @@ const TestSlotBooking = ({ route }) => {
   const navigation = useNavigation();
   const { licenseDetails } = route.params || {};
   
+  
   // Date and time states
   const [preferredDate, setPreferredDate] = useState(null);
   const [preferredTime, setPreferredTime] = useState(null);

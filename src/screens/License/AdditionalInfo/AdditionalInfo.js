@@ -3,12 +3,14 @@ import { View, Text, TouchableOpacity, ScrollView, StyleSheet, TextInput } from 
 import { ChevronDown, Check, User, Users } from 'lucide-react-native';
 import Ionic from "react-native-vector-icons/Ionicons";
 
-
-const AdditionalInfo= ({navigation}) => {
+const AdditionalInfo = ({ navigation, route }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedQualification, setSelectedQualification] = useState(null);
   const [guardianName, setGuardianName] = useState('');
   const [isUnder18, setIsUnder18] = useState(false);
+  
+  // Extract params with default values to avoid undefined errors
+  const { email = '', applicationType = 'license' } = route?.params || {};
 
   const qualifications = [
     'High School Diploma',
@@ -32,22 +34,37 @@ const AdditionalInfo= ({navigation}) => {
     setIsOpen(false);
   };
 
-  const toggleAgeGroup = () => {
-    setIsUnder18(!isUnder18);
+  const getHeaderText = () => {
+    return applicationType === 'learner' ? 'Apply for Learner' : 'Apply for License';
+  };
+
+  const handleNext = () => {
+    // Create a completeDetails object with all the information
+    const completeDetails = {
+      ageGroup: isUnder18 ? 'Under 18' : '18+',
+      guardianName: isUnder18 ? guardianName : null,
+      qualification: selectedQualification,
+      email
+    };
+    
+    navigation.navigate('details', { 
+      completeDetails, 
+      applicationType 
+    });
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.iconstyle}
-            onPress={() => navigation.navigate("AddressDetails")}>
-            <Ionic name="chevron-back"
-                style={styles.icon}
-            />
-        </TouchableOpacity>
+        activeOpacity={0.8}
+        style={styles.iconstyle}
+        onPress={() => navigation.navigate("AddressDetails")}>
+        <Ionic name="chevron-back"
+          style={styles.icon}
+        />
+      </TouchableOpacity>
       <View style={styles.header}>
-        <Text style={styles.title}>Apply for License</Text>
+        <Text style={styles.headerText}>{getHeaderText()}</Text>
         <Text style={styles.subtitle}>Additional Information</Text>
       </View>
 
@@ -112,59 +129,61 @@ const AdditionalInfo= ({navigation}) => {
         )}
       </View>
 
-      <TouchableOpacity style={styles.submitButton} activeOpacity={0.8} onPress={()=>navigation.navigate("details")}>
+      <TouchableOpacity 
+        style={styles.submitButton} 
+        activeOpacity={0.8} 
+        onPress={handleNext}
+      >
         <Text style={styles.submitButtonText}>Next</Text>
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
-  icon:{
-    fontSize:20,
-    color:"white",
-},
-iconstyle:{
+  icon: {
+    fontSize: 20,
+    color: "white",
+  },
+  iconstyle: {
     backgroundColor: 'rgba(27, 25, 25, 0.37)',
-    marginTop:50,
-    padding:10,
-    borderRadius:100,
-    // elevation:5,
-    alignItems:"center",
-    aspectRatio:1/1,
-    width:40,
-    position:"absolute",
-    top:20,
-    left:20,
-    zIndex:1,
-},
+    marginTop: 50,
+    padding: 10,
+    borderRadius: 100,
+    alignItems: "center",
+    aspectRatio: 1/1,
+    width: 40,
+    position: "absolute",
+    top: 20,
+    left: 20,
+    zIndex: 1,
+  },
   header: {
     padding: 30,
     backgroundColor: '#35cad1',
     alignItems: 'center',
-    height:150,
-    marginBottom:15
+    height: 150,
+    marginBottom: 15
   },
-  title: {
+  headerText: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 4,
-    top:50
+    marginTop: 50
   },
   subtitle: {
     fontSize: 16,
     color: '#fff',
-    top:45,
-    
+    marginTop: 5
   },
   ageGroupContainer: {
     marginBottom: 20,
-    padding:15
+    padding: 15
   },
   toggleContainer: {
     flexDirection: 'row',
@@ -194,8 +213,7 @@ iconstyle:{
   },
   inputContainer: {
     marginBottom: 20,
-        padding:15
-
+    padding: 15
   },
   label: {
     fontSize: 16,
@@ -227,8 +245,8 @@ iconstyle:{
   dropdownMenu: {
     position: 'absolute',
     top: 76,
-    left: 0,
-    right: 0,
+    left: 15,
+    right: 15,
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#ddd',
@@ -262,9 +280,7 @@ iconstyle:{
     padding: 16,
     alignItems: 'center',
     marginTop: 16,
-        padding:15,
-        marginHorizontal:15
-
+    marginHorizontal: 15
   },
   submitButtonText: {
     color: '#fff',
@@ -272,4 +288,5 @@ iconstyle:{
     fontWeight: 'bold',
   },
 });
+
 export default AdditionalInfo;

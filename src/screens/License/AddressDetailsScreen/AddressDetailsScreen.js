@@ -19,6 +19,8 @@ import Ionic from "react-native-vector-icons/Ionicons";
 const AddressDetailsScreen = ({ route }) => {
   const navigation = useNavigation();
   const { personalDetails } = route.params || {};
+  const { email, applicationType } = route.params || { email: '', applicationType: 'license' };
+
   
   // Form state
   const [street, setStreet] = useState('');
@@ -143,13 +145,15 @@ const AddressDetailsScreen = ({ route }) => {
       };
       
       // Navigate to next screen with combined data
-      navigation.navigate('AdditionalInfo', { completeDetails });
+      navigation.navigate('AdditionalInfo', { completeDetails, applicationType});
       
       // You can also save to redux/context state here
       console.log('Address form submitted:', addressDetails);
     }
   };
-
+ const getHeaderText = () => {
+    return applicationType === 'learner' ? 'Apply for Learner' : 'Apply for License';
+  };
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -166,7 +170,7 @@ const AddressDetailsScreen = ({ route }) => {
         </TouchableOpacity> 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Apply for License</Text>
+            <Text style={styles.headerText}>{getHeaderText()}</Text>
             <Text style={styles.subHeaderText}>Address Details</Text>
           </View>
           

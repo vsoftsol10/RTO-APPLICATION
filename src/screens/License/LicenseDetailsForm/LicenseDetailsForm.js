@@ -14,13 +14,14 @@ import {
 } from 'react-native';
 import Ionic from "react-native-vector-icons/Ionicons";
 
-const LicenseDetailsForm = ({ navigation }) => {
+const LicenseDetailsForm = ({ navigation, route }) => {
   
   // State variables
   const [licenseType, setLicenseType] = useState('');
   const [vehicleTypes, setVehicleTypes] = useState([]);
   const [preferredRTO, setPreferredRTO] = useState('');
   const [drivingSchool, setDrivingSchool] = useState('');
+  const { email, applicationType } = route?.params || { email: '', applicationType: 'license' };
   
   // Modals visibility state
   const [licenseTypeModalVisible, setLicenseTypeModalVisible] = useState(false);
@@ -65,7 +66,9 @@ const LicenseDetailsForm = ({ navigation }) => {
         licenseType,
         vehicleTypes,
         preferredRTO,
-        drivingSchool
+        drivingSchool,
+        email,
+        applicationType
       };
       
       // Navigation logic based on license type
@@ -77,11 +80,16 @@ const LicenseDetailsForm = ({ navigation }) => {
         // Navigate to a different screen or show completion message
         console.log('Form submitted with data:', licenseDetails);
         alert('License details submitted successfully!');
-        
+        navigation.navigate('UploadDoc');
         // You might want to navigate to a different screen here
         // navigation.navigate('LearnerLicenseCompletion', { licenseDetails });
       }
     }
+  };
+
+  
+  const getHeaderText = () => {
+    return applicationType === 'learner' ? 'Apply for Learner' : 'Apply for License';
   };
 
   return (
@@ -100,7 +108,7 @@ const LicenseDetailsForm = ({ navigation }) => {
             />
         </TouchableOpacity>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Apply for License</Text>
+            <Text style={styles.headerText}>{getHeaderText()}</Text>
             <Text style={styles.subHeaderText}>License Details</Text>
           </View>
           
@@ -376,13 +384,11 @@ const styles = StyleSheet.create({
   keyboardAvoid: {
     flex: 1,
   },
-  
-
-icon:{
+  icon:{
     fontSize:20,
     color:"white",
-},
-iconstyle:{
+  },
+  iconstyle:{
     backgroundColor: '#35cad1',
     marginTop:50,
     padding:10,
@@ -395,7 +401,7 @@ iconstyle:{
     top:20,
     left:20,
     zIndex:1,
-},
+  },
   header: {
     padding: 20,
     backgroundColor: '#35cad1',

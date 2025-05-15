@@ -17,7 +17,7 @@ import DocumentPicker from 'react-native-document-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Ionic from "react-native-vector-icons/Ionicons";
-const DocumentUploadScreen = ({ navigation }) => {
+const DocumentUploadScreen = ({ route,navigation }) => {
   // const { personalDetails } = route.params || {};
 
   // Document state
@@ -31,6 +31,7 @@ const DocumentUploadScreen = ({ navigation }) => {
 
   // Error state
   const [errors, setErrors] = useState({});
+  const { email, applicationType } = route.params || { email: '', applicationType: 'license' };
 
   // Request permissions (Android)
   const requestPermissions = async () => {
@@ -264,6 +265,9 @@ const DocumentUploadScreen = ({ navigation }) => {
       </View>
     );
   };
+   const getHeaderText = () => {
+    return applicationType === 'learner' ? 'Apply for Learner' : 'Apply for License';
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -280,7 +284,8 @@ const DocumentUploadScreen = ({ navigation }) => {
         </TouchableOpacity>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Apply for License</Text>
+            
+  <Text style={styles.headerText}>{getHeaderText()}</Text>
             <Text style={styles.subHeaderText}>Document Upload</Text>
           </View>
 
