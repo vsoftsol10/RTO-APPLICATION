@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
@@ -187,7 +188,7 @@ const HomeScreen = () => {
         translucent
         backgroundColor="transparent"
         barStyle="light-content"
-      />{' '}
+      />
       <SafeAreaView
         style={styles.safeArea}
         edges={['right', 'left']} // Don't include top/bottom in edges so we can control them manually
@@ -451,6 +452,10 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+  },
+  scrollViewContent: {
+    // Added container style for scroll view content
+    flexGrow: 1,
   },
   container: {
     flex: 1,

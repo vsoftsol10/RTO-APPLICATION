@@ -44,6 +44,7 @@ import AddressDetailsScreen from './src/screens/License/AddressDetailsScreen/Add
 import LicenseDetailsForm from './src/screens/License/LicenseDetailsForm/LicenseDetailsForm';
 import TestSlotBooking from './src/screens/License/TestSlotBooking/TestSlotBooking';
 import DocumentUploadScreen from './src/screens/License/DocumentUploadScreen/DocumentUploadScreen';
+import VerifyEmail from './src/screens/authentication/VerifiyEmail/VerifyEmail';
 
 
 enableScreens();
@@ -161,6 +162,7 @@ const App = () => {
         <Stack.Screen name='details' component={LicenseDetailsForm} />
         <Stack.Screen name='TestBooking' component={TestSlotBooking} />
         <Stack.Screen name='UploadDoc' component={DocumentUploadScreen} />
+        <Stack.Screen name='VerifyEmail' component={VerifyEmail}  />
       </Stack.Navigator>
     </NavigationContainer>
   );

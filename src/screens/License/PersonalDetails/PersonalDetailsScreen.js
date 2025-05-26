@@ -16,12 +16,14 @@ import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import Ionic from "react-native-vector-icons/Ionicons";
 
-
 const PersonalDetailsScreen = ({ route }) => {
   const navigation = useNavigation();
-  const { email, applicationType } = route.params || { email: '', applicationType: 'license' };
   
-  // Form state
+  // Safe parameter extraction with defaults
+  const routeParams = route?.params || {};
+  const { email = '', applicationType = 'license' } = routeParams;
+  
+  // Form state - Initialize all strings properly
   const [fullName, setFullName] = useState('');
   const [dob, setDob] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -29,7 +31,7 @@ const PersonalDetailsScreen = ({ route }) => {
   const [gender, setGender] = useState('');
   const [qualification, setQualification] = useState('');
   const [mobile, setMobile] = useState('');
-  const [emailAddress, setEmailAddress] = useState(email);
+  const [emailAddress, setEmailAddress] = useState('');
   const [aadhar, setAadhar] = useState('');
   
   // Form validation state
@@ -37,7 +39,7 @@ const PersonalDetailsScreen = ({ route }) => {
   
   // Set email from route params when available
   useEffect(() => {
-    if (email) {
+    if (email && typeof email === 'string') {
       setEmailAddress(email);
     }
   }, [email]);
@@ -82,11 +84,17 @@ const PersonalDetailsScreen = ({ route }) => {
     return age;
   };
 
-  // Validate form fields
+  // Validate form fields - Fixed with safe string handling
   const validateForm = () => {
     let newErrors = {};
     
-    if (!fullName.trim()) newErrors.fullName = 'Name is required';
+    // Safe string validation
+    const safeFullName = fullName || '';
+    const safeMobile = mobile || '';
+    const safeEmailAddress = emailAddress || '';
+    const safeAadhar = aadhar || '';
+    
+    if (!safeFullName.trim()) newErrors.fullName = 'Name is required';
     
     const age = calculateAge(dob);
     if (age < 18) newErrors.dob = 'You must be at least 18 years old';
@@ -94,19 +102,20 @@ const PersonalDetailsScreen = ({ route }) => {
     if (!gender) newErrors.gender = 'Please select a gender';
     if (!qualification) newErrors.qualification = 'Please select your qualification';
     
-    if (!mobile.trim()) {
+    if (!safeMobile.trim()) {
       newErrors.mobile = 'Mobile number is required';
-    } else if (!/^\d{10}$/.test(mobile)) {
+    } else if (!/^\d{10}$/.test(safeMobile.trim())) {
       newErrors.mobile = 'Please enter a valid 10-digit mobile number';
     }
     
-    if (emailAddress.trim() && !/\S+@\S+\.\S+/.test(emailAddress)) {
+    // Email is optional, but if provided, it should be valid
+    if (safeEmailAddress.trim() && !/\S+@\S+\.\S+/.test(safeEmailAddress.trim())) {
       newErrors.email = 'Please enter a valid email address';
     }
     
-    if (!aadhar.trim()) {
+    if (!safeAadhar.trim()) {
       newErrors.aadhar = 'Aadhar number is required';
-    } else if (!/^\d{12}$/.test(aadhar)) {
+    } else if (!/^\d{12}$/.test(safeAadhar.trim())) {
       newErrors.aadhar = 'Please enter a valid 12-digit Aadhar number';
     }
     
@@ -117,16 +126,16 @@ const PersonalDetailsScreen = ({ route }) => {
   // Handle form submission
   const handleSubmit = () => {
     if (validateForm()) {
-      // Create personal details object
+      // Create personal details object with safe values
       const personalDetails = {
-        fullName,
+        fullName: (fullName || '').trim(),
         dob,
         age: calculateAge(dob),
         gender,
         qualification,
-        mobile,
-        emailAddress,
-        aadhar
+        mobile: (mobile || '').trim(),
+        emailAddress: (emailAddress || '').trim(),
+        aadhar: (aadhar || '').trim()
       };
       
       // Navigate to next screen with data including applicationType
@@ -135,9 +144,25 @@ const PersonalDetailsScreen = ({ route }) => {
         applicationType 
       });
       
-      // You can also save to redux/context state here
       console.log('Form submitted:', personalDetails, 'Application Type:', applicationType);
     }
+  };
+
+  // Safe text input handlers
+  const handleFullNameChange = (text) => {
+    setFullName(text || '');
+  };
+
+  const handleMobileChange = (text) => {
+    setMobile(text || '');
+  };
+
+  const handleEmailChange = (text) => {
+    setEmailAddress(text || '');
+  };
+
+  const handleAadharChange = (text) => {
+    setAadhar(text || '');
   };
 
   // Render the date picker differently based on platform
@@ -230,7 +255,7 @@ const PersonalDetailsScreen = ({ route }) => {
                 style={[styles.input, errors.fullName && styles.inputError]}
                 placeholder="Enter your full name"
                 value={fullName}
-                onChangeText={setFullName}
+                onChangeText={handleFullNameChange}
               />
               {errors.fullName && <Text style={styles.errorText}>{errors.fullName}</Text>}
             </View>
@@ -259,7 +284,7 @@ const PersonalDetailsScreen = ({ route }) => {
               <View style={[styles.pickerContainer, errors.gender && styles.inputError]}>
                 <Picker
                   selectedValue={gender}
-                  onValueChange={(itemValue) => setGender(itemValue)}
+                  onValueChange={(itemValue) => setGender(itemValue || '')}
                   style={styles.picker}
                 >
                   <Picker.Item label="Select Gender" value="" />
@@ -277,7 +302,7 @@ const PersonalDetailsScreen = ({ route }) => {
               <View style={[styles.pickerContainer, errors.qualification && styles.inputError]}>
                 <Picker
                   selectedValue={qualification}
-                  onValueChange={(itemValue) => setQualification(itemValue)}
+                  onValueChange={(itemValue) => setQualification(itemValue || '')}
                   style={styles.picker}
                 >
                   <Picker.Item label="Select Qualification" value="" />
@@ -300,7 +325,7 @@ const PersonalDetailsScreen = ({ route }) => {
                 style={[styles.input, errors.mobile && styles.inputError]}
                 placeholder="Enter your 10-digit mobile number"
                 value={mobile}
-                onChangeText={setMobile}
+                onChangeText={handleMobileChange}
                 keyboardType="number-pad"
                 maxLength={10}
               />
@@ -315,7 +340,7 @@ const PersonalDetailsScreen = ({ route }) => {
                 style={[styles.input, errors.email && styles.inputError]}
                 placeholder="Enter your email address"
                 value={emailAddress}
-                onChangeText={setEmailAddress}
+                onChangeText={handleEmailChange}
                 keyboardType="email-address"
                 autoCapitalize="none"
               />
@@ -329,7 +354,7 @@ const PersonalDetailsScreen = ({ route }) => {
                 style={[styles.input, errors.aadhar && styles.inputError]}
                 placeholder="Enter your 12-digit Aadhar number"
                 value={aadhar}
-                onChangeText={setAadhar}
+                onChangeText={handleAadharChange}
                 keyboardType="number-pad"
                 maxLength={12}
               />
